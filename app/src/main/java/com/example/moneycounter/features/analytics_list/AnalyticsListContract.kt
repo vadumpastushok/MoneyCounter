@@ -11,4 +11,6 @@ interface AnalyticsListContract: BaseContract {
     fun getAnalyticsMoneyType(): MoneyType
 
     fun setNoDataMessage(title: String)
+
+    fun openHomeFragment()
 }

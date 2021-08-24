@@ -7,7 +7,7 @@ import com.example.moneycounter.model.entity.db.Finance
 interface FinanceDao {
 
     @Query("SELECT * FROM ${DBConfig.Finance.TABLE_NAME}")
-    suspend fun getAllFinance(): MutableList<Finance>
+    suspend fun getAllFinances(): MutableList<Finance>
 
     @Query("SELECT * FROM ${DBConfig.Finance.TABLE_NAME} WHERE ${DBConfig.Finance.Columns.CATEGORY_ID} == :id")
     suspend fun getFinancesByCategoryId(id: Long): MutableList<Finance>
@@ -16,5 +16,5 @@ interface FinanceDao {
     suspend fun insertFinance(finance: Finance)
 
     @Delete
-    suspend fun deleteFinance(finance: Finance)
+    suspend fun deleteFinance(finances: MutableList<Finance>)
 }

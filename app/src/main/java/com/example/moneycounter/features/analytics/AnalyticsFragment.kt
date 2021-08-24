@@ -46,10 +46,6 @@ class AnalyticsFragment : BaseFragment<FragmentAnalyticsBinding>(), AnalyticsCon
         binding.MCToolbarAnalytics.setupTitleText(text)
     }
 
-    /**
-     * Help fun-s
-     */
-
     private fun setupBottomBar(){
         val host: NavHostFragment = childFragmentManager.findFragmentById(R.id.nav_analytics_fragment) as NavHostFragment? ?: return
         navController = host.navController
@@ -57,7 +53,8 @@ class AnalyticsFragment : BaseFragment<FragmentAnalyticsBinding>(), AnalyticsCon
     }
 
     private fun initListeners(){
-        binding.MCToolbarAnalytics.setBackButtonClickListener { presenter.onBackButtonClicked() }
+        binding.MCToolbarAnalytics.setBackButtonClickListener {
+            presenter.onBackButtonClicked() }
 
         navController.addOnDestinationChangedListener{ _, destination, _ ->
             when(destination.id) {
@@ -75,10 +72,16 @@ class AnalyticsFragment : BaseFragment<FragmentAnalyticsBinding>(), AnalyticsCon
     }
 
     companion object {
-        lateinit var toolbar:MCToolbar
+        private lateinit var toolbar:MCToolbar
+
         fun setupTitleText(title: String){
             toolbar.setupTitleText(title)
         }
+
+        fun backClick(){
+            toolbar.backClick()
+        }
+
         fun start(navController: NavController) {
             navController.navigate(R.id.action_to_analytics)
         }

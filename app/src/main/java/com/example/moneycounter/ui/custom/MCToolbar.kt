@@ -100,6 +100,9 @@ class MCToolbar @JvmOverloads constructor(
         binding.titleBottomLine.setBackgroundColor(color)
     }
 
+    fun backClick(){
+        backButtonClickListener()
+    }
 
 
 

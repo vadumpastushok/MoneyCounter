@@ -28,7 +28,9 @@ interface CategoryContract: BaseContract {
 
     fun notifyItemInserted(position: Int)
 
-    fun showDialog()
+    fun showExitDialog()
+
+    fun showDeletingDialog()
 
     fun closeDialog()
 }

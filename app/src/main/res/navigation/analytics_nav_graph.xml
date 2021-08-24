@@ -14,8 +14,6 @@
 
     <action android:id="@+id/action_to_graph"
         app:destination="@id/graphFragment"
-        app:popUpTo="@id/analytics_nav_graph"
-        app:popUpToInclusive="true"
         app:enterAnim="@anim/fade_in"
         app:exitAnim="@anim/fade_out"
         app:popEnterAnim="@anim/fade_in"
@@ -30,8 +28,6 @@
 
     <action android:id="@+id/action_to_analytics_income"
         app:destination="@id/analyticsListFragment"
-        app:popUpTo="@id/analytics_nav_graph"
-        app:popUpToInclusive="true"
         app:enterAnim="@anim/fade_in"
         app:exitAnim="@anim/fade_out"
         app:popEnterAnim="@anim/fade_in"
@@ -46,8 +42,6 @@
 
     <action android:id="@+id/action_to_piggy_bank"
         app:destination="@id/piggyBankFragment"
-        app:popUpTo="@id/analytics_nav_graph"
-        app:popUpToInclusive="true"
         app:enterAnim="@anim/fade_in"
         app:exitAnim="@anim/fade_out"
         app:popEnterAnim="@anim/fade_in"

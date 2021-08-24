@@ -203,4 +203,34 @@
         app:popEnterAnim="@anim/fade_in"
         app:popExitAnim="@anim/fade_out"/>
 
+<!--    Currency-->
+    <fragment
+        android:id="@+id/CurrencyFragment"
+        android:name="com.example.moneycounter.features.currency.CurrencyFragment"
+        android:label="CurrencyFragment"
+        tools:layout="@layout/fragment_currency" >
+    </fragment>
+
+    <action android:id="@+id/action_to_currency"
+        app:destination="@id/CurrencyFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
+
+<!--    Calculate-->
+    <fragment
+        android:id="@+id/CalculateFragment"
+        android:name="com.example.moneycounter.features.calculate.CalculateFragment"
+        android:label="CalculateFragment"
+        tools:layout="@layout/fragment_calculate" >
+    </fragment>
+
+    <action android:id="@+id/action_to_calculate"
+        app:destination="@id/CalculateFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
+
 </navigation>

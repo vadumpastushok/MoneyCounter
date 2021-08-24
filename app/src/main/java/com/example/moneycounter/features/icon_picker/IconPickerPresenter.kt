@@ -19,7 +19,7 @@ class IconPickerPresenter: BasePresenter<IconPickerContract>() {
             context,
             AppDatabase::class.java, DBConfig.DB_NAME
         ).build()
-        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao())
+        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
         setupData()
     }
 

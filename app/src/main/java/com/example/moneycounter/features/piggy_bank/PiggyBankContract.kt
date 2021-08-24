@@ -32,7 +32,9 @@ interface PiggyBankContract: BaseContract {
     fun setTimeIndependence(years: Float)
 
 
-    fun hideSecondGroup()
+    fun showSecondAndThirdGroup()
+
+    fun showOnlyThirdGroup()
 
     fun setSavedChartData(savedPercent: Int)
 

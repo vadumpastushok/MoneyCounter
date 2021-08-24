@@ -1,5 +1,6 @@
 package com.example.moneycounter.features.data_manager
 
+import android.content.Context
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App
+import com.example.moneycounter.app.Config
 import com.example.moneycounter.features.home.HomeFragment
 import com.example.moneycounter.model.db.AppDatabase
 import com.example.moneycounter.model.db.DBConfig
@@ -29,7 +31,7 @@ class ImportDataManager(val fragment: Fragment): ViewModel() {
             App.context,
             AppDatabase::class.java, DBConfig.DB_NAME
         ).build()
-        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao())
+        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
     }
 
     fun importData(){
@@ -63,6 +65,8 @@ class ImportDataManager(val fragment: Fragment): ViewModel() {
 
         viewModelScope.launch {
             databaseManager.deleteAll()
+            val preferences = App.context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE)
+            preferences.edit().putLong(Config.PREF_LAST_TIME_UPDATE_CURRENCIES, 0).apply()
 
             for(row in rows){
                 val moneyTypeString: String = row[App.context.getString(R.string.header_money_type)] ?: ""

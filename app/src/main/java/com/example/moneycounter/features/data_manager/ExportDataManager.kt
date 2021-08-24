@@ -29,7 +29,7 @@ class ExportDataManager(val fragment: Fragment): ViewModel() {
             App.context,
             AppDatabase::class.java, DBConfig.DB_NAME
         ).build()
-        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao())
+        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
     }
 
     fun exportData(){

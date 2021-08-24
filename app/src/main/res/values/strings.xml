@@ -5,6 +5,7 @@
     <string name="name">Название</string>
     <string name="next">Далее</string>
     <string name="skip">Пропустить</string>
+    <string name="one">1</string>
     <string name="zero">0</string>
     <string name="save">Сохранить</string>
     <string name="add">Добавить</string>
@@ -21,6 +22,16 @@
     <string name="action_change">изменить</string>
     <string name="action_remove">удалить</string>
 
+    <string name="api_base_url">https://api.monobank.ua/bank/</string>
+    <string name="no_internet">Нет соединения с интернетом</string>
+    <string name="last_update">Последнее обновление</string>
+    <string name="at">в</string>
+    <string name="year">года</string>
+    <string name="ru">ru</string>
+    <string name="UAH">UAH</string>
+    <string name="PLN">PLN</string>
+    <string name="USD">$</string>
+
     <string name="protect_app_by_password">Защитить приложение кодом для входа</string>
     <string name="change_password">Изменить код для входа</string>
     <string name="use_biometric">Использовать биометрическую авторизацию</string>
@@ -35,6 +46,11 @@
     <string name="accept_exit">Выйти</string>
     <string name="refuse_exit">Остаться</string>
 
+    <string name="delete">Удалить?</string>
+    <string name="question_to_delete">Данная категория содержит финансы. Удаление ее приведет к удалению всех финансов этой категории</string>
+    <string name="accept_delete">Удалить</string>
+    <string name="refuse_delete">Оставить</string>
+
     <string name="enter_password">Введите код для быстрого доступа к приложению</string>
     <string name="enter_previous_password">Введите прошлый код</string>
     <string name="invent_password">Придумайте код</string>
@@ -44,7 +60,7 @@
     <string name="biometrics_not_found">Биометрия не найдена</string>
     <string name="scan_to_enter">Отсканируйте чтобы войти</string>
     <string name="enter_code">Ввести код</string>
-    <string name="enter_current_password">Ввести текущий код</string>
+    <string name="enter_current_password">Введите текущий код</string>
     <string name="try_again_later">Попробуйте позже</string>
 
 
@@ -98,8 +114,8 @@
     <string name="home_text_income">Доходы</string>
     <string name="home_text_costs">Расходы</string>
     <string name="home_text_analytics">Аналитика</string>
-    <string name="home_text_development">Развитие личности</string>
-    <string name="home_text_deposit">Депозитные программы</string>
+    <string name="home_text_calculate">Конвертер валют</string>
+    <string name="home_text_currency">Курсы валют</string>
     
     
     <string name="sidebar_text_settings">Настройки</string>
@@ -195,6 +211,7 @@
     <string name="piggy_bank_sum_in_hour">Приблизительная минимальная сумма, которую вы должны зарабатывать в час</string>
     <string name="piggy_bank_saved">Сбережения</string>
     <string name="piggy_bank_independence_time">Приблизительно через сколько вы будете финансово независимы</string>
+    <string name="still_in_development">В стадии разработки</string>
 
 
 

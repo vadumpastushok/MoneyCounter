@@ -30,7 +30,7 @@ class HomePresenter: BasePresenter<HomeContract>() {
             App.context,
             AppDatabase::class.java, DBConfig.DB_NAME
         ).build()
-        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao())
+        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
 
         getFinanceData()
         setupMenu()
@@ -42,7 +42,7 @@ class HomePresenter: BasePresenter<HomeContract>() {
             incomeAmount = 0f
             costsAmount = 0f
 
-            val finances = databaseManager.getAllFinance()
+            val finances = databaseManager.getAllFinances()
 
             for (finance in finances) {
                 if (incomeCategories.find { it.id == finance.category_id } != null){
@@ -105,7 +105,15 @@ class HomePresenter: BasePresenter<HomeContract>() {
     }
 
     fun onButtonAnalyticsClicked(){
-        rootView?.openCategoriesAnalytics()
+        rootView?.openAnalytics()
+    }
+
+    fun onButtonCurrencyClicked(){
+        rootView?.openCurrency()
+    }
+
+    fun onButtonDevelopmentClicked(){
+        rootView?.openCalculate()
     }
 
     fun onMenuButtonClicked(){

@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
@@ -43,6 +44,7 @@ class PiggyBankFragment: BaseFragment<FragmentPiggyBankBinding>(), PiggyBankCont
         setupChart(binding.piggyBankSavedChart)
         initListeners()
         setupSlider()
+        setupOnBackPressed()
     }
 
     /**
@@ -163,8 +165,13 @@ class PiggyBankFragment: BaseFragment<FragmentPiggyBankBinding>(), PiggyBankCont
         binding.tvIndependenceTimePiggyBank.text = date
     }
 
-    override fun hideSecondGroup(){
-        binding.layoutSecondGroupPiggyBank.isVisible = false
+    override fun showSecondAndThirdGroup(){
+        binding.layoutSecondGroupPiggyBank.isVisible = true
+        binding.layoutThirdGroup.isVisible = true
+    }
+
+    override fun showOnlyThirdGroup(){
+        binding.layoutThirdGroup.isVisible = true
     }
 
     override fun getCurrentPercent(): Float {
@@ -214,9 +221,23 @@ class PiggyBankFragment: BaseFragment<FragmentPiggyBankBinding>(), PiggyBankCont
         binding.tvCostsOfHour.text = cost
     }
 
+    /**
+     * Help fun-s
+     */
+
     override fun onPause() {
         super.onPause()
         presenter.onPause()
+    }
+
+    private fun setupOnBackPressed(){
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    presenter.onBackClicked()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     private fun setupChart(chart: PieChart){
@@ -231,7 +252,7 @@ class PiggyBankFragment: BaseFragment<FragmentPiggyBankBinding>(), PiggyBankCont
         chart.renderer.paintRender.setShadowLayer(
             1f,
             0f,
-            16f,
+            12f,
             ContextCompat.getColor(requireContext(),
                 R.color.shadow)
         )

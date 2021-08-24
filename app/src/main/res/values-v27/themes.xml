@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.MoneyCounter" parent="Theme.MaterialComponents.Light.NoActionBar">
 
@@ -23,31 +23,6 @@
         <!-- Customize your theme here. -->
         <item name="buttonStyle">@style/Button</item>
         <item name="listPreferredItemHeightSmall">56dp</item>
-    </style>
-
-    <style name="Button" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/button_rounded</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="RadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
-
-        <item name="android:button">@drawable/selector_radio_btn</item>
-
-    </style>
-
-    <style name="SwitchStyle" parent="Theme.AppCompat.Light">
-        <!-- active thumb & track color (30% transparency) -->
-        <item name="colorControlActivated">@color/yellow</item>
-
-        <!-- inactive thumb color -->
-        <item name="colorSwitchThumbNormal">@color/unabled
-        </item>
-
-        <!-- inactive track color (30% transparency) -->
-        <item name="android:colorForeground">@color/unabled
-        </item>
     </style>
 
 </resources>

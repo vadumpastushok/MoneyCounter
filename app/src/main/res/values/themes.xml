@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.MoneyCounter" parent="Theme.MaterialComponents.Light.NoActionBar">
 
@@ -13,12 +13,13 @@
         <item name="colorOnSecondary">@color/black</item>
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:navigationBarColor">@color/white</item>
 
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">true</item>
 
         <!-- Customize your theme here. -->
         <item name="buttonStyle">@style/Button</item>
@@ -39,7 +40,7 @@
 
     <style name="SwitchStyle" parent="Theme.AppCompat.Light">
         <!-- active thumb & track color (30% transparency) -->
-        <item name="colorControlActivated">@color/yellow</item>
+        <item name="colorControlActivated">@color/light_blue</item>
 
         <!-- inactive thumb color -->
         <item name="colorSwitchThumbNormal">@color/unabled

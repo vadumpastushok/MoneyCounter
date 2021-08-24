@@ -2,12 +2,14 @@ package com.example.moneycounter.features.analytics_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moneycounter.R
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentAnalyticsListBinding
+import com.example.moneycounter.features.analytics.AnalyticsFragment
 import com.example.moneycounter.model.entity.ui.Analytics
 import com.example.moneycounter.model.entity.ui.MoneyType
 import com.example.moneycounter.utils.RecycleDiffUtilCallback
@@ -30,6 +32,7 @@ class AnalyticsListFragment(val moneyType: MoneyType) : BaseFragment<FragmentAna
 
     override fun initView() {
         setupRecycler()
+        setupOnBackPressed()
     }
 
     /**
@@ -50,10 +53,23 @@ class AnalyticsListFragment(val moneyType: MoneyType) : BaseFragment<FragmentAna
 
     override fun getAnalyticsMoneyType(): MoneyType = moneyType
 
+    override fun openHomeFragment() {
+        AnalyticsFragment.backClick()
+    }
 
     /**
      * Help fun-s
      */
+
+    private fun setupOnBackPressed(){
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    presenter.onBackClicked()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     private fun setupRecycler() {
         val manager = LinearLayoutManager(context)
@@ -61,7 +77,7 @@ class AnalyticsListFragment(val moneyType: MoneyType) : BaseFragment<FragmentAna
         binding.rcAnalyticsList.layoutManager = manager
 
         val dividerItemDecoration = com.example.moneycounter.ui.adapter.
-        DividerItemDecoration(binding.rcAnalyticsList.context)
+        DividerItemDecoration(binding.rcAnalyticsList.context, 62)
         binding.rcAnalyticsList.addItemDecoration(dividerItemDecoration)
     }
 

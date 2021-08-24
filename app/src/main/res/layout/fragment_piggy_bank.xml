@@ -22,8 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="32dp">
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp">
 
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/piggy_bank_date_chart"
@@ -198,14 +198,13 @@
                 android:background="@color/light_blue" />
 
 
-
-
-
             <LinearLayout
                 android:id="@+id/layout_second_group_piggy_bank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
+
                 <TextView
                     android:id="@+id/tv_title_second_group"
                     android:layout_width="match_parent"
@@ -299,10 +298,10 @@
                     android:value="10"
                     android:valueFrom="1"
                     android:valueTo="100"
+                    app:labelBehavior="gone"
                     app:thumbColor="@color/dark_blue"
                     app:thumbRadius="6dp"
                     app:tickVisible="false"
-                    app:labelBehavior="gone"
                     app:trackColorActive="@color/light_blue"
                     app:trackColorInactive="@color/light_gray" />
 
@@ -330,60 +329,66 @@
             </LinearLayout>
 
 
-
-
-
-            <TextView
-                android:id="@+id/textView3"
+            <LinearLayout
+                android:id="@+id/layout_third_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="@font/roboto_medium"
-                android:gravity="center"
-                android:text="@string/intro_title_work_hour"
-                android:textColor="@color/dark_gray"
-                android:textSize="24sp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:src="@drawable/icon_money" />
+                android:orientation="vertical"
+                android:paddingBottom="24dp"
+                android:visibility="gone">
 
                 <TextView
-                    android:id="@+id/tv_costs_of_hour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="6dp"
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:fontFamily="@font/roboto_medium"
                     android:gravity="center"
+                    android:text="@string/intro_title_work_hour"
                     android:textColor="@color/dark_gray"
-                    android:textSize="20sp" />
+                    android:textSize="24sp" />
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:src="@drawable/icon_money" />
+
+                    <TextView
+                        android:id="@+id/tv_costs_of_hour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="6dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:gravity="center"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="@string/piggy_bank_sum_in_hour"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp" />
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="@font/roboto_regular"
-                android:gravity="center"
-                android:text="@string/piggy_bank_sum_in_hour"
-                android:textColor="@color/dark_gray"
-                android:textSize="14sp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

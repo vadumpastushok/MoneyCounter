@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App
 import com.example.moneycounter.base.BasePresenter
+import com.example.moneycounter.features.analytics.AnalyticsFragment
 import com.example.moneycounter.model.db.AppDatabase
 import com.example.moneycounter.model.db.DBConfig
 import com.example.moneycounter.model.db.DatabaseManager
@@ -21,7 +22,7 @@ class PiggyBankPresenter: BasePresenter<PiggyBankContract>() {
             App.context,
             AppDatabase::class.java, DBConfig.DB_NAME
         ).build()
-        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao())
+        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
 
         setDateChartData()
         getSavedData()
@@ -31,9 +32,14 @@ class PiggyBankPresenter: BasePresenter<PiggyBankContract>() {
     fun onPause(){
         rootView?.hideKeyboard()
     }
+
+    fun onBackClicked(){
+        AnalyticsFragment.backClick()
+    }
+
     /**
      * First Group
-      */
+     */
 
     private var isEditTextOpened: Boolean = false
     fun onInvestButtonClicked(){
@@ -70,7 +76,7 @@ class PiggyBankPresenter: BasePresenter<PiggyBankContract>() {
         val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         val passedDays = calendar[Calendar.DAY_OF_MONTH]
         val leftDays = daysInMonth - passedDays
-        if(leftDays == 18){/////////////////////////////////////////////////////////////////////////
+        if(leftDays == 0){
             rootView?.enableInvestButton()
         }
         rootView?.setDateChartData(leftDays, passedDays)
@@ -138,8 +144,9 @@ class PiggyBankPresenter: BasePresenter<PiggyBankContract>() {
                 averageCosts = generalCosts / monthSet.size
                 setSavedChartData()
                 onPercentChanged(10)
+                rootView?.showSecondAndThirdGroup()
             }else{
-                rootView?.hideSecondGroup()
+                rootView?.showOnlyThirdGroup()
                 isSecondGroupHidden = true
             }
         }

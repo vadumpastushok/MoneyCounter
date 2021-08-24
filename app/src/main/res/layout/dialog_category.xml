@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_exit_title"
+        android:id="@+id/tv_dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -19,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_exit_info"
+        android:id="@+id/tv_dialog_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -32,31 +31,30 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_exit_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_dialog_title" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_refuse_exit"
+    <TextView
+        android:id="@+id/btn_refuse"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#FFFFFF"
         android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
         android:padding="16dp"
         android:text="@string/refuse_exit"
         android:textColor="@color/dark_blue"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_accept_exit"
+        app:layout_constraintEnd_toStartOf="@+id/btn_accept_dialog"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_exit_info" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_dialog_info" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_accept_exit"
+        android:id="@+id/btn_accept_dialog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
@@ -64,9 +62,10 @@
         android:fontFamily="@font/roboto_medium"
         android:padding="16dp"
         android:text="@string/accept_exit"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_refuse_exit"
-        app:layout_constraintTop_toBottomOf="@+id/tv_exit_info" />
+        app:layout_constraintStart_toEndOf="@+id/btn_refuse"
+        app:layout_constraintTop_toBottomOf="@+id/tv_dialog_info" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

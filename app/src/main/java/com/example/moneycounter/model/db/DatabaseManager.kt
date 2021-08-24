@@ -3,12 +3,14 @@ package com.example.moneycounter.model.db
 import com.example.moneycounter.app.App
 import com.example.moneycounter.model.entity.db.Category
 import com.example.moneycounter.model.entity.db.CategoryWithFinances
+import com.example.moneycounter.model.entity.db.Currency
 import com.example.moneycounter.model.entity.db.Finance
 import com.example.moneycounter.model.entity.ui.MoneyType
 
 class DatabaseManager(
     private val categoryDao: CategoryDao,
-    private val financeDao: FinanceDao
+    private val financeDao: FinanceDao,
+    private val currencyDao: CurrencyDao
 ) {
 
      suspend fun getCategoryByType(type: MoneyType): MutableList<Category> = categoryDao.getCategoryByType(type)
@@ -38,11 +40,23 @@ class DatabaseManager(
     suspend fun getNumberOfCategoriesByMoneyType(moneyType: MoneyType): Int = categoryDao.getNumberOfCategoriesByMoneyType(moneyType)
 
 
-    suspend fun getAllFinance(): MutableList<Finance> = financeDao.getAllFinance()
+    suspend fun getAllFinances(): MutableList<Finance> = financeDao.getAllFinances()
 
     suspend fun getFinancesByCategoryId(id: Long): MutableList<Finance> = financeDao.getFinancesByCategoryId(id)
 
     suspend fun insertFinance(finance: Finance) = financeDao.insertFinance(finance)
+
+    suspend fun deleteFinance(finances: MutableList<Finance>) = financeDao.deleteFinance(finances)
+
+
+    suspend fun getAllCurrencies() = currencyDao.getAllCurrencies()
+
+    suspend fun getCurrency(id: Long) = currencyDao.getCurrency(id)
+
+    suspend fun insertCurrencies(currencies: MutableList<Currency>) = currencyDao.insertCurrency(currencies)
+
+    suspend fun deleteCurrencies() = currencyDao.deleteCurrencies()
+
 
     fun deleteAll(){
         App.context.deleteDatabase(DBConfig.DB_NAME)

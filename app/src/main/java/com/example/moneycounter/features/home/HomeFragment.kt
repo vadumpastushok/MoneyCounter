@@ -27,7 +27,9 @@ import com.example.moneycounter.app.App
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentHomeBinding
 import com.example.moneycounter.features.analytics.AnalyticsFragment
+import com.example.moneycounter.features.calculate.CalculateFragment
 import com.example.moneycounter.features.category.CategoryFragment
+import com.example.moneycounter.features.currency.CurrencyFragment
 import com.example.moneycounter.features.info.InfoFragment
 import com.example.moneycounter.features.lock_settings.LockSettingsFragment
 import com.example.moneycounter.features.write_to_us.WriteToUsFragment
@@ -196,8 +198,16 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         CategoryFragment.start(findNavController(), MoneyType.COSTS)
     }
 
-    override fun openCategoriesAnalytics() {
+    override fun openAnalytics() {
         AnalyticsFragment.start(findNavController())
+    }
+
+    override fun openCurrency() {
+        CurrencyFragment.start(findNavController())
+    }
+
+    override fun openCalculate() {
+        CalculateFragment.start(findNavController())
     }
 
     override fun openInfoFragment(){
@@ -308,7 +318,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
 
         val navMenuView = binding.homeSidebar.getChildAt(0) as NavigationMenuView
         navMenuView.addItemDecoration(
-            com.example.moneycounter.ui.adapter.DividerItemDecoration(requireContext())
+            com.example.moneycounter.ui.adapter.DividerItemDecoration(requireContext(), 62, 1, 1)
         )
 
         binding.homeSidebar.itemIconTintList = null
@@ -340,6 +350,12 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         }
         binding.buttonHomeAnalytics.setOnClickListener {
             presenter.onButtonAnalyticsClicked()
+        }
+        binding.buttonHomeCurrency.setOnClickListener {
+            presenter.onButtonCurrencyClicked()
+        }
+        binding.buttonHomeCalculate.setOnClickListener {
+            presenter.onButtonDevelopmentClicked()
         }
         binding.homeFinanceChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener
         {

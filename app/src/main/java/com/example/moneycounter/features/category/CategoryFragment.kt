@@ -98,7 +98,19 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
         adapter.notifyItemInserted(position)
     }
 
-    override fun showDialog(){
+    override fun showDeletingDialog() {
+        dialogBinding.tvDialogTitle.text = requireContext().getString(R.string.delete)
+        dialogBinding.tvDialogInfo.text = requireContext().getString(R.string.question_to_delete)
+        dialogBinding.btnAcceptDialog.text = requireContext().getString(R.string.accept_delete)
+        dialogBinding.btnRefuse.text = requireContext().getString(R.string.refuse_delete)
+        alertDialog.show()
+    }
+
+    override fun showExitDialog() {
+        dialogBinding.tvDialogTitle.text = requireContext().getString(R.string.exit)
+        dialogBinding.tvDialogInfo.text = requireContext().getString(R.string.question_to_exit)
+        dialogBinding.btnAcceptDialog.text = requireContext().getString(R.string.accept_exit)
+        dialogBinding.btnRefuse.text = requireContext().getString(R.string.refuse_exit)
         alertDialog.show()
     }
 
@@ -149,12 +161,12 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
             presenter.onDeleteCategoryClicked(index)
         }
 
-        dialogBinding.btnAcceptExit.setOnClickListener {
-            presenter.onAcceptExit()
+        dialogBinding.btnAcceptDialog.setOnClickListener {
+            presenter.onAcceptDialog()
         }
 
-        dialogBinding.btnRefuseExit.setOnClickListener {
-            presenter.onRefuseExit()
+        dialogBinding.btnRefuse.setOnClickListener {
+            presenter.onRefuseDialog()
         }
     }
 

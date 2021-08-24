@@ -21,14 +21,14 @@ class GraphPresenter: BasePresenter<GraphContract>() {
             AppDatabase::class.java,
             DBConfig.DB_NAME
         ).build()
-        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao())
+        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
 
         getFinances()
     }
 
     private fun getFinances(){
         viewModelScope.launch {
-            val finances = databaseManager.getAllFinance()
+            val finances = databaseManager.getAllFinances()
 
             rootView?.setupLineChart(MoneyType.INCOME, formatData(finances, MoneyType.INCOME))
             rootView?.setupLineChart(MoneyType.COSTS, formatData(finances, MoneyType.COSTS))

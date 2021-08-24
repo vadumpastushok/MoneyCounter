@@ -71,7 +71,7 @@ class StartScreenPresenter: BasePresenter<StartScreenContract>() {
             AppDatabase::class.java, DBConfig.DB_NAME
         ).build()
 
-        val databaseManager = DatabaseManager(db.categoryDao(), db.financeDao())
+        val databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
         viewModelScope.launch {
             databaseManager.insertCategory(
                 DefaultData.categories

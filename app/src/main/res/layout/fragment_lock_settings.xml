@@ -9,7 +9,7 @@
         android:id="@+id/lock_settings_titlebar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:icon_color="@color/yellow"
+        app:icon_color="@color/light_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

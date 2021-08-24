@@ -28,4 +28,18 @@ object DBConfig {
             const val ID = "id"
         }
     }
+
+    object Currency {
+        const val TABLE_NAME = "currencies"
+
+        object Columns {
+            const val NAME = "name"
+            const val SYMBOL = "symbol"
+            const val FLAG = "flag"
+            const val FIRST_RATE = "firstRate"
+            const val SECOND_RATE = "secondRate"
+            const val TYPE = "type"
+            const val ID = "id"
+        }
+    }
 }

@@ -23,7 +23,7 @@ class AnalyticsListPresenter: BasePresenter<AnalyticsListContract>() {
             context,
             AppDatabase::class.java, DBConfig.DB_NAME
         ).build()
-        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao())
+        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
 
         val root = rootView ?: return
         getAnalyticsList(root.getAnalyticsMoneyType())
@@ -65,6 +65,10 @@ class AnalyticsListPresenter: BasePresenter<AnalyticsListContract>() {
 
     private fun setAnalyticsList(oldList : MutableList<Analytics>, newList : MutableList<Analytics>){
         rootView?.setData(oldList, newList)
+    }
+
+    fun onBackClicked(){
+        rootView?.openHomeFragment()
     }
 
 }

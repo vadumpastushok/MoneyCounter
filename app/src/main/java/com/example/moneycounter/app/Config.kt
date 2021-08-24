@@ -16,8 +16,8 @@ object Config {
     const val PREF_IS_SOUND_NOTIFICATION_ENABLED = "isSoundNotificationEnabled"
     const val PREF_PASSWORD = "password"
     const val PREF_IS_FINGERPRINT_ENABLED = "isFingerprintEnabled"
+    const val PREF_LAST_TIME_UPDATE_CURRENCIES = "lastTimeUpdateCurrencies"
 
-    const val REQUEST_KEY_LOCK_SETTINGS = "lockSettings"
     const val REQUEST_KEY_CATEGORY_ADD = "categoryAdd"
 
     val tableHeader = mutableListOf(

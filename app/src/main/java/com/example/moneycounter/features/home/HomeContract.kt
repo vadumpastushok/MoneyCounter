@@ -30,7 +30,11 @@ interface HomeContract: BaseContract {
 
     fun openCategoriesCosts()
 
-    fun openCategoriesAnalytics()
+    fun openAnalytics()
+
+    fun openCurrency()
+
+    fun openCalculate()
 
     fun closeApp()
 

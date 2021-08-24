@@ -1,5 +1,6 @@
 package com.example.moneycounter.features.category
 
+import android.widget.Toast
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import com.example.moneycounter.R
@@ -9,19 +10,22 @@ import com.example.moneycounter.model.db.AppDatabase
 import com.example.moneycounter.model.db.DBConfig
 import com.example.moneycounter.model.db.DatabaseManager
 import com.example.moneycounter.model.entity.db.Category
+import com.example.moneycounter.model.entity.db.Finance
 import com.example.moneycounter.model.entity.ui.MoneyType
 import kotlinx.coroutines.launch
 
 class CategoryPresenter: BasePresenter<CategoryContract>() {
 
     private var categories: MutableList<Category> = mutableListOf()
+    private var financesToDelete: MutableList<Finance> = mutableListOf()
     private var isEditable: Boolean = false
+
 
     private val db = Room.databaseBuilder(
         context,
         AppDatabase::class.java, DBConfig.DB_NAME
     ).build()
-    private val dbManager = DatabaseManager(db.categoryDao(), db.financeDao())
+    private val dbManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
 
     override fun onViewAttached() {
         updateData()
@@ -86,6 +90,9 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
                 }
                 dbManager.insertCategory(prepareList())
             }
+
+            Toast.makeText(context, financesToDelete.toString(), Toast.LENGTH_SHORT).show()
+            dbManager.deleteFinance(financesToDelete)
         }
     }
 
@@ -111,16 +118,34 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
         }
     }
 
+    private var isCategoryDeleting = false
+    private var categoryDeleting = 0
     fun onDeleteCategoryClicked(index: Int){
         if(index == -1)return
-        categories.removeAt(index)
-        rootView?.notifyItemRemoved(index)
+        isCategoryDeleting = true
+        categoryDeleting = index
+        viewModelScope.launch {
+            val id = categories[index].id
+            val financeList = dbManager.getFinancesByCategoryId(id)
+            if(financeList.size > 0) {
+                rootView?.showDeletingDialog()
+                financesToDelete += financeList
+            }else{
+                deleteCategory()
+            }
+        }
+    }
+
+    private fun deleteCategory(){
+        categories.removeAt(categoryDeleting)
+        rootView?.notifyItemRemoved(categoryDeleting)
         checkIsElseCategories()
     }
 
     fun onBackClicked(){
         if(isEditable){
-            rootView?.showDialog()
+            isCategoryDeleting = false
+            rootView?.showExitDialog()
         }else {
             rootView?.openLastFragment()
         }
@@ -143,12 +168,16 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
         }
     }
 
-    fun onAcceptExit(){
-        rootView?.openLastFragment()
+    fun onAcceptDialog(){
+        if(isCategoryDeleting) {
+            deleteCategory()
+        }else {
+            rootView?.openLastFragment()
+        }
         rootView?.closeDialog()
     }
 
-    fun onRefuseExit(){
+    fun onRefuseDialog(){
         rootView?.closeDialog()
     }
 }

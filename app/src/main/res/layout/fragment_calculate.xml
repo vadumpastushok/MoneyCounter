@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <com.example.moneycounter.ui.custom.MCToolbar
+        android:id="@+id/toolbar_calculate"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:icon_color="@color/light_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:toolbar_title="@string/home_text_calculate" />
+
+    <TextView
+        android:id="@+id/tv_message_calculate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center"
+        android:lineSpacingExtra="2dp"
+        android:textColor="@color/unabled"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_calculate" />
+
+    <LinearLayout
+        android:id="@+id/layout_first_group"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_message_calculate">
+
+        <LinearLayout
+            android:id="@+id/layout_first_currency"
+            android:layout_width="128dp"
+            android:layout_height="match_parent"
+            android:gravity="start|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_first_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/flag_uah" />
+
+            <TextView
+                android:id="@+id/tv_first_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="@string/UAH"
+                android:textColor="@color/dark_text"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/iv_first_arrow"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="8dp"
+                android:rotation="90"
+                app:srcCompat="@drawable/icon_arrow" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edit_first_currency"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/tv_transparent_with_borders"
+            android:backgroundTint="@color/light_blue"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:hint="@string/zero"
+            android:inputType="number|numberDecimal"
+            android:maxLength="8"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:textColor="@color/dark_text"
+            android:textColorHint="@color/hint_text"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_second_group"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_first_group">
+
+        <LinearLayout
+            android:id="@+id/layout_second_currency"
+            android:layout_width="128dp"
+            android:layout_height="match_parent"
+            android:gravity="start|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_second_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/flag_uah" />
+
+            <TextView
+                android:id="@+id/tv_second_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="@string/UAH"
+                android:textColor="@color/dark_text"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/iv_second_arrow"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="8dp"
+                android:rotation="90"
+                app:srcCompat="@drawable/icon_arrow" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edit_second_currency"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/tv_transparent_with_borders"
+            android:backgroundTint="@color/light_blue"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:hint="@string/zero"
+            android:inputType="number|numberDecimal"
+            android:maxLength="8"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:textColor="@color/dark_text"
+            android:textColorHint="@color/hint_text"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
