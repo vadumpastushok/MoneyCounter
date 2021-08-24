@@ -26,7 +26,13 @@
     <color name="costs_color">#FF8C7F</color>
     <color name="shadow">#29696969</color>
     <color name="home_scrim">#80FFFFFF</color>
-    <color name="home_background">#0E97D9</color>
+    <color name="home_background_start">#5F7CFA</color>
+    <color name="home_background_center">#0B98D9</color>
+    <color name="home_background_end">#2290E2</color>
+    <color name="light_gray">#F2F2F2</color>
 
+    <color name="colorPrimary">#56CCF2</color>
+    <color name="colorPrimaryDark">#56CCF2</color>
+    <color name="colorAccent">#FFFFFF</color>
 
 </resources>

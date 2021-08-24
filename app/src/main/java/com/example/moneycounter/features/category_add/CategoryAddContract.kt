@@ -11,7 +11,7 @@ interface CategoryAddContract: BaseContract {
 
     fun showDialog()
 
-    fun setInDialogColor(newColor: Int)
+    fun setInDialogColor(dialogColor: Int)
 
     fun closeDialog()
 
@@ -20,6 +20,8 @@ interface CategoryAddContract: BaseContract {
     fun getIcon(): String
 
     fun getColor(): Int
+
+    fun setEditColor(setColor: Boolean)
 
     fun getMoneyType(): MoneyType
 

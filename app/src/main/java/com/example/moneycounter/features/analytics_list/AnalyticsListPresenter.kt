@@ -37,8 +37,6 @@ class AnalyticsListPresenter: BasePresenter<AnalyticsListContract>() {
 
 
     private fun getAnalyticsList(moneyType: MoneyType){
-        val root = rootView ?: return
-
         viewModelScope.launch {
 
             val categoriesWithFinances =

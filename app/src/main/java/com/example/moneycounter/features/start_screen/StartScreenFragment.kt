@@ -1,20 +1,17 @@
 package com.example.moneycounter.features.start_screen
 
-import android.content.Context
-import android.content.SharedPreferences
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import android.widget.TableLayout
+import android.widget.TableRow
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.moneycounter.R
-import com.example.moneycounter.app.Config.PREFERENCES_NAME
-import com.example.moneycounter.app.Config.PREF_IS_DATABASE_INITALIZED
-import com.example.moneycounter.app.Config.PREF_IS_POLICY_CONFIRMED
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentStartScreenBinding
 import com.example.moneycounter.features.home.HomeFragment
 import com.example.moneycounter.features.intro.IntroFragment
+import com.example.moneycounter.ui.custom.NumberButton
 
 class StartScreenFragment : BaseFragment<FragmentStartScreenBinding>(), StartScreenContract {
 
@@ -31,8 +28,6 @@ class StartScreenFragment : BaseFragment<FragmentStartScreenBinding>(), StartScr
         presenter.attachView(this)
     }
 
-
-
     override fun openHomeScreen(){
         HomeFragment.start(findNavController())
     }
@@ -40,4 +35,68 @@ class StartScreenFragment : BaseFragment<FragmentStartScreenBinding>(), StartScr
     override fun openIntro(){
         IntroFragment.start(findNavController())
     }
+
+    override fun incorrectPassword() {
+        binding.progressbarStartScreen.incorrectPassword()
+    }
+
+    override fun setCompletedLinesOnProgressbar(completedLines: Int){
+        binding.progressbarStartScreen.setCompletedLinesNum(completedLines)
+    }
+
+    override fun getFragment(): Fragment = this
+
+
+
+
+    override fun setupTable(){
+        val table: TableLayout = binding.tableStartScreenNumbers
+
+        var order = 1
+        for(rowNum in 0 until 3){
+            val row = TableRow(requireContext())
+            row.layoutParams = TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT)
+            for(buttonNum in 0 until 3){
+                val button = NumberButton(requireContext())
+                button.setupText(order)
+                button.setOnClickListener { presenter.onNumberClicked(button.getOrder()) }
+                order++
+
+
+                row.addView(button, buttonNum)
+            }
+
+            table.addView(row, rowNum)
+        }
+
+        val row = TableRow(requireContext())
+        row.layoutParams = TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT)
+        for(buttonNum in 0 until 3){
+            val button = NumberButton(requireContext())
+            when(buttonNum) {
+                0 -> {
+                    if(presenter.checkIsFingerprintEnabled()) {
+                        button.setupFingerPrint()
+                        button.setOnClickListener { presenter.onFingerPrintClicked() }
+                    }else {
+                        button.isEnabled = false
+                    }
+                }
+                1 -> {
+                    button.setupText(0)
+                    button.setOnClickListener { presenter.onNumberClicked("0") }
+                }
+                2 -> {
+                    button.setupClearButton()
+                    button.setOnClickListener { presenter.onClearClicked() }
+                }
+            }
+            order++
+            row.addView(button, buttonNum)
+            }
+
+        table.addView(row, 3)
+    }
+
+
 }

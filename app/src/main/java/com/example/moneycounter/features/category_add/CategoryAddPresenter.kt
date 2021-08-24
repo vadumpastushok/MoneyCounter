@@ -43,6 +43,10 @@ class CategoryAddPresenter: BasePresenter<CategoryAddContract>() {
         rootView?.setColor(color)
     }
 
+    fun editHasFocus(hasFocus: Boolean){
+        rootView?.setEditColor(hasFocus)
+    }
+
     private fun checkAllData(): Boolean{
         val root = rootView ?: return false
         return when {

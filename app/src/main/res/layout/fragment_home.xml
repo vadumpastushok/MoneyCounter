@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_drawer_layout"
@@ -13,24 +12,24 @@
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/home_main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/home_main_layout"
-        android:background="@color/home_background">
+        android:background="@color/white">
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
+            android:id="@+id/background_color_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="#FFFFFF"
+            android:background="@drawable/home_background"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/home_wave_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_wave_view">
+            app:layout_constraintTop_toTopOf="parent">
 
         </LinearLayout>
 
@@ -54,8 +53,7 @@
             app:layout_constraintBottom_toTopOf="@+id/tv_home_expression"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/finance_text_view"
@@ -63,25 +61,25 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/roboto_regular"
-            tools:text="Доход"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/finance_percent_view"
             app:layout_constraintEnd_toEndOf="@+id/home_finance_chart"
-            app:layout_constraintStart_toStartOf="@+id/home_finance_chart" />
+            app:layout_constraintStart_toStartOf="@+id/home_finance_chart"
+            tools:text="Доход" />
 
         <TextView
             android:id="@+id/finance_percent_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_light"
-            tools:text="66.9%"
             android:textColor="@color/white"
             android:textSize="48sp"
             app:layout_constraintBottom_toBottomOf="@+id/home_finance_chart"
             app:layout_constraintEnd_toEndOf="@+id/home_finance_chart"
             app:layout_constraintStart_toStartOf="@+id/home_finance_chart"
-            app:layout_constraintTop_toTopOf="@+id/home_finance_chart" />
+            app:layout_constraintTop_toTopOf="@+id/home_finance_chart"
+            tools:text="66.9%" />
 
         <TextView
             android:id="@+id/finance_sum_view"
@@ -89,12 +87,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_regular"
-            tools:text="5480.00"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@+id/home_finance_chart"
             app:layout_constraintStart_toStartOf="@+id/home_finance_chart"
-            app:layout_constraintTop_toBottomOf="@+id/finance_percent_view" />
+            app:layout_constraintTop_toBottomOf="@+id/finance_percent_view"
+            tools:text="5480.00" />
 
         <TextView
             android:id="@+id/tv_home_expression"
@@ -133,7 +131,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginBottom="24dp"
             app:btn_color="@color/yellow"
             app:btn_icon="home_icon_income"
             app:layout_constraintBottom_toTopOf="@+id/button_home_development"
@@ -144,7 +141,6 @@
             android:id="@+id/button_home_costs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
             app:btn_color="@color/purple"
             app:btn_icon="home_icon_costs"
             app:layout_constraintBottom_toTopOf="@+id/button_home_deposit"
@@ -157,7 +153,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
             app:btn_color="@color/red"
             app:btn_icon="home_icon_analytics"
             app:layout_constraintBottom_toTopOf="@+id/button_home_deposit"
@@ -180,7 +175,7 @@
             android:id="@+id/button_home_deposit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             app:btn_color="@color/light_blue"
             app:btn_icon="home_icon_deposit"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -193,8 +188,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:padding="20dp"
             android:background="#00FFFFFF"
+            android:padding="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/home_menu" />
@@ -206,12 +201,13 @@
             android:alpha="0"
             android:background="@drawable/home_scrim_background"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_height="wrap_content"
+            tools:layout_width="wrap_content" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
     <com.google.android.material.navigation.NavigationView
@@ -219,9 +215,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/home_sidebar_menu"
-        app:itemTextColor="@color/dark_text"
+        app:headerLayout="@layout/el_home_header_sidebar"
         app:itemTextAppearance="@font/roboto_regular"
-        app:headerLayout="@layout/el_home_header_sidebar" />
+        app:itemTextColor="@color/dark_text"
+        app:itemIconSize="32dp"
+        app:menu="@menu/home_sidebar_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

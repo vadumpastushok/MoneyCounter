@@ -13,7 +13,6 @@ class App: Application() {
     }
 
     companion object {
-
         @JvmStatic
         var context: Context by Delegates.notNull()
             private set

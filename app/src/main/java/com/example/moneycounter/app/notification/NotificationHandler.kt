@@ -16,17 +16,20 @@ import com.example.moneycounter.app.Config
 import com.example.moneycounter.features.main.MainActivity
 
 
-class NotificationHandler() {
-    var channelId = ""
-    var importance = 0
-    var notificationName = ""
+class NotificationHandler {
+    private var channelId = ""
+    private var importance = 0
+    private var notificationName = ""
 
 
     fun setupNotification() {
         val preferences = App.context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE)
+        val isNotificationEnabled = preferences?.getBoolean(Config.PREF_IS_NOTIFICATION_ENABLED, true) ?: true
         val isSoundEnabled =  preferences?.getBoolean(Config.PREF_IS_SOUND_NOTIFICATION_ENABLED, true) ?: true
 
-        Log.d("tag123", "sad = $isSoundEnabled")
+
+        if(!isNotificationEnabled)return
+
         if (isSoundEnabled) {
             channelId = App.context.getString(R.string.channelId_with_sound)
             notificationName = App.context.getString(R.string.notification_name_with_sound)
@@ -73,7 +76,7 @@ class NotificationHandler() {
 
     private fun createChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
+            Log.d("tagg", "channel created")
             val descriptionText = App.context.getString(R.string.descriptionText)
 
             val mChannel = NotificationChannel(channelId, notificationName, importance)

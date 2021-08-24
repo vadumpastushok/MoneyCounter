@@ -16,7 +16,7 @@
         <item name="listPreferredItemHeightSmall">56dp</item>
     </style>
     <style name="Button" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/button_rounded_intro</item>
+        <item name="android:background">@drawable/button_rounded</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/white</item>
     </style>

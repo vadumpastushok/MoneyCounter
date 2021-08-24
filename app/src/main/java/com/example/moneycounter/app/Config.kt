@@ -2,6 +2,7 @@ package com.example.moneycounter.app
 
 import android.graphics.Color
 import com.example.moneycounter.R
+import com.example.moneycounter.app.App.Companion.context
 import com.example.moneycounter.model.entity.ui.Intro
 import com.example.moneycounter.model.entity.ui.IntroType
 import com.ssynhtn.waveview.WaveView
@@ -13,6 +14,20 @@ object Config {
     const val PREF_IS_DATABASE_INITALIZED = "isDatabaseInitialized"
     const val PREF_IS_NOTIFICATION_ENABLED = "isNotificationEnabled"
     const val PREF_IS_SOUND_NOTIFICATION_ENABLED = "isSoundNotificationEnabled"
+    const val PREF_PASSWORD = "password"
+    const val PREF_IS_FINGERPRINT_ENABLED = "isFingerprintEnabled"
+
+    val tableHeader = mutableListOf(
+        context.getString(R.string.header_category_id),
+        context.getString(R.string.header_name),
+        context.getString(R.string.header_money_type),
+        context.getString(R.string.header_icon),
+        context.getString(R.string.header_color),
+        context.getString(R.string.header_order),
+        context.getString(R.string.header_finance_id),
+        context.getString(R.string.header_date),
+        context.getString(R.string.header_amount),
+    )
 
     val introData = mutableListOf(
         Intro(

@@ -62,6 +62,9 @@ class AnalyticsFragment : BaseFragment<FragmentAnalyticsBinding>(), AnalyticsCon
                 R.id.analyticsListFragment -> {
                     presenter.onListPageSelected()
                 }
+                R.id.piggyBankFragment -> {
+                    presenter.onPiggyBankSelected()
+                }
             }
         }
     }

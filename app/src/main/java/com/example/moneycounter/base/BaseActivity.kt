@@ -1,18 +1,11 @@
 package com.example.moneycounter.base
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.LayoutInflater
-import android.view.Window
-import android.view.WindowInsets
-import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.navigation.fragment.NavHostFragment
 import androidx.viewbinding.ViewBinding
-import com.example.moneycounter.R
 
 abstract class BaseActivity<
         VB : ViewBinding
@@ -30,8 +23,5 @@ abstract class BaseActivity<
     }
 
     protected abstract fun createViewBinding(inflater: LayoutInflater): VB
-
-
-
 
 }

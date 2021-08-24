@@ -2,12 +2,15 @@ package com.example.moneycounter.features.home
 
 import android.content.Context
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App
 import com.example.moneycounter.app.Config
 import com.example.moneycounter.base.BasePresenter
+import com.example.moneycounter.features.data_manager.ExportDataManager
+import com.example.moneycounter.features.data_manager.ImportDataManager
 import com.example.moneycounter.model.db.AppDatabase
 import com.example.moneycounter.model.db.DBConfig
 import com.example.moneycounter.model.db.DatabaseManager
@@ -35,7 +38,7 @@ class HomePresenter: BasePresenter<HomeContract>() {
         setupMenu()
     }
 
-    private fun getFinanceData(){
+    fun getFinanceData(){
         val root = rootView ?: return
 
         viewModelScope.launch {
@@ -139,24 +142,19 @@ class HomePresenter: BasePresenter<HomeContract>() {
                     !getSoundNotification()
                 )
             App.context.getString(R.string.sidebar_text_import_data) -> {
-                showToast("3")
+                ImportDataManager(rootView as Fragment).importData()
             }
-            App.context.getString(R.string.sidebar_text_export_data) ->
-                showToast(
-                    "4"
-                )
+            App.context.getString(R.string.sidebar_text_export_data) -> {
+                ExportDataManager(rootView as Fragment).exportData()
+            }
             App.context.getString(R.string.sidebar_text_renew_subscription) ->
                 showToast(
                     "5"
                 )
             App.context.getString(R.string.sidebar_text_lock_settings) ->
-                showToast(
-                    "6"
-                )
+                rootView?.openSetPasswordFragment()
             App.context.getString(R.string.sidebar_text_write_to_us) ->
-                showToast(
-                    "7"
-                )
+                rootView?.openWriteToUsFragment()
             App.context.getString(R.string.sidebar_text_rate_app) ->
                 showToast(
                     "8"
@@ -199,8 +197,6 @@ class HomePresenter: BasePresenter<HomeContract>() {
         val translation = width * slideOffset
         rootView?.setMainLayoutTranslation(translation)
     }
-
-
 
 
 

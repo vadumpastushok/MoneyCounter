@@ -11,4 +11,14 @@
         <attr name="toolbar_title" format="string" />
         <attr name="is_right_button" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="NumberButton">
+        <attr name="number" format="integer" />
+        <attr name="is_fingerprint_button" format="boolean"/>
+        <attr name="is_clear_button" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="MCProgressbar">
+        <attr name="lines_num" format="integer"/>
+    </declare-styleable>
 </resources>

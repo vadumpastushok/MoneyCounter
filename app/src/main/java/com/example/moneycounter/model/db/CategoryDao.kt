@@ -27,6 +27,10 @@ interface CategoryDao {
     @Query("SELECT * FROM ${DBConfig.Category.TABLE_NAME} WHERE :moneyType == ${DBConfig.Category.Columns.TYPE}")
     suspend fun getCategoryWithFinancesByMoneyType(moneyType: MoneyType): List<CategoryWithFinances>
 
+    @Transaction
+    @Query("SELECT * FROM ${DBConfig.Category.TABLE_NAME}")
+    suspend fun getCategoryWithFinances(): List<CategoryWithFinances>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCategory(category: Category)
 

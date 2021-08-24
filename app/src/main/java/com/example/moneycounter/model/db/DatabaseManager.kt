@@ -1,5 +1,6 @@
 package com.example.moneycounter.model.db
 
+import com.example.moneycounter.app.App
 import com.example.moneycounter.model.entity.db.Category
 import com.example.moneycounter.model.entity.db.CategoryWithFinances
 import com.example.moneycounter.model.entity.db.Finance
@@ -28,6 +29,8 @@ class DatabaseManager(
     suspend fun getCategoryWithFinancesByMoneyType(moneyType: MoneyType): List<CategoryWithFinances> =
         categoryDao.getCategoryWithFinancesByMoneyType(moneyType)
 
+    suspend fun getCategoryWithFinances(): List<CategoryWithFinances> = categoryDao.getCategoryWithFinances()
+
     suspend fun insertCategory(category: Category) = categoryDao.insertCategory(category)
 
     suspend fun insertCategory(categories: MutableList<Category>)  = categoryDao.insertCategory(categories)
@@ -50,5 +53,9 @@ class DatabaseManager(
     suspend fun insertFinance(finance: Finance) = financeDao.insertFinance(finance)
 
     suspend fun deleteFinance(finance: Finance) = financeDao.deleteFinance(finance)
+
+    fun deleteAll(){
+        App.context.deleteDatabase(DBConfig.DB_NAME)
+    }
 
 }

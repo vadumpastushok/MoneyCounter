@@ -32,6 +32,10 @@ interface HomeContract: BaseContract {
 
     fun getSideBarMenuItem(index: Int): MenuItem
 
+    fun openWriteToUsFragment()
+
+    fun openSetPasswordFragment()
+
     fun openInfoFragment()
 
     fun setScrimAlpha(alpha: Float)

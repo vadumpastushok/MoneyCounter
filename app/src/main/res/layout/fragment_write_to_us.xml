@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.moneycounter.ui.custom.MCToolbar
+        android:id="@+id/write_to_us_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon_color="@color/light_blue"
+        app:is_right_button="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:toolbar_title="@string/sidebar_text_write_to_us" />
+
+    <TextView
+        android:id="@+id/write_to_us_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:text="@string/write_to_us_text"
+        android:textColor="@color/dark_text"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/write_to_us_titlebar" />
+
+    <EditText
+        android:id="@+id/write_to_us_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/tv_transparent_with_borders"
+        android:inputType="text"
+        android:importantForAutofill="no"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="start|top"
+        android:hint="@string/write_message"
+        android:maxLength="200"
+        android:padding="16dp"
+        android:textColor="@color/dark_text"
+        android:textColorHint="@color/hint_text"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/write_to_us_textView" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/write_to_us_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_rounded"
+        android:backgroundTint="@color/dark_blue"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/write_to_us_edit" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

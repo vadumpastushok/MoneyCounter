@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutDateChart"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp">
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/piggy_bank_date_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </com.github.mikephil.charting.charts.PieChart>
+
+                <TextView
+                    android:id="@+id/tv_left_days_piggy_bank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="64sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.45"
+                    tools:text="10" />
+
+                <TextView
+                    android:id="@+id/tv_title_left_days_piggy_bank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/roboto_light"
+                    android:text="@string/piggy_bank_left_days"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_left_days_piggy_bank" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginEnd="36dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edit_invest_piggy_bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/tv_transparent_with_borders"
+                    android:backgroundTint="@color/dark_blue"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:padding="4dp"
+                    android:maxLength="8"
+                    android:cursorVisible="false"
+                    android:textColor="@color/dark_text"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_invest_piggy_bank"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginBottom="2dp"
+                        android:background="@drawable/button_rounded"
+                        android:backgroundTint="@color/gray"
+                        android:enabled="false"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/piggy_bank_invest"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_show_rules_piggy_bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|start"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_piggy_bank_show_rules"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="12dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/piggy_bank_rules"
+                        android:textColor="@color/dark_blue" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_piggy_bank_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="4dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/icon_arrow" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_instructions_piggy_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:layout_marginEnd="36dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="@string/piggy_bank_first_instruction"
+                    android:textColor="@color/dark_gray" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="@string/piggy_bank_second_instruction"
+                    android:textColor="@color/dark_gray" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="@string/piggy_bank_third_instruction"
+                    android:textColor="@color/red" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/line_piggy_bank"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/light_blue" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="@string/title_calculate_independence"
+                android:textColor="@color/dark_gray"
+                android:textSize="24sp"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/line_piggy_bank2"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/light_blue"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center"
+                android:text="@string/intro_title_work_hour"
+                android:textColor="@color/dark_gray"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:src="@drawable/icon_money" />
+
+                <TextView
+                    android:id="@+id/tv_costs_of_hour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="6dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:gravity="center"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:text="@string/piggy_bank_sum_in_hour"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

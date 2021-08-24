@@ -1,11 +1,8 @@
 package com.example.moneycounter.features.main
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.moneycounter.R
 import com.example.moneycounter.base.BaseActivity
 import com.example.moneycounter.databinding.ActivityMainBinding
 
@@ -19,8 +16,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
-
-
-
-
 }

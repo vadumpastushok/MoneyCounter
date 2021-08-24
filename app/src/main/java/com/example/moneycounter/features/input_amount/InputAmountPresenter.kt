@@ -47,7 +47,7 @@ class InputAmountPresenter: BasePresenter<InputAmountContract>() {
 
 
         val calendar = Calendar.getInstance()
-        //calendar[Calendar.DAY_OF_MONTH] = 27
+        //calendar[Calendar.DAY_OF_MONTH] = 6
         calendar[Calendar.HOUR_OF_DAY] = 0
         calendar.clear(Calendar.MINUTE)
         calendar.clear(Calendar.SECOND)

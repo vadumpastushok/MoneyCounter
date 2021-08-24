@@ -30,7 +30,6 @@
         android:id="@+id/btn_color_pick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:fontFamily="@font/roboto_medium"
         android:gravity="center"
         android:paddingStart="32dp"
@@ -40,15 +39,17 @@
         android:text="@string/select_color"
         android:textColor="@color/red"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/edit_category_name"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/edit_category_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="36dp"
         android:background="@drawable/tv_transparent_with_borders"
         android:fontFamily="@font/roboto_medium"
@@ -59,10 +60,9 @@
         android:textColor="@color/dark_text"
         android:textColorHint="@color/hint_text"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_color_pick" />
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -72,7 +72,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/button_rounded_intro"
+        android:background="@drawable/button_rounded"
         android:backgroundTint="@color/red"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/add"

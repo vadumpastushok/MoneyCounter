@@ -1,9 +1,13 @@
 package com.example.moneycounter.features.start_screen
 
 import android.content.Context
-import android.util.Log
+import android.widget.Toast
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
+import com.example.moneycounter.R
 import com.example.moneycounter.app.App.Companion.context
 import com.example.moneycounter.app.Config
 import com.example.moneycounter.app.notification.AlarmHandler
@@ -20,26 +24,35 @@ class StartScreenPresenter: BasePresenter<StartScreenContract>() {
 
     override fun onViewAttached() {
 
-        if(checkIsPolicyConfirmed()){
-            rootView?.openHomeScreen()
-        } else {
-            rootView?.openIntro()
+
+        if(checkIsPasswordEnabled()){
+            rootView?.setupTable()
+        }else {
+            if(checkIsPolicyConfirmed()){
+                rootView?.openHomeScreen()
+            } else {
+                rootView?.openIntro()
+            }
         }
 
         if(!checkIsDatabaseInitialized()){
             initializeDatabase()
         }
 
-        Log.d("tag123", checkIsSoundNotificationEnabled().toString())
         if(checkIsNotificationEnabled()) {
             val alarmHandler = AlarmHandler()
             alarmHandler.setupAlarm()
         }
-//        else{
-//            val alarmHandler = AlarmHandler()
-//            alarmHandler.removeAlarm()
-//        }
+    }
 
+    private fun checkIsPasswordEnabled(): Boolean{
+        val password = preferences?.getString(Config.PREF_PASSWORD, "") ?: ""
+        return if(password != "") {
+            rightPassword = password
+            true
+        }else{
+            false
+        }
     }
 
     private fun checkIsPolicyConfirmed() =
@@ -51,8 +64,9 @@ class StartScreenPresenter: BasePresenter<StartScreenContract>() {
     private fun checkIsNotificationEnabled() =
         preferences?.getBoolean(Config.PREF_IS_NOTIFICATION_ENABLED, true) ?: true
 
-    private fun checkIsSoundNotificationEnabled() =
-        preferences?.getBoolean(Config.PREF_IS_SOUND_NOTIFICATION_ENABLED, true) ?: true
+    fun checkIsFingerprintEnabled() =
+        preferences?.getBoolean(Config.PREF_IS_FINGERPRINT_ENABLED, false) ?: false
+
 
     private fun initializeDatabase(){
         val db = Room.databaseBuilder(
@@ -70,4 +84,66 @@ class StartScreenPresenter: BasePresenter<StartScreenContract>() {
         preferences?.edit()?.putBoolean(Config.PREF_IS_DATABASE_INITALIZED, true)?.apply()
 
     }
+
+
+
+
+
+
+    private var rightPassword = ""
+    private var password: String = ""
+    fun onNumberClicked(order: String){
+        password += order
+        rootView?.setCompletedLinesOnProgressbar(password.length)
+        if(password.length == 4 && password == rightPassword){
+            rootView?.openHomeScreen()
+        }else if(password.length == 4 && password != rightPassword){
+            password = ""
+            rootView?.incorrectPassword()
+        }
+    }
+
+    fun onFingerPrintClicked(){
+        if(!checkIsFingerprintEnabled()) return
+
+        val fragment: Fragment = rootView?.getFragment() ?: return
+
+        val  executor = ContextCompat.getMainExecutor(context)
+
+        val biometricPrompt = BiometricPrompt(
+            fragment,
+            executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+
+
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    Toast.makeText(context, context.getString(R.string.try_again_later), Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    rootView?.openHomeScreen()
+                }
+
+            }
+        )
+
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle(context.getString(R.string.scan_to_enter))
+            .setNegativeButtonText(context.getString(R.string.enter_code))
+            .build()
+        biometricPrompt.authenticate(promptInfo)
+    }
+
+    fun onClearClicked(){
+        if(password.isEmpty())return
+        password = password.substring(0, password.lastIndex)
+        rootView?.setCompletedLinesOnProgressbar(password.length)
+    }
+
+
+
+
+
 }

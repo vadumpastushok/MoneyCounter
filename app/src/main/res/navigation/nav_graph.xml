@@ -22,7 +22,11 @@
         tools:layout="@layout/fragment_intro" />
 
     <action android:id="@+id/action_to_intro"
-        app:destination="@id/IntroFragment" />
+        app:destination="@id/IntroFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
 
 <!--    Home-->
     <fragment
@@ -33,6 +37,10 @@
 
     <action android:id="@+id/action_to_home"
         app:destination="@id/HomeFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"
         app:popUpTo="@id/nav_graph"
         app:popUpToInclusive="true"/>
 
@@ -51,7 +59,11 @@
     </fragment>
 
     <action android:id="@+id/action_to_icon_picker"
-        app:destination="@id/IconPickerFragment" />
+        app:destination="@id/IconPickerFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
 
 <!--    Category-->
     <fragment
@@ -65,7 +77,11 @@
     </fragment>
 
     <action android:id="@+id/action_to_category"
-        app:destination="@id/CategoryFragment"/>
+        app:destination="@id/CategoryFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
 
 <!--    CategoryAdd-->
     <fragment
@@ -85,7 +101,11 @@
     </fragment>
 
     <action android:id="@+id/action_to_category_add"
-        app:destination="@id/CategoryAddFragment" />
+        app:destination="@id/CategoryAddFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
 
 
 <!--    InputAmount-->
@@ -103,7 +123,11 @@
     </fragment>
 
     <action android:id="@+id/action_to_input_amount"
-        app:destination="@id/InputAmountFragment"/>
+        app:destination="@id/InputAmountFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
 
 <!--    Analytics-->
     <fragment
@@ -113,7 +137,11 @@
         tools:layout="@layout/fragment_analytics" />
 
     <action android:id="@+id/action_to_analytics"
-        app:destination="@id/AnalyticsFragment" />
+        app:destination="@id/AnalyticsFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
 
 <!--    Info-->
     <fragment
@@ -123,6 +151,38 @@
         tools:layout="@layout/fragment_info" />
 
     <action android:id="@+id/action_to_info"
-        app:destination="@id/InfoFragment" />
+        app:destination="@id/InfoFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
+
+<!--    Info-->
+    <fragment
+        android:id="@+id/WriteToUsFragment"
+        android:name="com.example.moneycounter.features.write_to_us.WriteToUsFragment"
+        android:label="WriteToUsFragment"
+        tools:layout="@layout/fragment_write_to_us" />
+
+    <action android:id="@+id/action_to_write_to_us"
+        app:destination="@id/WriteToUsFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
+
+<!--    SetPassword-->
+    <fragment
+        android:id="@+id/SetPasswordFragment"
+        android:name="com.example.moneycounter.features.set_password.SetPasswordFragment"
+        android:label="SetPasswordFragment"
+        tools:layout="@layout/fragment_set_password" />
+
+    <action android:id="@+id/action_to_set_password"
+        app:destination="@id/SetPasswordFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
 
 </navigation>

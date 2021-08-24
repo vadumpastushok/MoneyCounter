@@ -1,10 +1,12 @@
 package com.example.moneycounter.features.home
 
+import android.content.Intent
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -22,6 +24,8 @@ import com.example.moneycounter.databinding.FragmentHomeBinding
 import com.example.moneycounter.features.analytics.AnalyticsFragment
 import com.example.moneycounter.features.category.CategoryFragment
 import com.example.moneycounter.features.info.InfoFragment
+import com.example.moneycounter.features.set_password.SetPasswordFragment
+import com.example.moneycounter.features.write_to_us.WriteToUsFragment
 import com.example.moneycounter.model.entity.ui.MoneyType
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
@@ -108,19 +112,20 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
     }
 
     override fun setChartData(incomeAmount: Float, costsAmount: Float ){
+
         val pieEntries: ArrayList<PieEntry> = ArrayList()
         val label = "label"
 
-        val typeAmountMap: MutableMap<String, Float> = HashMap()
-        typeAmountMap[" "] = costsAmount
-        typeAmountMap["  "] = incomeAmount
+        val pieChartDataMap: MutableMap<String, Float> = HashMap()
+        pieChartDataMap[" "] = costsAmount
+        pieChartDataMap["  "] = incomeAmount
 
         val colors: ArrayList<Int> = ArrayList()
         colors.add(App.context.getColor(R.color.costs_color))
         colors.add(App.context.getColor(R.color.light_blue))
 
-        for (type in typeAmountMap.keys) {
-            pieEntries.add(PieEntry(typeAmountMap[type]!!.toFloat(), type))
+        for (type in pieChartDataMap.keys) {
+            pieEntries.add(PieEntry(pieChartDataMap[type]!!.toFloat(), type))
         }
 
         val pieDataSet = PieDataSet(pieEntries, label)
@@ -149,6 +154,15 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
     override fun openInfoFragment(){
         InfoFragment.start(findNavController())
     }
+
+    override fun openSetPasswordFragment() {
+        SetPasswordFragment.start(findNavController())
+    }
+
+    override fun openWriteToUsFragment(){
+        WriteToUsFragment.start(findNavController())
+    }
+
 
     override fun openSideBar() {
         drawerLayout.open()
@@ -181,6 +195,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         binding.homeMainLayout.translationX = translation
     }
 
+
+
     /**
      * Help fun-s
      */
@@ -190,6 +206,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         binding.homeFinanceChart.legend.isEnabled = false
         binding.homeFinanceChart.isRotationEnabled = false
         binding.homeFinanceChart.isHighlightPerTapEnabled = true
+
 
         binding.homeFinanceChart.setHoleColor(requireContext().getColor(R.color.transparent))
         binding.homeFinanceChart.holeRadius = 90f
@@ -276,6 +293,20 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
             presenter.onSidebarItemSelected(it)
             true
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+    Toast.makeText(App.context, data.toString(), Toast.LENGTH_SHORT).show()
+
+    //        if (resultCode == Activity.RESULT_OK && requestCode == 1) {
+//            Toast.makeText(App.context, requestCode.toString(), Toast.LENGTH_SHORT).show()
+//            val filePath: String = data?.getStringExtra(FilePickerActivity.RESULT_FILE_PATH) ?: return
+//            presenter.onFileImportSelected(filePath)
+//        }else{
+//            Toast.makeText(App.context, data!!.data.toString(), Toast.LENGTH_SHORT).show()
+//            data.dataString?.let { presenter.onFileExportSelected(it) }
+//        }
     }
 
     companion object {

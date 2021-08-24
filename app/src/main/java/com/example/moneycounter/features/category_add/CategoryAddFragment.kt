@@ -69,11 +69,17 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
         binding.btnCategoryAdd.backgroundTintList =
             ColorStateList.valueOf(color)
     }
+    override fun setEditColor(setColor: Boolean){
+        if(setColor){
+            binding.editCategoryName.backgroundTintList = ColorStateList.valueOf(color)
+        }else{
+            binding.editCategoryName.backgroundTintList = null
+        }
+    }
 
-    override fun setInDialogColor(newColor: Int){
-        color = newColor
-        dialogBinding.categoryViewDialog.setColor(color)
-        dialogBinding.btnDialog.backgroundTintList = ColorStateList.valueOf(color)
+    override fun setInDialogColor(dialogColor: Int){
+        dialogBinding.categoryViewDialog.setColor(dialogColor)
+        dialogBinding.btnDialog.backgroundTintList = ColorStateList.valueOf(dialogColor)
     }
 
 
@@ -174,7 +180,11 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
             }
         })
         dialogBinding.btnDialog.setOnClickListener {
-            presenter.onApplyColor(color)
+            presenter.onApplyColor(dialogBinding.colorPickerDialog.color)
+        }
+        binding.editCategoryName.setOnFocusChangeListener {
+                _, hasFocus ->
+            presenter.editHasFocus(hasFocus)
         }
     }
 
