@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/StartScreenFragment">
+
+
+<!--    StartScreen-->
+
+    <fragment
+        android:id="@+id/StartScreenFragment"
+        android:name="com.example.moneycounter.features.start_screen.StartScreenFragment"
+        android:label="StartScreenFragment"
+        tools:layout="@layout/fragment_start_screen" />
+
+<!--    Intro-->
+    <fragment
+        android:id="@+id/IntroFragment"
+        android:name="com.example.moneycounter.features.intro.IntroFragment"
+        android:label="IntroFragment"
+        tools:layout="@layout/fragment_intro" />
+
+    <action android:id="@+id/action_to_intro"
+        app:destination="@id/IntroFragment" />
+
+<!--    Home-->
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.example.moneycounter.features.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home" />
+
+    <action android:id="@+id/action_to_home"
+        app:destination="@id/HomeFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true"/>
+
+<!--    Category-->
+    <fragment
+        android:id="@+id/CategoryFragment"
+        android:name="com.example.moneycounter.features.category.CategoryFragment"
+        android:label="CategoryFragment"
+        tools:layout="@layout/fragment_category" >
+        <argument
+            android:name="type"
+            app:argType="com.example.moneycounter.model.entity.MoneyType" />
+    </fragment>
+
+    <action android:id="@+id/action_to_category"
+        app:destination="@id/CategoryFragment"/>
+
+<!--    InputAmount-->
+    <fragment
+        android:id="@+id/InputAmountFragment"
+        android:name="com.example.moneycounter.features.input_amount.InputAmountFragment"
+        android:label="InputAmountFragment"
+        tools:layout="@layout/fragment_input_amount" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="type"
+            app:argType="com.example.moneycounter.model.entity.MoneyType" />
+    </fragment>
+
+    <action android:id="@+id/action_to_input_amount"
+        app:destination="@id/InputAmountFragment"/>
+
+<!--    Analytics-->
+    <fragment
+        android:id="@+id/AnalyticsFragment"
+        android:name="com.example.moneycounter.features.analytics.AnalyticsFragment"
+        android:label="AnalyticsFragment"
+        tools:layout="@layout/fragment_analytics" />
+
+    <action android:id="@+id/action_to_analytics"
+        app:destination="@id/AnalyticsFragment" />
+
+
+
+</navigation>

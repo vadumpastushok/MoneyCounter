@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.example.moneycounter.ui.custom.MCToolbar
+        android:id="@+id/MCToolbarAnalytics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon_color="@color/light_blue"
+        app:toolbar_title="@string/title_analytics"
+        app:is_right_button="false" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_analytics_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/analytics_nav_graph"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_navigation_menu"
+        app:labelVisibilityMode="unlabeled"
+        app:itemIconTint="@drawable/selector_nav_view"/>
+
+
+</LinearLayout>

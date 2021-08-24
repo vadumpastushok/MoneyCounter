@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/graphFragment"
+        android:enabled="true"
+        android:icon="@drawable/bottom_icon_analytics"
+        android:title="" />
+    <item
+        android:id="@+id/analyticsListFragment"
+        android:enabled="true"
+        android:icon="@drawable/bottom_icon_list"
+        android:title="" />
+    <item
+        android:id="@+id/page3"
+        android:enabled="true"
+        android:icon="@drawable/bottom_icon_piggy_bank"
+        android:title="" />
+</menu>

@@ -1,0 +1,97 @@
+<resources>
+    <string name="app_name">MoneyCounter</string>
+    <string name="next">Далее</string>
+    <string name="skip">Пропустить</string>
+    <string name="zero">0</string>
+    <string name="save">Сохранить</string>
+
+    <string name="intro_title_mission">Миссия</string>
+    <string name="intro_title_costs">Расходы</string>
+    <string name="intro_title_analytics">Аналитика</string>
+    <string name="intro_title_independence">Расчёт финансовой независимости</string>
+    <string name="intro_title_work_hour">Стоимость работы в час</string>
+    <string name="intro_title_budget">Ваш бюджет всегда будет с вами</string>
+    <string name="intro_title_offline">Приложение работает offline</string>
+
+    <string name="intro_text_mission">Миссия нашего приложения научить вас контролировать поток денег и удерживать его в вашем кошельке.</string>
+    <string name="intro_text_costs">Записывайте все ваши расходы сразу же как вы их сделали. Делите их по категориям.</string>
+    <string name="intro_text_analytics">Графики расходов и доходов подскажут вам сколько вы тратите каждый день. Анализируйте свой бюджет по каждой категории.</string>
+    <string name="intro_text_independence">Расчитывайте исходя из суммы отложений в копилку за последний месяц и процента дохода от этой суммы.</string>
+    <string name="intro_text_work_hour">Расчитывается исходя из расходов за последний месяц, показывает минимальную необходимую стоимость часа работы.</string>
+    <string name="intro_text_budget">В приложении можно сделать экспорт и импорт своих данных при смене девайса</string>
+    <string name="intro_text_offline">Контролируете финансы, анализируете свой бюджет, копите деньги, рассчитываете стоимость своей работы — и все это оффлайн.</string>
+    
+    <string name="intro_policy_terms">
+\n<b>1.</b> Идейные соображения высшего.
+\n<b>1.1.</b> Порядка, а также сложившаяся структура организации требуют определения и уточнения форм развития.
+\n<b>1.2.</b> Задача организации, в особенности же новая модель организационной.
+\n\n<b>2.</b> Деятельности играет важную роль в формировании направлений.
+\n\n<b>3.</b> Прогрессивного развития.
+\n\n<b>4.</b> Соображения высшего порядка, а также консультация с широким активом играет
+\n\n<b>5.</b> Важную роль в формировании систем массового участия.
+\n\n<b>6.</b> Соответствующий условий активизации.
+\n\n<b>7.</b> Соображения высшего порядка, а также консультация с широким активом играет
+</string>
+    <string name="intro_radio_policy_terms">Я ПРИНИМАЮ УСЛОВИЯ ПОЛИТИКИ КОНФИДЕНЦИАЛЬНОСТИ</string>
+    <string name="intro_accept_policy_terms">Начать</string>
+
+
+    <string name="home_text_income">Доходы</string>
+    <string name="home_text_costs">Расходы</string>
+    <string name="home_text_analytics">Аналитика</string>
+    <string name="home_text_development">Развитие личности</string>
+    <string name="home_text_deposit">Депозитные программы</string>
+
+    
+    <string name="home_expression">Я знаю, нельзя иметь всего сразу, поэтому я начну с малого — с денег.</string>
+    <string name="home_author_expression">Януш Васильковский</string>
+    
+    
+    <string name="category_title_salary">Заработная плата</string>
+    <string name="category_title_sponsor">Спонсор</string>
+    <string name="category_title_rollback">Вхятка, откат</string>
+    <string name="category_title_gift">Подарки</string>
+    <string name="category_title_dividend">Дивиденды</string>
+    <string name="category_title_investments">Инвестиции</string>
+    <string name="category_title_business">Бизнес</string>
+    <string name="category_title_property">Недвижимость</string>
+    <string name="category_title_insurance">Страхование</string>
+    <string name="category_title_stock">Ценные бумаги, акции</string>
+    <string name="category_title_loans">Кредиты, займы</string>
+    <string name="category_title_unexpected">Непредвиденный</string>
+    <string name="category_title_state_benefits">Гос. пособия</string>
+    <string name="category_title_food">Питание</string>
+    <string name="category_title_utility_services">Комунальные услуги</string>
+    <string name="category_title_communication">Связь, интернет, ТВ</string>
+    <string name="category_title_clothes">Одежда, обувь</string>
+    <string name="category_title_transport">Транспорт</string>
+    <string name="category_title_games">Развлечения</string>
+    <string name="category_title_relax">Отдых</string>
+    <string name="category_title_education">Обучение</string>
+    <string name="category_title_kids">Дети</string>
+    <string name="category_title_parents">Родители</string>
+    <string name="category_title_love">Вторая половинка</string>
+    <string name="category_title_personal_care">Уход за собой</string>
+    <string name="category_title_home_care">Уход за домом</string>
+    <string name="category_title_sport">Здоровье, спорт</string>
+    <string name="category_title_pet">Питомец</string>
+    <string name="category_title_hobby">Хобби</string>
+    <string name="category_title_repair">Ремонт, мебель, техника</string>
+    <string name="category_title_add">""</string>
+
+
+    <string name="title_income">Доходы</string>
+    <string name="title_salary">Зарплата</string>
+    <string name="title_main">Основная</string>
+    <string name="title_costs">Расходы</string>
+    <string name="title_business">Бизнес</string>
+    <string name="title_add_business">Добавить бизнес</string>
+    <string name="title_choose_icon">Выберите иконку</string>
+    <string name="title_analytics">Аналитика</string>
+    <string name="title_piggy_bank">Копилка</string>
+    <string name="title_calculate_independence">Расчёт финансовой независимости</string>
+
+
+
+
+</resources>

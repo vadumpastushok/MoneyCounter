@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/analytics_nav_graph"
+    app:startDestination="@id/graphFragment">
+
+<!--    GraphFragment-->
+    <fragment
+        android:id="@+id/graphFragment"
+        android:name="com.example.moneycounter.features.graph.GraphFragment"
+        android:label="FragmentGraph"
+        tools:layout="@layout/fragment_graph" />
+
+    <action android:id="@+id/action_to_graph"
+        app:destination="@id/graphFragment"
+        app:popUpTo="@id/analytics_nav_graph"
+        app:popUpToInclusive="true"/>
+
+<!--    GraphFragment-->
+    <fragment
+        android:id="@+id/analyticsListFragment"
+        android:name="com.example.moneycounter.features.analytics_pager.AnalyticsPagerFragment"
+        android:label="AnalyticsIncomeFragment"
+        tools:layout="@layout/fragment_analytics_pager" />
+
+    <action android:id="@+id/action_to_analytics_income"
+        app:destination="@id/analyticsListFragment"
+        app:popUpTo="@id/analytics_nav_graph"
+        app:popUpToInclusive="true"/>
+
+</navigation>
