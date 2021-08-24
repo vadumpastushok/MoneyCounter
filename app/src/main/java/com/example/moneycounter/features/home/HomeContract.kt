@@ -8,7 +8,15 @@ interface HomeContract: BaseContract {
 
     fun setWaves(wavesList: MutableList<WaveView.WaveData>)
 
+    fun pauseWaves()
+
+    fun resumeWaves()
+
     fun startWaves()
+
+    fun vibrate()
+
+    fun playSound()
 
     fun setGeneral(sum: Int)
 
@@ -24,9 +32,17 @@ interface HomeContract: BaseContract {
 
     fun openCategoriesAnalytics()
 
+    fun closeApp()
+
+    fun getIsSidebarOpened(): Boolean
+
     fun openSideBar()
 
+    fun closeSideBar()
+
     fun setItemEnabled(item: MenuItem, isEnabled: Boolean)
+
+    fun setItemClickable(item: MenuItem, isClickable: Boolean)
 
     fun getSideBarMenuSize(): Int
 
@@ -34,9 +50,11 @@ interface HomeContract: BaseContract {
 
     fun openWriteToUsFragment()
 
-    fun openSetPasswordFragment()
+    fun openLockSettingsFragment()
 
     fun openInfoFragment()
+
+    fun onDataImported(incomeAmount: Float, costsAmount: Float)
 
     fun setScrimAlpha(alpha: Float)
 

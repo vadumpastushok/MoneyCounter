@@ -13,6 +13,6 @@
     <item
         android:id="@+id/piggyBankFragment"
         android:enabled="true"
-        android:icon="@drawable/bottom_icon_piggy_bank"
+        android:icon="@drawable/icon_piggy_bank"
         android:title="" />
 </menu>

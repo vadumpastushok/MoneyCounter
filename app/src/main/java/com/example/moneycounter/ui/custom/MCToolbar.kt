@@ -22,10 +22,6 @@ class MCToolbar @JvmOverloads constructor(
         backButtonClickListener = listener
     }
 
-    fun setRightButtonClickListener(listener: () -> Unit) {
-        rightButtonClickListener = listener
-    }
-
     init {
         val view = LayoutInflater.from(context).inflate(
             R.layout.el_mc_toolbar,
@@ -83,7 +79,7 @@ class MCToolbar @JvmOverloads constructor(
         binding.titleText.text = title
     }
 
-    fun setupRightButton(icon : String? = null, color : Int? = null){
+    private fun setupRightButton(icon : String? = null, color : Int? = null){
         icon?.let {
             binding.titleRightButton.setImageResource(
                 context.resources.getIdentifier(

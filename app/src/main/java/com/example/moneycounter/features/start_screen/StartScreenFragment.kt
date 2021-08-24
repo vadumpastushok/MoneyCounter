@@ -46,12 +46,15 @@ class StartScreenFragment : BaseFragment<FragmentStartScreenBinding>(), StartScr
 
     override fun getFragment(): Fragment = this
 
+    override fun getFingerprintButton() = fingerprintButton
 
-
-
+    private lateinit var fingerprintButton: NumberButton
     override fun setupTable(){
         val table: TableLayout = binding.tableStartScreenNumbers
 
+        /**
+         * Number buttons
+         */
         var order = 1
         for(rowNum in 0 until 3){
             val row = TableRow(requireContext())
@@ -68,7 +71,9 @@ class StartScreenFragment : BaseFragment<FragmentStartScreenBinding>(), StartScr
 
             table.addView(row, rowNum)
         }
-
+        /**
+         * Bottom buttons
+         */
         val row = TableRow(requireContext())
         row.layoutParams = TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT)
         for(buttonNum in 0 until 3){
@@ -78,6 +83,7 @@ class StartScreenFragment : BaseFragment<FragmentStartScreenBinding>(), StartScr
                     if(presenter.checkIsFingerprintEnabled()) {
                         button.setupFingerPrint()
                         button.setOnClickListener { presenter.onFingerPrintClicked() }
+                        fingerprintButton = button
                     }else {
                         button.isEnabled = false
                     }
@@ -97,6 +103,4 @@ class StartScreenFragment : BaseFragment<FragmentStartScreenBinding>(), StartScr
 
         table.addView(row, 3)
     }
-
-
 }

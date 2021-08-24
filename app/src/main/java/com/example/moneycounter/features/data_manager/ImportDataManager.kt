@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App
@@ -22,18 +21,16 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 
-open class ImportDataManager(val fragment: Fragment): ViewModel() {
+class ImportDataManager(val fragment: Fragment): ViewModel() {
 
-    private var databaseManager: DatabaseManager
-
-    init{
+    private val databaseManager: DatabaseManager
+    init {
         val db = Room.databaseBuilder(
             App.context,
             AppDatabase::class.java, DBConfig.DB_NAME
         ).build()
         databaseManager = DatabaseManager(db.categoryDao(), db.financeDao())
     }
-
 
     fun importData(){
         if (Util.permissionGranted(fragment.activity)) {
@@ -46,9 +43,6 @@ open class ImportDataManager(val fragment: Fragment): ViewModel() {
             singleFilePickerDialog.show()
         } else {
             Util.requestPermission(fragment.activity)
-            if(Util.permissionGranted(fragment.activity)){
-                importData()
-            }
         }
     }
 
@@ -62,6 +56,8 @@ open class ImportDataManager(val fragment: Fragment): ViewModel() {
     }
 
     private fun changeDatabase(file: File){
+        var incomeAmount = 0
+        var costsAmount = 0
 
         val rows: List<Map<String, String>> = csvReader().readAllWithHeader(file)
 
@@ -71,10 +67,19 @@ open class ImportDataManager(val fragment: Fragment): ViewModel() {
             for(row in rows){
                 val moneyTypeString: String = row[App.context.getString(R.string.header_money_type)] ?: ""
 
-                val moneyType = if(moneyTypeString == MoneyType.INCOME.toString()) {
-                    MoneyType.INCOME
+                var moneyType: MoneyType
+                if(moneyTypeString == MoneyType.INCOME.toString()) {
+                    moneyType = MoneyType.INCOME
+                    val amountString = row[App.context.getString(R.string.header_amount)]
+                    if(!amountString.isNullOrEmpty()) {
+                        incomeAmount += amountString.toInt()
+                    }
                 }else{
-                    MoneyType.COSTS
+                    moneyType = MoneyType.COSTS
+                    val amountString = row[App.context.getString(R.string.header_amount)]
+                    if(!amountString.isNullOrEmpty()) {
+                        costsAmount += amountString.toInt()
+                    }
                 }
 
                 databaseManager.insertCategory(
@@ -90,7 +95,6 @@ open class ImportDataManager(val fragment: Fragment): ViewModel() {
 
                 if(row[App.context.getString(R.string.header_finance_id)].isNullOrEmpty())continue
 
-
                 databaseManager.insertFinance(
                     Finance(
                         row[App.context.getString(R.string.header_category_id)]?.toLong() ?: 0,
@@ -99,11 +103,10 @@ open class ImportDataManager(val fragment: Fragment): ViewModel() {
                         row[App.context.getString(R.string.header_finance_id)]?.toLong() ?: 0,
                     )
                 )
-
-
             }
-            HomeFragment.start(fragment.findNavController())
+
+
+            (fragment as HomeFragment).onDataImported(incomeAmount.toFloat(), costsAmount.toFloat())
         }
     }
-
 }

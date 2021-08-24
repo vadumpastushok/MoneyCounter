@@ -7,5 +7,4 @@ interface AnalyticsContract: BaseContract {
     fun openLastFragment()
 
     fun setTitleText(text: String)
-
 }

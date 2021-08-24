@@ -8,8 +8,7 @@ interface AnalyticsListContract: BaseContract {
 
     fun setData(oldList : MutableList<Analytics>, newList : MutableList<Analytics>)
 
-    fun reverseSortImage()
-
     fun getAnalyticsMoneyType(): MoneyType
 
+    fun setNoDataMessage(title: String)
 }

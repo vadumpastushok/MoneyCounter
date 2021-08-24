@@ -1,9 +1,11 @@
 package com.example.moneycounter.features.write_to_us
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -31,7 +33,14 @@ class WriteToUsFragment: BaseFragment<FragmentWriteToUsBinding>(), WriteToUsCont
         initListeners()
     }
 
+    override fun onStop() {
+        super.onStop()
+        hideKeyboard()
+    }
 
+    /**
+     * Contract fun-s
+     */
 
     override fun openLastFragment(){
         findNavController().popBackStack()
@@ -39,6 +48,11 @@ class WriteToUsFragment: BaseFragment<FragmentWriteToUsBinding>(), WriteToUsCont
 
     override fun openHomeFragment() {
         HomeFragment.start(findNavController())
+    }
+
+    override fun hideKeyboard() {
+        (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+            .hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     override fun setEditEnabled(isEnabled: Boolean) {
@@ -51,6 +65,9 @@ class WriteToUsFragment: BaseFragment<FragmentWriteToUsBinding>(), WriteToUsCont
         }
     }
 
+    /**
+     * Help fun-s
+     */
 
     private fun initListeners(){
         binding.writeToUsTitlebar.setBackButtonClickListener {
@@ -67,7 +84,6 @@ class WriteToUsFragment: BaseFragment<FragmentWriteToUsBinding>(), WriteToUsCont
             }
         })
     }
-
 
     companion object{
         fun start(navController: NavController){

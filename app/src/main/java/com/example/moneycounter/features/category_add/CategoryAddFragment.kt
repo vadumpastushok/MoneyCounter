@@ -1,15 +1,21 @@
 package com.example.moneycounter.features.category_add
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.res.ColorStateList
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.moneycounter.NavGraphDirections
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App
+import com.example.moneycounter.app.Config
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.DialogCategoryAddBinding
 import com.example.moneycounter.databinding.FragmentCategoryAddBinding
@@ -35,6 +41,7 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
     ): FragmentCategoryAddBinding {
         return FragmentCategoryAddBinding.bind(inflater.inflate(R.layout.fragment_category_add, container, false))
     }
+
     override fun attachToPresenter() {
         presenter.attachView(this)
     }
@@ -42,23 +49,36 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
     override fun initView() {
         setupData()
         setupTransferData()
-        setupView()
         setupDialog()
         initListeners()
+        setupView()
     }
 
+    override fun onStop() {
+        super.onStop()
+        hideKeyboard()
+    }
 
+    /**
+     * Contract
+     */
 
     override fun openLastFragment(){
+        findNavController().popBackStack()
+    }
+
+    override fun openHomeFragment(){
         HomeFragment.start(findNavController())
     }
+
     override fun openIconPickerFragment(){
         IconPickerFragment.start(findNavController(), getMoneyType(), color)
     }
 
-
-
-
+    override fun hideKeyboard() {
+        (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+            .hideSoftInputFromWindow(view?.windowToken, 0)
+    }
 
     override fun setColor(color: Int){
         this.color = color
@@ -66,15 +86,8 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
         binding.categoryAddTitlebar.setupLeftButton(color)
         binding.btnIconCategoryAdd.setColor(color)
         binding.btnColorPick.setTextColor(color)
-        binding.btnCategoryAdd.backgroundTintList =
-            ColorStateList.valueOf(color)
-    }
-    override fun setEditColor(setColor: Boolean){
-        if(setColor){
-            binding.editCategoryName.backgroundTintList = ColorStateList.valueOf(color)
-        }else{
-            binding.editCategoryName.backgroundTintList = null
-        }
+        binding.editCategoryTitle.backgroundTintList = ColorStateList.valueOf(color)
+        setButtonEnabled(null)
     }
 
     override fun setInDialogColor(dialogColor: Int){
@@ -82,10 +95,9 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
         dialogBinding.btnDialog.backgroundTintList = ColorStateList.valueOf(dialogColor)
     }
 
-
     override fun showDialog(){
         dialogBinding.categoryViewDialog.setIcon(icon)
-        dialogBinding.categoryViewDialog.setTitle(binding.editCategoryName.text.toString())
+        dialogBinding.categoryViewDialog.setTitle(binding.editCategoryTitle.text.toString())
         alertDialog.show()
     }
 
@@ -93,9 +105,8 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
         alertDialog.dismiss()
     }
 
-
     override fun getTitle(): String {
-        return binding.editCategoryName.text.toString()
+        return binding.editCategoryTitle.text.toString()
     }
 
     override fun getColor(): Int = color
@@ -104,9 +115,34 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
 
     override fun getMoneyType(): MoneyType = moneyType
 
+    override fun setIcon(selectedIcon: String){
+        binding.btnIconCategoryAdd.setIcon(icon)
+    }
 
+    override fun setButtonEnabled(isEnabled: Boolean?) {
+        if (isEnabled != null) binding.btnCategoryAdd.isEnabled = isEnabled
+        if (binding.btnCategoryAdd.isEnabled) {
+            binding.btnCategoryAdd.backgroundTintList = ColorStateList.valueOf(color)
+        } else {
+            binding.btnCategoryAdd.backgroundTintList = ColorStateList.valueOf(
+                ResourcesCompat.getColor(
+                    requireContext().resources,
+                    R.color.gray,
+                    null
+                )
+            )
+        }
+    }
 
+    /**
+     * Help fun-s
+     */
 
+    private fun setupView(){
+        setButtonEnabled(false)
+        binding.categoryAddTitlebar.setupTitleText(args.title)
+        setColor(color)
+    }
 
     private fun setupData(){
         moneyType = args.type
@@ -117,34 +153,22 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
     }
 
     private fun setupTransferData(){
-        parentFragmentManager.setFragmentResultListener("requestKey", this,
+        parentFragmentManager.setFragmentResultListener(Config.REQUEST_KEY_CATEGORY_ADD, this,
             { _, bundle ->
-                val moneyTypeResult = bundle.getString("moneyType")
+                val moneyTypeResult = bundle.getString(requireContext().getString(R.string.header_money_type))
                 moneyType = if(moneyTypeResult == MoneyType.INCOME.toString()) {
                     MoneyType.INCOME
                 }else{
                     MoneyType.COSTS
                 }
-
-                val iconResult = bundle.getString("icon")
+                val iconResult = bundle.getString(requireContext().getString(R.string.header_icon))
                 iconResult?.let {
                     icon = iconResult
+                    presenter.onIconSelected(iconResult)
                 }
-
-                setupView()
-
+                setColor(color)
             }
         )
-    }
-
-    private fun setupView(){
-        binding.btnIconCategoryAdd.setIcon(icon)
-        binding.categoryAddTitlebar.setupTitleText(args.title)
-        binding.categoryAddTitlebar.setupLeftButton(color)
-        binding.btnIconCategoryAdd.setColor(color)
-        binding.btnColorPick.setTextColor(color)
-        binding.btnCategoryAdd.backgroundTintList =
-            ColorStateList.valueOf(color)
     }
 
     private fun setupDialog(){
@@ -174,6 +198,13 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
         binding.btnCategoryAdd.setOnClickListener {
             presenter.onCreateCategory()
         }
+        binding.editCategoryTitle.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(editable: Editable?) {
+                presenter.onTextChanged(editable.toString())
+            }
+        })
         dialogBinding.colorPickerDialog.setColorListener(object : ColorListener {
             override fun onColorSelected(color: Int, fromUser: Boolean) {
                 presenter.onColorSelected(color)
@@ -182,21 +213,18 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
         dialogBinding.btnDialog.setOnClickListener {
             presenter.onApplyColor(dialogBinding.colorPickerDialog.color)
         }
-        binding.editCategoryName.setOnFocusChangeListener {
-                _, hasFocus ->
-            presenter.editHasFocus(hasFocus)
-        }
     }
 
 
-
-
     companion object{
-        fun start( navController: NavController, moneyType: MoneyType, icon: String = "icon_add", title: String = App.context.getString(R.string.title_create_category)) {
+        fun start(
+            navController: NavController,
+            moneyType: MoneyType,
+            icon: String = App.context.getString(R.string.default_icon),
+            title: String = App.context.getString(R.string.title_create_category)
+        ) {
             val direction = NavGraphDirections.actionToCategoryAdd(moneyType, icon, title)
             navController.navigate(direction)
         }
     }
-
-
 }

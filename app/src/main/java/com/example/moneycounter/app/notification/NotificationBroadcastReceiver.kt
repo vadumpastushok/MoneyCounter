@@ -7,7 +7,6 @@ import android.content.Intent
 
 class NotificationBroadcastReceiver : BroadcastReceiver() {
 
-
     override fun onReceive(context: Context?, intent: Intent?) {
         val notificationHandler = NotificationHandler()
         if (context != null) {

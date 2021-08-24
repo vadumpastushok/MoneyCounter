@@ -25,7 +25,7 @@ interface CategoryDao {
 
     @Transaction
     @Query("SELECT * FROM ${DBConfig.Category.TABLE_NAME} WHERE :moneyType == ${DBConfig.Category.Columns.TYPE}")
-    suspend fun getCategoryWithFinancesByMoneyType(moneyType: MoneyType): List<CategoryWithFinances>
+    suspend fun getCategoryWithFinancesByMoneyType(moneyType: MoneyType): MutableList<CategoryWithFinances>
 
     @Transaction
     @Query("SELECT * FROM ${DBConfig.Category.TABLE_NAME}")
@@ -43,7 +43,7 @@ interface CategoryDao {
     @Update
     suspend fun updateCategory(categories: MutableList<Category>)
 
-    @Delete()
+    @Delete
     suspend fun deleteCategory(category: Category)
 
     @Query("DELETE FROM ${DBConfig.Category.TABLE_NAME} WHERE :moneyType = ${DBConfig.Category.Columns.TYPE}")

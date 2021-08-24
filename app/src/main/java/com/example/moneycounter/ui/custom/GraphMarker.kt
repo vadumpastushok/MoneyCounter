@@ -6,7 +6,7 @@ import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import com.example.moneycounter.R
 import com.example.moneycounter.databinding.ElGraphMarkerBinding
 import com.example.moneycounter.model.entity.ui.MoneyType
-import com.example.moneycounter.utils.ViewExtensions.toPx
+import com.example.moneycounter.utils.ViewExtensions.dp
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
@@ -38,7 +38,7 @@ class GraphMarker(context: Context, layoutResource: Int, val moneyType: MoneyTyp
     }
 
     override fun getOffset(): MPPointF {
-        return MPPointF((-(width / 2)).toFloat(), (-((height + 24.toPx) / 2)).toFloat())
+        return MPPointF((-(width / 2)).toFloat(), (-((height + 24.dp) / 2)).toFloat())
     }
 
 

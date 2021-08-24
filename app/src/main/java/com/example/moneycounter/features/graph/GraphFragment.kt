@@ -34,9 +34,7 @@ class GraphFragment : BaseFragment<FragmentGraphBinding>(), GraphContract {
         presenter.attachView(this)
     }
 
-
     override fun setupLineChart(moneyType: MoneyType, data: MutableMap<Long, GraphEntity?>){
-
         val lineData: LineData
         val entryList: MutableList<Entry> = mutableListOf()
         val lineChart: LineChart = if (moneyType == MoneyType.INCOME) {
@@ -64,7 +62,6 @@ class GraphFragment : BaseFragment<FragmentGraphBinding>(), GraphContract {
 
         lineChart.xAxis.valueFormatter = valueFormatter
 
-
         val lineDataSet = LineDataSet(entryList, "")
         if(moneyType == MoneyType.INCOME){
             lineDataSet.setColors(requireContext().getColor(R.color.dark_blue))
@@ -90,11 +87,6 @@ class GraphFragment : BaseFragment<FragmentGraphBinding>(), GraphContract {
         lineDataSet.setDrawCircles(true)
         lineDataSet.setDrawCircleHole(false)
         lineDataSet.setDrawValues(false)
-
-
-
-
-
 
 
         lineData = LineData(lineDataSet)
@@ -137,11 +129,13 @@ class GraphFragment : BaseFragment<FragmentGraphBinding>(), GraphContract {
         lineChart.xAxis.spaceMax = 0.1f
         lineChart.xAxis.spaceMin = 0.1f
 
-        lineChart.setNoDataText("Недостаточно данных")
+
         if(moneyType == MoneyType.INCOME){
-            lineChart.setNoDataTextColor(context?.getColor(R.color.dark_blue) ?: return)
+            lineChart.setNoDataText(getString(R.string.no_income_graph_data))
+            lineChart.setNoDataTextColor(requireContext().getColor(R.color.dark_blue))
         }else{
-            lineChart.setNoDataTextColor(context?.getColor(R.color.red) ?: return)
+            lineChart.setNoDataText(getString(R.string.no_costs_graph_data))
+            lineChart.setNoDataTextColor(requireContext().getColor(R.color.red))
         }
         lineChart.setNoDataTextTypeface(ResourcesCompat.getFont(requireContext(), R.font.roboto_medium))
 
@@ -163,16 +157,5 @@ class GraphFragment : BaseFragment<FragmentGraphBinding>(), GraphContract {
         val elevationMarker = GraphMarker(requireContext(), R.layout.el_graph_marker, moneyType)
         lineChart.marker = elevationMarker
         lineChart.invalidate()
-
-
-
     }
-
-
-    /*companion object {
-        fun start(navController: NavController) {
-            navController.navigate(R.id.action_to_graph)
-        }
-    }*/
-
 }

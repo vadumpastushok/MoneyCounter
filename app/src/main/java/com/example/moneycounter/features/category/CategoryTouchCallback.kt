@@ -20,7 +20,6 @@ class CategoryTouchCallback(
         return false
     }
 
-
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: ViewHolder): Int {
         val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END
         val swipeFlags = 0
@@ -51,10 +50,8 @@ class CategoryTouchCallback(
     override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
     }
 
-    companion object{
-        private var isMovementEnabled: Boolean = false
-        fun setIsMovementEnabled(isEnabled: Boolean){
-            isMovementEnabled = isEnabled
-        }
+    private var isMovementEnabled: Boolean = false
+    fun setIsMovementEnabled(isEnabled: Boolean){
+        isMovementEnabled = isEnabled
     }
 }

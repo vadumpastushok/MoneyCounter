@@ -19,7 +19,6 @@ class IconPickerAdapter: RecyclerView.Adapter<IconPickerAdapter.IconViewHolder>(
         )))
     }
 
-
     override fun onBindViewHolder(holder: IconViewHolder, position: Int) {
         val binding = ItemIconPickerBinding.bind(holder.itemView)
         binding.btnIconPicker.setIcon(data[position])
@@ -39,12 +38,9 @@ class IconPickerAdapter: RecyclerView.Adapter<IconPickerAdapter.IconViewHolder>(
         notifyDataSetChanged()
     }
 
-
     fun setCategoryClickedListener(listener: (icon: String) -> Unit) {
         iconClickedListener = listener
     }
-
-
 
     class IconViewHolder(val binding: ItemIconPickerBinding) : RecyclerView.ViewHolder(binding.root)
 }

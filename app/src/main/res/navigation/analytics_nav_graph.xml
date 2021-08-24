@@ -42,7 +42,7 @@
         android:id="@+id/piggyBankFragment"
         android:name="com.example.moneycounter.features.piggy_bank.PiggyBankFragment"
         android:label="PiggyBankFragment"
-        tools:layout="@layout/fragment_piggy_bank" />
+        tools:layout="@layout/fragment_piggy_bank"/>
 
     <action android:id="@+id/action_to_piggy_bank"
         app:destination="@id/piggyBankFragment"

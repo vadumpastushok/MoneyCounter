@@ -6,17 +6,20 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.example.moneycounter.NavGraphDirections
 import com.example.moneycounter.R
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentSetPasswordBinding
-import com.example.moneycounter.features.home.HomeFragment
 import com.example.moneycounter.ui.custom.NumberButton
 
 class SetPasswordFragment: BaseFragment<FragmentSetPasswordBinding>(), SetPasswordContract {
 
     private val presenter by lazy { SetPasswordPresenter() }
+    private val args: SetPasswordFragmentArgs by navArgs()
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -25,11 +28,17 @@ class SetPasswordFragment: BaseFragment<FragmentSetPasswordBinding>(), SetPasswo
         return FragmentSetPasswordBinding.bind(inflater.inflate(R.layout.fragment_set_password, container, false))
     }
 
-
-
     override fun attachToPresenter() {
         presenter.attachView(this)
     }
+
+    override fun initView() {
+        setupTable()
+    }
+
+    /**
+     * Contract
+     */
 
     override fun incorrectPassword() {
         binding.progressbarSetPassword.incorrectPassword()
@@ -39,8 +48,8 @@ class SetPasswordFragment: BaseFragment<FragmentSetPasswordBinding>(), SetPasswo
         binding.progressbarSetPassword.setCompletedLinesNum(completedLines)
     }
 
-    override fun openHomeFragment() {
-        HomeFragment.start(findNavController())
+    override fun openLastFragment() {
+        findNavController().popBackStack()
     }
 
     override fun setTitle(@StringRes title: Int) {
@@ -49,12 +58,19 @@ class SetPasswordFragment: BaseFragment<FragmentSetPasswordBinding>(), SetPasswo
 
     override fun getFragment(): Fragment = this
 
-    override fun getFingerprintButton(): NumberButton = fingerprintButton
+    override fun getAction(): String = args.action
 
-    private lateinit var fingerprintButton: NumberButton
-    override fun setupTable(){
+    override fun fragmentManager(): FragmentManager = parentFragmentManager
+
+    /**
+     * Help fun-s
+     */
+    private fun setupTable(){
         val table: TableLayout = binding.tableSetPasswordNumbers
 
+        /**
+         * Number buttons
+         */
         var order = 1
         for(rowNum in 0 until 3){
             val row = TableRow(requireContext())
@@ -72,6 +88,9 @@ class SetPasswordFragment: BaseFragment<FragmentSetPasswordBinding>(), SetPasswo
             table.addView(row, rowNum)
         }
 
+        /**
+         * Bottom buttons
+         */
         val row = TableRow(requireContext())
         row.layoutParams = TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT)
         for(buttonNum in 0 until 3){
@@ -79,7 +98,6 @@ class SetPasswordFragment: BaseFragment<FragmentSetPasswordBinding>(), SetPasswo
             when(buttonNum) {
                 0 -> {
                     button.isEnabled = false
-                    fingerprintButton = button
                 }
                 1 -> {
                     button.setupText(0)
@@ -97,9 +115,11 @@ class SetPasswordFragment: BaseFragment<FragmentSetPasswordBinding>(), SetPasswo
         table.addView(row, 3)
     }
 
+
     companion object {
-        fun start(navController: NavController) {
-            navController.navigate(R.id.action_to_set_password)
+        fun start(navController: NavController, action: String) {
+            val direction = NavGraphDirections.actionToSetPassword(action)
+            navController.navigate(direction)
         }
     }
 

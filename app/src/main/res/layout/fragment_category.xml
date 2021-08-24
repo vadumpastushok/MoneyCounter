@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,12 +11,12 @@
         android:id="@+id/category_titlebar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:is_right_button="false"
-        app:toolbar_title="title_income"
         app:icon_color="@color/light_blue"
-        app:layout_constraintTop_toTopOf="parent"
+        app:is_right_button="false"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:toolbar_title="title_income" />
 
 
     <com.airbnb.lottie.LottieAnimationView
@@ -42,5 +43,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/category_titlebar" />
+
+    <TextView
+        android:id="@+id/tv_no_categories"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="64dp"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
+        android:text="@string/no_categories"
+        android:textColor="@color/hint_text"
+        android:textSize="16sp"
+        android:lineSpacingExtra="2dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_titlebar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

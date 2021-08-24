@@ -171,12 +171,30 @@
         app:popEnterAnim="@anim/fade_in"
         app:popExitAnim="@anim/fade_out"/>
 
+<!--    LockSettings-->
+    <fragment
+        android:id="@+id/LockSettingsFragment"
+        android:name="com.example.moneycounter.features.lock_settings.LockSettingsFragment"
+        android:label="LockSettingsFragment"
+        tools:layout="@layout/fragment_lock_settings" />
+
+    <action android:id="@+id/action_to_lock_settings"
+        app:destination="@id/LockSettingsFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
+
 <!--    SetPassword-->
     <fragment
         android:id="@+id/SetPasswordFragment"
         android:name="com.example.moneycounter.features.set_password.SetPasswordFragment"
         android:label="SetPasswordFragment"
-        tools:layout="@layout/fragment_set_password" />
+        tools:layout="@layout/fragment_set_password" >
+        <argument
+            android:name="action"
+            app:argType="string" />
+    </fragment>
 
     <action android:id="@+id/action_to_set_password"
         app:destination="@id/SetPasswordFragment"

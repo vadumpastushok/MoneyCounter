@@ -32,27 +32,24 @@ class HomePresenter: BasePresenter<HomeContract>() {
         ).build()
         databaseManager = DatabaseManager(db.categoryDao(), db.financeDao())
 
-        if(incomeAmount == 0f && costsAmount == 0f)getFinanceData()
-        else setFinanceAmount(null)
-
+        getFinanceData()
         setupMenu()
     }
 
-    fun getFinanceData(){
-        val root = rootView ?: return
-
+    private fun getFinanceData(){
         viewModelScope.launch {
             val incomeCategories = databaseManager.getCategoryByType(MoneyType.INCOME)
             incomeAmount = 0f
-
-            val costsCategories = databaseManager.getCategoryByType(MoneyType.COSTS)
             costsAmount = 0f
 
             val finances = databaseManager.getAllFinance()
 
             for (finance in finances) {
-                if (incomeCategories.find { it.id == finance.category_id } != null) incomeAmount += finance.amount
-                else costsAmount += finance.amount
+                if (incomeCategories.find { it.id == finance.category_id } != null){
+                    incomeAmount += finance.amount
+                } else{
+                    costsAmount += finance.amount
+                }
             }
 
             setFinanceAmount(null)
@@ -86,11 +83,18 @@ class HomePresenter: BasePresenter<HomeContract>() {
             if(item.title.equals(App.context.getString(R.string.sidebar_text_notifications))){
                 root.setItemEnabled(item, getNotification())
             }else if(item.title.equals(App.context.getString(R.string.sidebar_text_sound_notifications))){
-                root.setItemEnabled(item, getSoundNotification())
+                root.setItemEnabled(item, getNotification() && getSoundNotification())
             }
         }
     }
 
+    fun onBackClicked(){
+        if(rootView?.getIsSidebarOpened() == true){
+            rootView?.closeSideBar()
+        }else{
+            rootView?.closeApp()
+        }
+    }
 
     fun onButtonIncomeClicked(){
         rootView?.openCategoriesIncome()
@@ -141,53 +145,17 @@ class HomePresenter: BasePresenter<HomeContract>() {
                     item,
                     !getSoundNotification()
                 )
-            App.context.getString(R.string.sidebar_text_import_data) -> {
+            App.context.getString(R.string.sidebar_text_import_data) ->
                 ImportDataManager(rootView as Fragment).importData()
-            }
-            App.context.getString(R.string.sidebar_text_export_data) -> {
+            App.context.getString(R.string.sidebar_text_export_data) ->
                 ExportDataManager(rootView as Fragment).exportData()
-            }
-            App.context.getString(R.string.sidebar_text_renew_subscription) ->
-                showToast(
-                    "5"
-                )
             App.context.getString(R.string.sidebar_text_lock_settings) ->
-                rootView?.openSetPasswordFragment()
+                rootView?.openLockSettingsFragment()
             App.context.getString(R.string.sidebar_text_write_to_us) ->
                 rootView?.openWriteToUsFragment()
-            App.context.getString(R.string.sidebar_text_rate_app) ->
-                showToast(
-                    "8"
-                )
-            App.context.getString(R.string.sidebar_text_share_app) ->
-                showToast(
-                    "9"
-                )
             App.context.getString(R.string.sidebar_text_info) ->
                 rootView?.openInfoFragment()
         }
-    }
-
-    private val preferences by lazy { App.context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE) }
-
-
-    private fun getNotification(): Boolean{
-        return preferences?.getBoolean(Config.PREF_IS_NOTIFICATION_ENABLED, true) ?: true
-    }
-
-    private fun setNotification(item: MenuItem, isEnabled: Boolean){
-        preferences?.edit()?.putBoolean(Config.PREF_IS_NOTIFICATION_ENABLED, isEnabled)?.apply()
-        rootView?.setItemEnabled(item, isEnabled)
-    }
-
-
-    private fun getSoundNotification(): Boolean{
-        return preferences?.getBoolean(Config.PREF_IS_SOUND_NOTIFICATION_ENABLED, true) ?: true
-    }
-
-    private fun setSoundNotification(item: MenuItem, isEnabled: Boolean){
-        preferences?.edit()?.putBoolean(Config.PREF_IS_SOUND_NOTIFICATION_ENABLED, isEnabled)?.apply()
-        rootView?.setItemEnabled(item, isEnabled)
     }
 
     fun onSlide(width: Int, slideOffset: Float){
@@ -198,12 +166,48 @@ class HomePresenter: BasePresenter<HomeContract>() {
         rootView?.setMainLayoutTranslation(translation)
     }
 
-
-
-
-    private fun showToast(text: String){
-        //  TEMP
+    fun onDataImported(income: Float, costs: Float){
+        incomeAmount = income
+        costsAmount = costs
+        setFinanceAmount(null)
     }
 
+
+    private val preferences by lazy { App.context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE) }
+
+    private fun getNotification(): Boolean{
+        return preferences?.getBoolean(Config.PREF_IS_NOTIFICATION_ENABLED, true) ?: true
+    }
+
+    private fun setNotification(item: MenuItem, isEnabled: Boolean){
+        preferences?.edit()?.putBoolean(Config.PREF_IS_NOTIFICATION_ENABLED, isEnabled)?.apply()
+        rootView?.setItemEnabled(item, isEnabled)
+        setSoundNotificationClickable(isEnabled)
+    }
+
+    private fun getSoundNotification(): Boolean{
+        return preferences?.getBoolean(Config.PREF_IS_SOUND_NOTIFICATION_ENABLED, true) ?: true
+    }
+
+    private fun setSoundNotification(item: MenuItem, isEnabled: Boolean){
+        preferences?.edit()?.putBoolean(Config.PREF_IS_SOUND_NOTIFICATION_ENABLED, isEnabled)?.apply()
+        rootView?.setItemEnabled(item, isEnabled)
+        if(isEnabled){
+            rootView?.playSound()
+        }else{
+            rootView?.vibrate()
+        }
+    }
+
+    private fun setSoundNotificationClickable(isClickable: Boolean){
+        val size = rootView?.getSideBarMenuSize() ?: 0
+        for(it in 0 until size){
+            val item = rootView?.getSideBarMenuItem(it) ?: continue
+            if(item.title == App.context.getString(R.string.sidebar_text_sound_notifications)){
+                rootView?.setItemClickable(item, isClickable)
+                rootView?.setItemEnabled(item, (getSoundNotification() && isClickable))
+            }
+        }
+    }
 
 }

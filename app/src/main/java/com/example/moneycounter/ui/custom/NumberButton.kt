@@ -74,6 +74,10 @@ class NumberButton @JvmOverloads constructor(
         binding.numberButtonImage.setImageDrawable(ResourcesCompat.getDrawable(context.resources, R.drawable.start_screen_icon_fingerprint, null))
     }
 
+    fun disableFingerPrint(){
+        binding.numberButtonImage.setImageDrawable(null)
+    }
+
     fun setupClearButton(){
         binding.numberButtonImage.setImageDrawable(ResourcesCompat.getDrawable(context.resources, R.drawable.start_screen_icon_clear, null))
     }

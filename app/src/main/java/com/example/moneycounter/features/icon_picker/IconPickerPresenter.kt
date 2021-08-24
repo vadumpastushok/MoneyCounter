@@ -7,6 +7,7 @@ import com.example.moneycounter.base.BasePresenter
 import com.example.moneycounter.model.db.AppDatabase
 import com.example.moneycounter.model.db.DBConfig
 import com.example.moneycounter.model.db.DatabaseManager
+import com.example.moneycounter.model.db.DefaultData
 import kotlinx.coroutines.launch
 
 class IconPickerPresenter: BasePresenter<IconPickerContract>() {
@@ -24,12 +25,11 @@ class IconPickerPresenter: BasePresenter<IconPickerContract>() {
 
     private fun setupData(){
         viewModelScope.launch {
-            val data = databaseManager.getCategoryIcons()
+            val data = DefaultData.icons
             val color = rootView?.getColor() ?: 0
 
             rootView?.setData(data, color)
         }
-
     }
 
     fun onIconSelected(icon: String){

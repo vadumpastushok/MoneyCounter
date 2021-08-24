@@ -6,6 +6,39 @@ import com.example.moneycounter.model.entity.db.Category
 import com.example.moneycounter.model.entity.ui.MoneyType
 
 object DefaultData {
+    val icons = mutableListOf(
+        context.resources.getResourceEntryName(R.drawable.category_icon_food),
+        context.resources.getResourceEntryName(R.drawable.category_icon_utility_services),
+        context.resources.getResourceEntryName(R.drawable.category_icon_communication),
+        context.resources.getResourceEntryName(R.drawable.category_icon_clothes),
+        context.resources.getResourceEntryName(R.drawable.category_icon_transport),
+        context.resources.getResourceEntryName(R.drawable.category_icon_games),
+        context.resources.getResourceEntryName(R.drawable.category_icon_relax),
+        context.resources.getResourceEntryName(R.drawable.category_icon_education),
+        context.resources.getResourceEntryName(R.drawable.category_icon_kids),
+        context.resources.getResourceEntryName(R.drawable.category_icon_parents),
+        context.resources.getResourceEntryName(R.drawable.category_icon_love),
+        context.resources.getResourceEntryName(R.drawable.category_icon_personal_care),
+        context.resources.getResourceEntryName(R.drawable.category_icon_home_care),
+        context.resources.getResourceEntryName(R.drawable.category_icon_sport),
+        context.resources.getResourceEntryName(R.drawable.category_icon_gift),
+        context.resources.getResourceEntryName(R.drawable.category_icon_pet),
+        context.resources.getResourceEntryName(R.drawable.category_icon_hobby),
+        context.resources.getResourceEntryName(R.drawable.category_icon_loans),
+        context.resources.getResourceEntryName(R.drawable.category_icon_insurance),
+        context.resources.getResourceEntryName(R.drawable.category_icon_repair),
+        context.resources.getResourceEntryName(R.drawable.category_icon_salary),
+        context.resources.getResourceEntryName(R.drawable.category_icon_sponsor),
+        context.resources.getResourceEntryName(R.drawable.category_icon_rollback),
+        context.resources.getResourceEntryName(R.drawable.category_icon_dividend),
+        context.resources.getResourceEntryName(R.drawable.category_icon_investments),
+        context.resources.getResourceEntryName(R.drawable.category_icon_business),
+        context.resources.getResourceEntryName(R.drawable.category_icon_property),
+        context.resources.getResourceEntryName(R.drawable.category_icon_stock),
+        context.resources.getResourceEntryName(R.drawable.category_icon_unexpected),
+        context.resources.getResourceEntryName(R.drawable.category_icon_state_benefits),
+    )
+
     val categories = mutableListOf(
         Category(
             context.getString(R.string.category_title_food),
@@ -146,6 +179,13 @@ object DefaultData {
             context.getColor(R.color.red),
             MoneyType.COSTS,
             19
+        ),
+        Category(
+            context.getString(R.string.title_piggy_bank),
+            context.resources.getResourceEntryName(R.drawable.icon_piggy_bank),
+            context.getColor(R.color.light_blue),
+            MoneyType.COSTS,
+            0
         ),
 
 

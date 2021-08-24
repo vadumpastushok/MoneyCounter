@@ -10,11 +10,15 @@ interface CategoryContract: BaseContract {
 
     fun openInputAmountFragment(id: Long)
 
-    fun openHomeFragment()
+    fun openLastFragment()
 
     fun getMoneyType(): MoneyType
 
     fun setTitleText(text: String)
+
+    fun setMessageNoCategories()
+
+    fun removeMessageNoCategories()
 
     fun setData(list: MutableList<Category>)
 
@@ -23,4 +27,8 @@ interface CategoryContract: BaseContract {
     fun notifyItemRemoved(position: Int)
 
     fun notifyItemInserted(position: Int)
+
+    fun showDialog()
+
+    fun closeDialog()
 }

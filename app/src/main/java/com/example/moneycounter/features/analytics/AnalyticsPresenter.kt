@@ -15,7 +15,7 @@ class AnalyticsPresenter: BasePresenter<AnalyticsContract>() {
     }
 
     fun onListPageSelected(){
-        rootView?.setTitleText(App.context.getString(R.string.title_analytics))
+        rootView?.setTitleText(App.context.getString(R.string.title_income))
     }
 
     fun onPiggyBankSelected(){

@@ -11,13 +11,7 @@ class DatabaseManager(
     private val financeDao: FinanceDao
 ) {
 
-    /**
-     * Category
-     */
-
-    suspend fun getAllCategory(): List<Category> = categoryDao.getAllCategory()
-
-    suspend fun getCategoryByType(type: MoneyType): MutableList<Category> = categoryDao.getCategoryByType(type)
+     suspend fun getCategoryByType(type: MoneyType): MutableList<Category> = categoryDao.getCategoryByType(type)
 
     suspend fun getCategoryById(id: Long) : Category = categoryDao.getCategoryById(id)
 
@@ -26,7 +20,7 @@ class DatabaseManager(
     suspend fun getCategoryIcons(): MutableList<String> = categoryDao.getCategoryIcons().toMutableSet().toMutableList()
 
 
-    suspend fun getCategoryWithFinancesByMoneyType(moneyType: MoneyType): List<CategoryWithFinances> =
+    suspend fun getCategoryWithFinancesByMoneyType(moneyType: MoneyType): MutableList<CategoryWithFinances> =
         categoryDao.getCategoryWithFinancesByMoneyType(moneyType)
 
     suspend fun getCategoryWithFinances(): List<CategoryWithFinances> = categoryDao.getCategoryWithFinances()
@@ -34,8 +28,6 @@ class DatabaseManager(
     suspend fun insertCategory(category: Category) = categoryDao.insertCategory(category)
 
     suspend fun insertCategory(categories: MutableList<Category>)  = categoryDao.insertCategory(categories)
-
-    suspend fun updateCategory(category: Category) = categoryDao.updateCategory(category)
 
     suspend fun updateCategory(categories: MutableList<Category>) = categoryDao.updateCategory(categories)
 
@@ -48,11 +40,9 @@ class DatabaseManager(
 
     suspend fun getAllFinance(): MutableList<Finance> = financeDao.getAllFinance()
 
-    //suspend fun getRecentFinance(date: Long): MutableList<Finance> = financeDao.getRecentFinance(date)
+    suspend fun getFinancesByCategoryId(id: Long): MutableList<Finance> = financeDao.getFinancesByCategoryId(id)
 
     suspend fun insertFinance(finance: Finance) = financeDao.insertFinance(finance)
-
-    suspend fun deleteFinance(finance: Finance) = financeDao.deleteFinance(finance)
 
     fun deleteAll(){
         App.context.deleteDatabase(DBConfig.DB_NAME)

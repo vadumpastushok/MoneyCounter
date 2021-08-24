@@ -12,6 +12,28 @@
     <string name="select_color">Выбрать цвет</string>
     <string name="write_message">Напишите сообщение</string>
     <string name="hour">час</string>
+    <string name="storage">Хранилище</string>
+    <string name="wait">Подождите..</string>
+    <string name="already_independent">Вы уже независимые </string>
+    <string name="piggy_bank_empty">Копилка пустая</string>
+    <string name="default_icon">icon_add</string>
+    <string name="action_create">создать</string>
+    <string name="action_change">изменить</string>
+    <string name="action_remove">удалить</string>
+
+    <string name="protect_app_by_password">Защитить приложение кодом для входа</string>
+    <string name="change_password">Изменить код для входа</string>
+    <string name="use_biometric">Использовать биометрическую авторизацию</string>
+
+    <string name="no_income_finances">Источники доходов не найдены. Вы можете создать новые зайдя в Меню / Доходы</string>
+    <string name="no_costs_finances">Источники расходов не найдены. Вы можете создать новые зайдя в Меню / Расходы</string>
+    <string name="no_income_graph_data">Вскоре здесь появится график доходов </string>
+    <string name="no_costs_graph_data">Вскоре здесь появится график расходов </string>
+
+    <string name="exit">Выйти?</string>
+    <string name="question_to_exit">Все несохраненные изменения будут потеряны</string>
+    <string name="accept_exit">Выйти</string>
+    <string name="refuse_exit">Остаться</string>
 
     <string name="enter_password">Введите код для быстрого доступа к приложению</string>
     <string name="enter_previous_password">Введите прошлый код</string>
@@ -19,8 +41,10 @@
     <string name="repeat_password">Подтвердите код</string>
     <string name="fingerprint_disabled">Разблокировка отпечатком пальца отключена</string>
     <string name="fingerprint_enabled">Разблокировка отпечатком пальца включена</string>
+    <string name="biometrics_not_found">Биометрия не найдена</string>
     <string name="scan_to_enter">Отсканируйте чтобы войти</string>
     <string name="enter_code">Ввести код</string>
+    <string name="enter_current_password">Ввести текущий код</string>
     <string name="try_again_later">Попробуйте позже</string>
 
 
@@ -95,6 +119,7 @@
     <string name="home_author_expression">Януш Васильковский</string>
 
 
+    <string name="no_categories">Категории не найдены. Вы можете создать новые выйдя из режима редактирования</string>
     <string name="category_title_salary">Заработная плата</string>
     <string name="category_title_sponsor">Спонсор</string>
     <string name="category_title_rollback">Вхятка, откат</string>
@@ -168,6 +193,9 @@
     <string name="piggy_bank_invest">Вложить</string>
     <string name="piggy_bank_rules">Правила копилки</string>
     <string name="piggy_bank_sum_in_hour">Приблизительная минимальная сумма, которую вы должны зарабатывать в час</string>
+    <string name="piggy_bank_saved">Сбережения</string>
+    <string name="piggy_bank_independence_time">Приблизительно через сколько вы будете финансово независимы</string>
+
 
 
 </resources>

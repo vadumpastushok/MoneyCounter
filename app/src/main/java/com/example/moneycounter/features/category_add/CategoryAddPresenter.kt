@@ -2,6 +2,7 @@ package com.example.moneycounter.features.category_add
 
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
+import com.example.moneycounter.R
 import com.example.moneycounter.app.App.Companion.context
 import com.example.moneycounter.base.BasePresenter
 import com.example.moneycounter.model.db.AppDatabase
@@ -13,6 +14,9 @@ import kotlinx.coroutines.launch
 class CategoryAddPresenter: BasePresenter<CategoryAddContract>() {
 
     private lateinit var databaseManager: DatabaseManager
+    private var title = ""
+    private var color = 0
+    private var icon = ""
 
     override fun onViewAttached() {
         val db = Room.databaseBuilder(
@@ -22,11 +26,23 @@ class CategoryAddPresenter: BasePresenter<CategoryAddContract>() {
         databaseManager = DatabaseManager(db.categoryDao(), db.financeDao())
     }
 
+    private fun checkAllData(){
+        val root = rootView ?: return
+
+        if(root.getIcon() == context.getString(R.string.default_icon)|| root.getColor() == 0 || root.getTitle().isEmpty()){
+            root.setButtonEnabled(false)
+        }else{
+            root.setButtonEnabled(true)
+        }
+    }
+
     fun onBackClicked(){
+        rootView?.hideKeyboard()
         rootView?.openLastFragment()
     }
 
     fun onIconPickerClicked(){
+        rootView?.hideKeyboard()
         rootView?.openIconPickerFragment()
     }
 
@@ -34,43 +50,29 @@ class CategoryAddPresenter: BasePresenter<CategoryAddContract>() {
         rootView?.showDialog()
     }
 
-    fun onColorSelected(color: Int){
-        rootView?.setInDialogColor(color)
+    fun onColorSelected(selectedColor: Int){
+        rootView?.setInDialogColor(selectedColor)
     }
 
-    fun onApplyColor(color: Int){
+    fun onApplyColor(selectedColor: Int){
         rootView?.closeDialog()
-        rootView?.setColor(color)
+        rootView?.setColor(selectedColor)
+        color = selectedColor
+        checkAllData()
     }
 
-    fun editHasFocus(hasFocus: Boolean){
-        rootView?.setEditColor(hasFocus)
+    fun onTextChanged(selectedTitle: String){
+        title = selectedTitle
+        checkAllData()
     }
 
-    private fun checkAllData(): Boolean{
-        val root = rootView ?: return false
-        return when {
-            root.getIcon() == "icon_add" -> {
-                root.showToast("иконка не вибрана")
-                false
-            }
-            root.getColor() == 0 -> {
-                root.showToast("цвет не вибран")
-                false
-            }
-            root.getTitle().isEmpty() -> {
-                root.showToast("название не вибрано")
-                false
-            }
-            else -> {
-                true
-            }
-        }
-
+    fun onIconSelected(selectedIcon: String){
+        icon = selectedIcon
+        rootView?.setIcon(icon)
+        checkAllData()
     }
 
     fun onCreateCategory(){
-        if(!checkAllData())return
         val root = rootView ?: return
         viewModelScope.launch {
 
@@ -86,8 +88,6 @@ class CategoryAddPresenter: BasePresenter<CategoryAddContract>() {
                 )
             )
         }
-        rootView?.openLastFragment()
+        rootView?.openHomeFragment()
     }
-
-
 }

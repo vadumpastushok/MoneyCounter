@@ -12,6 +12,7 @@ class WriteToUsPresenter: BasePresenter<WriteToUsContract>() {
     }
 
     fun onBackClicked(){
+        rootView?.hideKeyboard()
         rootView?.openLastFragment()
     }
 

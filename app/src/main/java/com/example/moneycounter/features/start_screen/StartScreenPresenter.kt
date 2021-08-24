@@ -23,8 +23,6 @@ class StartScreenPresenter: BasePresenter<StartScreenContract>() {
     private val preferences by lazy { context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE) }
 
     override fun onViewAttached() {
-
-
         if(checkIsPasswordEnabled()){
             rootView?.setupTable()
         }else {
@@ -59,14 +57,13 @@ class StartScreenPresenter: BasePresenter<StartScreenContract>() {
         preferences?.getBoolean(Config.PREF_IS_POLICY_CONFIRMED, false) ?: false
 
     private fun checkIsDatabaseInitialized() =
-        preferences?.getBoolean(Config.PREF_IS_DATABASE_INITALIZED, false) ?: false
+        preferences?.getBoolean(Config.PREF_IS_DATABASE_INITIALIZED, false) ?: false
 
     private fun checkIsNotificationEnabled() =
         preferences?.getBoolean(Config.PREF_IS_NOTIFICATION_ENABLED, true) ?: true
 
     fun checkIsFingerprintEnabled() =
         preferences?.getBoolean(Config.PREF_IS_FINGERPRINT_ENABLED, false) ?: false
-
 
     private fun initializeDatabase(){
         val db = Room.databaseBuilder(
@@ -81,14 +78,16 @@ class StartScreenPresenter: BasePresenter<StartScreenContract>() {
             )
         }
 
-        preferences?.edit()?.putBoolean(Config.PREF_IS_DATABASE_INITALIZED, true)?.apply()
+        preferences?.edit()?.putBoolean(Config.PREF_IS_DATABASE_INITIALIZED, true)?.apply()
 
     }
 
 
-
-
-
+    private fun disableFingerPrint(){
+        preferences?.edit()?.putBoolean(Config.PREF_IS_FINGERPRINT_ENABLED, false)?.apply()
+        rootView?.getFingerprintButton()?.disableFingerPrint()
+        rootView?.getFingerprintButton()?.isEnabled = false
+    }
 
     private var rightPassword = ""
     private var password: String = ""
@@ -114,18 +113,20 @@ class StartScreenPresenter: BasePresenter<StartScreenContract>() {
             fragment,
             executor,
             object : BiometricPrompt.AuthenticationCallback() {
-
-
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
-                    Toast.makeText(context, context.getString(R.string.try_again_later), Toast.LENGTH_SHORT).show()
+                    if(errorCode == BiometricPrompt.ERROR_LOCKOUT){
+                        Toast.makeText(context, context.getString(R.string.try_again_later), Toast.LENGTH_SHORT).show()
+                    }else if(errorCode == BiometricPrompt.ERROR_NO_BIOMETRICS){
+                        Toast.makeText(context, context.getString(R.string.biometrics_not_found), Toast.LENGTH_SHORT).show()
+                        disableFingerPrint()
+                    }
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                     rootView?.openHomeScreen()
                 }
-
             }
         )
 
@@ -141,9 +142,5 @@ class StartScreenPresenter: BasePresenter<StartScreenContract>() {
         password = password.substring(0, password.lastIndex)
         rootView?.setCompletedLinesOnProgressbar(password.length)
     }
-
-
-
-
 
 }

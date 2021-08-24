@@ -9,6 +9,10 @@ interface CategoryAddContract: BaseContract {
 
     fun openIconPickerFragment()
 
+    fun openHomeFragment()
+
+    fun hideKeyboard()
+
     fun showDialog()
 
     fun setInDialogColor(dialogColor: Int)
@@ -21,9 +25,11 @@ interface CategoryAddContract: BaseContract {
 
     fun getColor(): Int
 
-    fun setEditColor(setColor: Boolean)
-
     fun getMoneyType(): MoneyType
 
     fun setColor(color: Int)
+
+    fun setButtonEnabled(isEnabled: Boolean?)
+
+    fun setIcon(selectedIcon: String)
 }

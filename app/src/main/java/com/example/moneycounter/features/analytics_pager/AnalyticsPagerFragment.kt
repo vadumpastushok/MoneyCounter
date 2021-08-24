@@ -55,7 +55,6 @@ class AnalyticsPagerFragment : BaseFragment<FragmentAnalyticsPagerBinding>(), An
         binding.analyticsDotsIndicator.setViewPager(binding.vpAnalytics)
     }
 
-
     private fun initListeners(){
         binding.vpAnalytics.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
@@ -65,7 +64,6 @@ class AnalyticsPagerFragment : BaseFragment<FragmentAnalyticsPagerBinding>(), An
             }
         })
     }
-
 
     private inner class ScreenSlidePagerAdapter(fm: FragmentManager, val fragments: List<Fragment>) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT ) {
 

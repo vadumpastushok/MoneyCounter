@@ -31,7 +31,9 @@ class AnalyticsListAdapter(private val moneyType: MoneyType, private val context
                 R.layout.item_analytics,
                 parent,
                 false
-            )))
+                )
+            )
+        )
     }
 
     override fun onBindViewHolder(
@@ -61,7 +63,7 @@ class AnalyticsListAdapter(private val moneyType: MoneyType, private val context
     }
 
     override fun getItemCount(): Int {
-        return data.size;
+        return data.size
     }
 
     class AnalyticsListViewHolder(binding: ItemAnalyticsBinding) : RecyclerView.ViewHolder(binding.root)

@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.moneycounter.R
@@ -20,7 +19,6 @@ class NotificationHandler {
     private var channelId = ""
     private var importance = 0
     private var notificationName = ""
-
 
     fun setupNotification() {
         val preferences = App.context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE)
@@ -50,20 +48,17 @@ class NotificationHandler {
     private fun showNotification(content: String) {
 
         val builder = NotificationCompat.Builder(App.context, channelId)
-            .setSmallIcon(R.drawable.bottom_icon_piggy_bank)
+            .setSmallIcon(R.drawable.icon_piggy_bank)
             .setContentText(content)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(setAction())
             .setAutoCancel(true)
 
-
         createChannel()
-
         with(NotificationManagerCompat.from(App.context)) {
             notify(0, builder.build())
         }
     }
-
 
     private fun setAction(): PendingIntent {
         val notificationIntent = Intent(App.context, MainActivity::class.java)
@@ -76,7 +71,6 @@ class NotificationHandler {
 
     private fun createChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Log.d("tagg", "channel created")
             val descriptionText = App.context.getString(R.string.descriptionText)
 
             val mChannel = NotificationChannel(channelId, notificationName, importance)
@@ -86,8 +80,4 @@ class NotificationHandler {
             notificationManager.createNotificationChannel(mChannel)
         }
     }
-
-
-
-
 }

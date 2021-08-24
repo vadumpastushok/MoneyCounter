@@ -2,6 +2,7 @@ package com.example.moneycounter.features.analytics_list
 
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
+import com.example.moneycounter.R
 import com.example.moneycounter.app.App.Companion.context
 import com.example.moneycounter.base.BasePresenter
 import com.example.moneycounter.model.db.AppDatabase
@@ -28,14 +29,6 @@ class AnalyticsListPresenter: BasePresenter<AnalyticsListContract>() {
         getAnalyticsList(root.getAnalyticsMoneyType())
     }
 
-    fun onSortViewClicked(){
-        rootView?.reverseSortImage()
-        val oldList: MutableList<Analytics> = analyticsList
-        analyticsList.reverse()
-        setAnalyticsList(oldList, analyticsList)
-    }
-
-
     private fun getAnalyticsList(moneyType: MoneyType){
         viewModelScope.launch {
 
@@ -57,7 +50,16 @@ class AnalyticsListPresenter: BasePresenter<AnalyticsListContract>() {
                 }
                 .sortedByDescending { it.amount }
                 .toMutableList()
-            setAnalyticsList(analyticsList, analyticsList)
+            if(analyticsList.size != 0){
+                setAnalyticsList(analyticsList, analyticsList)
+            }else{
+                when(moneyType){
+                    MoneyType.INCOME ->
+                        rootView?.setNoDataMessage(context.getString(R.string.no_income_finances))
+                    MoneyType.COSTS ->
+                        rootView?.setNoDataMessage(context.getString(R.string.no_costs_finances))
+                }
+            }
         }
     }
 

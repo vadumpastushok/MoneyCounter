@@ -83,7 +83,6 @@ class InputAmountFragment: BaseFragment<FragmentInputAmountBinding>(), InputAmou
      * Help fun-s
      */
 
-
     private fun initListeners(){
         binding.MCToolbar.setBackButtonClickListener {
             presenter.onBackButtonClicked()
@@ -93,7 +92,6 @@ class InputAmountFragment: BaseFragment<FragmentInputAmountBinding>(), InputAmou
             presenter.onInputAmountButtonClicked()
         }
     }
-
 
     companion object{
         fun start(navController : NavController, id : Long, type : MoneyType){

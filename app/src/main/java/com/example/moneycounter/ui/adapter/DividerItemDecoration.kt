@@ -6,7 +6,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moneycounter.R
-import com.example.moneycounter.utils.ViewExtensions.toPx
+import com.example.moneycounter.utils.ViewExtensions.dp
 
 
 class DividerItemDecoration(private val context: Context): RecyclerView.ItemDecoration() {
@@ -14,7 +14,7 @@ class DividerItemDecoration(private val context: Context): RecyclerView.ItemDeco
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
 
         val divider = ContextCompat.getDrawable(context, R.drawable.divider) ?: return
-        val left = parent.paddingLeft+62.toPx
+        val left = parent.paddingLeft+62.dp
         val right = parent.width - parent.paddingRight
         val childCount = parent.childCount
         for (i in 0 until childCount) {

@@ -32,7 +32,6 @@ class ExportDataManager(val fragment: Fragment): ViewModel() {
         databaseManager = DatabaseManager(db.categoryDao(), db.financeDao())
     }
 
-
     fun exportData(){
         if (Util.permissionGranted(fragment.activity)) {
             val directoryPickerDialog = DirectoryPickerDialog (fragment.requireContext(),
@@ -111,7 +110,6 @@ class ExportDataManager(val fragment: Fragment): ViewModel() {
         name += ".csv"
         val file = File(path, name)
         if(file.exists())file.delete()
-
 
         csvWriter().writeAll(data, file, false)
     }

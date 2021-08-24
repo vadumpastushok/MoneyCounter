@@ -10,7 +10,6 @@ import java.util.*
 
 class AlarmHandler {
 
-
     fun setupAlarm(){
         val currentCalendar = Calendar.getInstance()
 
@@ -19,11 +18,13 @@ class AlarmHandler {
         calendar[Calendar.MINUTE] = 0
         calendar[Calendar.SECOND] = 0
 
-
         if(calendar.timeInMillis < currentCalendar.timeInMillis){
             calendar[Calendar.HOUR] += 12
         }
-
+        if(calendar.timeInMillis < currentCalendar.timeInMillis){
+            calendar[Calendar.HOUR] = 9
+            calendar[Calendar.DAY_OF_YEAR] ++
+        }
 
         setAlarm(calendar.timeInMillis)
     }
@@ -37,9 +38,5 @@ class AlarmHandler {
         val alarmManager = App.context.getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_HALF_DAY , pendingIntent)
     }
-
-
-
-
 
 }

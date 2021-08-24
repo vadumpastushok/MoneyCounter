@@ -4,10 +4,8 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.moneycounter.model.entity.ui.Analytics
 
 
-class RecycleDiffUtilCallback(oldList: List<Analytics>, newList: List<Analytics>) :
+class RecycleDiffUtilCallback(private val oldList: List<Analytics>, private val newList: List<Analytics>) :
     DiffUtil.Callback() {
-    private val oldList: List<Analytics> = oldList
-    private val newList: List<Analytics> = newList
 
     override fun getOldListSize(): Int {
         return oldList.size

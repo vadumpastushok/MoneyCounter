@@ -1,12 +1,17 @@
 package com.example.moneycounter.features.home
 
-import android.content.Intent
+import android.content.Context
 import android.graphics.Color
+import android.media.RingtoneManager
+import android.net.Uri
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -24,7 +29,7 @@ import com.example.moneycounter.databinding.FragmentHomeBinding
 import com.example.moneycounter.features.analytics.AnalyticsFragment
 import com.example.moneycounter.features.category.CategoryFragment
 import com.example.moneycounter.features.info.InfoFragment
-import com.example.moneycounter.features.set_password.SetPasswordFragment
+import com.example.moneycounter.features.lock_settings.LockSettingsFragment
 import com.example.moneycounter.features.write_to_us.WriteToUsFragment
 import com.example.moneycounter.model.entity.ui.MoneyType
 import com.github.mikephil.charting.data.Entry
@@ -46,8 +51,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
     private lateinit var drawerToggle: ActionBarDrawerToggle
 
     private var lastTranslation = 0f
-    private var isDrawerOpened = false
-
+    private var isSidebarOpened = false
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -64,25 +68,69 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         setupChart()
         setupSideBar()
         initListeners()
+        setupOnBackPressed()
     }
 
     override fun onPause() {
         super.onPause()
-        binding.homeWaveView.pauseAnimation()
+        pauseWaves()
     }
 
     override fun onResume() {
         super.onResume()
-        binding.homeWaveView.resumeAnimation()
-        if(isDrawerOpened){
+        resumeWaves()
+        if(isSidebarOpened){
             presenter.onSlide(lastTranslation.toInt(), 1f)
         }
     }
+
+    private fun setupOnBackPressed(){
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                   presenter.onBackClicked()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    /**
+     * Contract
+     */
+
+    override fun vibrate(){
+        val vibrator = App.context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(100)
+        }
+    }
+
+    override fun playSound(){
+        val notification: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val ringtoneManager = RingtoneManager.getRingtone(
+            context,
+            notification
+        )
+        ringtoneManager.play()
+    }
+
+
 
     override fun setWaves(wavesList: MutableList<WaveView.WaveData>) {
         for (wave in wavesList){
             binding.homeWaveView.addWaveData(wave)
         }
+    }
+
+    override fun pauseWaves() {
+        binding.homeWaveView.pauseAnimation()
+    }
+
+    override fun resumeWaves() {
+        binding.homeWaveView.resumeAnimation()
     }
 
     override fun startWaves() {
@@ -112,7 +160,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
     }
 
     override fun setChartData(incomeAmount: Float, costsAmount: Float ){
-
         val pieEntries: ArrayList<PieEntry> = ArrayList()
         val label = "label"
 
@@ -131,13 +178,15 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         val pieDataSet = PieDataSet(pieEntries, label)
         pieDataSet.colors = colors
         pieDataSet.setDrawValues(false)
+        pieDataSet.notifyDataSetChanged()
 
         val pieData = PieData(pieDataSet)
+        pieData.notifyDataChanged()
 
         binding.homeFinanceChart.data = pieData
+        binding.homeFinanceChart.notifyDataSetChanged()
         binding.homeFinanceChart.invalidate()
     }
-
 
     override fun openCategoriesIncome() {
         CategoryFragment.start(findNavController(), MoneyType.INCOME)
@@ -155,18 +204,31 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         InfoFragment.start(findNavController())
     }
 
-    override fun openSetPasswordFragment() {
-        SetPasswordFragment.start(findNavController())
+    override fun openLockSettingsFragment() {
+        LockSettingsFragment.start(findNavController())
     }
 
     override fun openWriteToUsFragment(){
         WriteToUsFragment.start(findNavController())
     }
 
+    override fun closeApp() {
+        requireActivity().finishAndRemoveTask()
+    }
+
+    override fun onDataImported(incomeAmount: Float, costsAmount: Float){
+        presenter.onDataImported(incomeAmount, costsAmount)
+    }
 
     override fun openSideBar() {
         drawerLayout.open()
     }
+
+    override fun closeSideBar() {
+        drawerLayout.close()
+    }
+
+    override fun getIsSidebarOpened(): Boolean = isSidebarOpened
 
     override fun setItemEnabled(item: MenuItem, isEnabled: Boolean){
         if(isEnabled){
@@ -182,6 +244,10 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         }
     }
 
+    override fun setItemClickable(item: MenuItem, isClickable: Boolean) {
+        item.isEnabled = isClickable
+    }
+
     override fun getSideBarMenuSize(): Int = binding.homeSidebar.menu.size()
 
     override fun getSideBarMenuItem(index: Int): MenuItem = binding.homeSidebar.menu[index]
@@ -194,8 +260,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         lastTranslation = translation
         binding.homeMainLayout.translationX = translation
     }
-
-
 
     /**
      * Help fun-s
@@ -211,6 +275,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         binding.homeFinanceChart.setHoleColor(requireContext().getColor(R.color.transparent))
         binding.homeFinanceChart.holeRadius = 90f
 
+        binding.homeFinanceChart.setNoDataText(requireContext().getString(R.string.wait))
+        binding.homeFinanceChart.setNoDataTextColor(requireContext().getColor(R.color.light_blue))
         binding.homeFinanceChart.renderer.paintRender.setShadowLayer(
             1f,
             0f,
@@ -253,11 +319,11 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
             }
 
             override fun onDrawerOpened(drawerView: View) {
-                isDrawerOpened = true
+                isSidebarOpened = true
             }
 
             override fun onDrawerClosed(drawerView: View) {
-                isDrawerOpened = false
+                isSidebarOpened = false
             }
 
             override fun onDrawerStateChanged(newState: Int) {}
@@ -293,20 +359,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
             presenter.onSidebarItemSelected(it)
             true
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-    Toast.makeText(App.context, data.toString(), Toast.LENGTH_SHORT).show()
-
-    //        if (resultCode == Activity.RESULT_OK && requestCode == 1) {
-//            Toast.makeText(App.context, requestCode.toString(), Toast.LENGTH_SHORT).show()
-//            val filePath: String = data?.getStringExtra(FilePickerActivity.RESULT_FILE_PATH) ?: return
-//            presenter.onFileImportSelected(filePath)
-//        }else{
-//            Toast.makeText(App.context, data!!.data.toString(), Toast.LENGTH_SHORT).show()
-//            data.dataString?.let { presenter.onFileExportSelected(it) }
-//        }
     }
 
     companion object {

@@ -11,11 +11,14 @@ object Config {
 
     const val PREFERENCES_NAME = "preferences"
     const val PREF_IS_POLICY_CONFIRMED = "isPolicyConfirmed"
-    const val PREF_IS_DATABASE_INITALIZED = "isDatabaseInitialized"
+    const val PREF_IS_DATABASE_INITIALIZED = "isDatabaseInitialized"
     const val PREF_IS_NOTIFICATION_ENABLED = "isNotificationEnabled"
     const val PREF_IS_SOUND_NOTIFICATION_ENABLED = "isSoundNotificationEnabled"
     const val PREF_PASSWORD = "password"
     const val PREF_IS_FINGERPRINT_ENABLED = "isFingerprintEnabled"
+
+    const val REQUEST_KEY_LOCK_SETTINGS = "lockSettings"
+    const val REQUEST_KEY_CATEGORY_ADD = "categoryAdd"
 
     val tableHeader = mutableListOf(
         context.getString(R.string.header_category_id),

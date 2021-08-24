@@ -9,6 +9,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.moneycounter.R
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentAnalyticsBinding
+import com.example.moneycounter.ui.custom.MCToolbar
 
 
 class AnalyticsFragment : BaseFragment<FragmentAnalyticsBinding>(), AnalyticsContract {
@@ -30,8 +31,12 @@ class AnalyticsFragment : BaseFragment<FragmentAnalyticsBinding>(), AnalyticsCon
     override fun initView() {
         setupBottomBar()
         initListeners()
+        toolbar = binding.MCToolbarAnalytics
     }
 
+    /**
+     * Contract
+     */
 
     override fun openLastFragment(){
         findNavController().popBackStack()
@@ -70,6 +75,10 @@ class AnalyticsFragment : BaseFragment<FragmentAnalyticsBinding>(), AnalyticsCon
     }
 
     companion object {
+        lateinit var toolbar:MCToolbar
+        fun setupTitleText(title: String){
+            toolbar.setupTitleText(title)
+        }
         fun start(navController: NavController) {
             navController.navigate(R.id.action_to_analytics)
         }

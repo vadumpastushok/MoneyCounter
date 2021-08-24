@@ -39,7 +39,6 @@
         android:inputType="number"
         android:maxLength="8"
         android:cursorVisible="false"
-
         app:layout_constraintBottom_toTopOf="@+id/btn_input_amount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

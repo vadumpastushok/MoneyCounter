@@ -27,21 +27,23 @@ class InfoFragment: BaseFragment<FragmentInfoBinding>(), InfoContract {
         initListeners()
     }
 
-
+    /**
+     * Contract
+     */
 
     override fun openLastFragment(){
         findNavController().popBackStack()
     }
 
-
-
+    /**
+     * Help fun-s
+     */
 
     private fun initListeners(){
         binding.infoToolbar.setBackButtonClickListener {
             presenter.onBackPressed()
         }
     }
-
 
     companion object {
         fun start(navController: NavController) {

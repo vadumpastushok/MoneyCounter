@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
@@ -13,7 +13,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:fontFamily="@font/roboto_light"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="@string/piggy_bank_left_days"
                     android:textColor="@color/dark_gray"
                     android:textSize="14sp"
@@ -70,6 +71,7 @@
                 android:layout_height="64dp"
                 android:layout_marginStart="36dp"
                 android:layout_marginEnd="36dp"
+                android:animateLayoutChanges="true"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
@@ -83,13 +85,15 @@
                     android:layout_weight="1"
                     android:background="@drawable/tv_transparent_with_borders"
                     android:backgroundTint="@color/dark_blue"
+                    android:cursorVisible="false"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
+                    android:hint="@string/zero"
                     android:inputType="number"
-                    android:padding="4dp"
                     android:maxLength="8"
-                    android:cursorVisible="false"
+                    android:padding="4dp"
                     android:textColor="@color/dark_text"
+                    android:textColorHint="@color/hint_text"
                     android:textSize="16sp"
                     android:visibility="gone" />
 
@@ -137,7 +141,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="8dp"
                         android:scaleType="fitCenter"
                         android:src="@drawable/icon_arrow" />
                 </LinearLayout>
@@ -149,9 +153,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
-                android:layout_marginEnd="36dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginEnd="36dp"
                 android:layout_marginBottom="12dp"
+                android:animateLayoutChanges="true"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -186,35 +191,147 @@
             <View
                 android:id="@+id/line_piggy_bank"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="16dp"
+                android:layout_height="1px"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@color/light_blue" />
 
-            <TextView
-                android:id="@+id/textView2"
+
+
+
+
+            <LinearLayout
+                android:id="@+id/layout_second_group_piggy_bank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="@font/roboto_medium"
-                android:gravity="center"
-                android:text="@string/title_calculate_independence"
-                android:textColor="@color/dark_gray"
-                android:textSize="24sp"
-                android:visibility="gone" />
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_title_second_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:gravity="center"
+                    android:text="@string/title_calculate_independence"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="24sp" />
 
-            <View
-                android:id="@+id/line_piggy_bank2"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@color/light_blue"
-                android:visibility="gone" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutSavedChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="32dp">
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/piggy_bank_saved_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_percent_saved_piggy_bank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="64sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.45" />
+
+                    <TextView
+                        android:id="@+id/tv_title_saved_piggy_bank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/piggy_bank_saved"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_percent_saved_piggy_bank" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:src="@drawable/icon_saved" />
+
+                    <TextView
+                        android:id="@+id/tv_independence_time_piggy_bank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="6dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:gravity="center"
+                        android:text="@string/already_independent"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/slider_piggy_bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stepSize="1"
+                    android:value="10"
+                    android:valueFrom="1"
+                    android:valueTo="100"
+                    app:thumbColor="@color/dark_blue"
+                    app:thumbRadius="6dp"
+                    app:tickVisible="false"
+                    app:labelBehavior="gone"
+                    app:trackColorActive="@color/light_blue"
+                    app:trackColorInactive="@color/light_gray" />
+
+                <TextView
+                    android:id="@+id/tv_title_independence_time_piggy_bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:text="@string/piggy_bank_independence_time"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp" />
+
+                <View
+                    android:id="@+id/line_piggy_bank2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/light_blue" />
+            </LinearLayout>
+
+
+
+
 
             <TextView
                 android:id="@+id/textView3"

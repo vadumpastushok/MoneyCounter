@@ -27,7 +27,6 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
         updateData()
     }
 
-
     private fun updateData(){
         if(rootView?.getMoneyType() == MoneyType.INCOME){
             rootView?.setTitleText(context.getString(R.string.title_income))
@@ -43,6 +42,7 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
             rootView?.setTitleText(context.getString(R.string.title_costs))
             viewModelScope.launch {
                 categories = dbManager.getCategoryByType(MoneyType.COSTS)
+                categories.remove(categories.find { it.title == context.getString(R.string.title_piggy_bank) })
                 insertAddButton(MoneyType.COSTS)
                 categories.sortBy { it.order }
                 rootView?.setData(categories)
@@ -50,9 +50,6 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
         }
 
     }
-
-
-
 
     private fun insertAddButton(moneyType: MoneyType){
         categories.add(
@@ -64,6 +61,32 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
                 Int.MAX_VALUE
             )
         )
+    }
+
+    private fun prepareList(): MutableList<Category>{
+        val list: MutableList<Category> = categories.toMutableList()
+        list.removeAt(list.lastIndex)
+
+        var lastOrder = 0
+        for(i in 0 until list.size){
+            val item = list[i]
+            item.order = lastOrder + 1
+            lastOrder = item.order
+        }
+        return list
+    }
+
+    private fun applyChanges(){
+        viewModelScope.launch {
+            val categories =
+                dbManager.getCategoryByType(rootView?.getMoneyType() ?: MoneyType.INCOME)
+            categories.forEach {
+                if (it.title != context.getString(R.string.title_piggy_bank)) {
+                    dbManager.deleteCategory(it)
+                }
+                dbManager.insertCategory(prepareList())
+            }
+        }
     }
 
     fun onCategorySelected(order: Int){
@@ -80,8 +103,11 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
     fun onCategoryPositionChanged(data: MutableList<Category>){
         categories = data
         categories.sortBy { it.order }
-        viewModelScope.launch {
-            dbManager.updateCategory(categories)
+    }
+
+    private fun checkIsElseCategories(){
+        if(categories.size == 0){
+            rootView?.setMessageNoCategories()
         }
     }
 
@@ -89,24 +115,15 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
         if(index == -1)return
         categories.removeAt(index)
         rootView?.notifyItemRemoved(index)
+        checkIsElseCategories()
     }
-
-    private fun applyChanges(){
-        val list: MutableList<Category> = categories.toMutableList()
-        list.removeAt(list.lastIndex)
-        viewModelScope.launch {
-            dbManager.deleteCategoriesByMoneyType(rootView?.getMoneyType() ?: MoneyType.INCOME)
-            dbManager.insertCategory(list)
-        }
-
-    }
-
-
-
-
 
     fun onBackClicked(){
-        rootView?.openHomeFragment()
+        if(isEditable){
+            rootView?.showDialog()
+        }else {
+            rootView?.openLastFragment()
+        }
     }
 
     fun onRightClicked(){
@@ -117,10 +134,21 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
             val index = categories.lastIndex
             categories.removeAt(index)
             rootView?.notifyItemRemoved(index)
+            checkIsElseCategories()
         }else{
             insertAddButton(rootView?.getMoneyType() ?: MoneyType.INCOME)
             rootView?.notifyItemInserted(categories.lastIndex)
             applyChanges()
+            rootView?.removeMessageNoCategories()
         }
+    }
+
+    fun onAcceptExit(){
+        rootView?.openLastFragment()
+        rootView?.closeDialog()
+    }
+
+    fun onRefuseExit(){
+        rootView?.closeDialog()
     }
 }

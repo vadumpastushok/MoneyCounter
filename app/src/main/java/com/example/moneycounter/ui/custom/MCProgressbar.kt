@@ -12,7 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
 import com.example.moneycounter.R
 import com.example.moneycounter.databinding.ElMcProgressbarBinding
-import com.example.moneycounter.utils.ViewExtensions.toPx
+import com.example.moneycounter.utils.ViewExtensions.dp
 
 
 class MCProgressbar @JvmOverloads constructor(
@@ -59,7 +59,7 @@ class MCProgressbar @JvmOverloads constructor(
         for(it in 0 until linesNum) {
             val line = AppCompatImageView(context)
             line.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            line.setPadding(6.toPx)
+            line.setPadding(6.dp)
             line.setImageDrawable(ResourcesCompat.getDrawable(context.resources, R.drawable.line_progressbar, null))
             lines.add(line)
            binding.mcProgressbarLayout.addView(line)

@@ -3,12 +3,14 @@ package com.example.moneycounter.features.icon_picker
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.moneycounter.NavGraphDirections
 import com.example.moneycounter.R
+import com.example.moneycounter.app.Config
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentIconPickerBinding
 import com.example.moneycounter.model.entity.ui.MoneyType
@@ -36,12 +38,16 @@ class IconPickerFragment: BaseFragment<FragmentIconPickerBinding>(), IconPickerC
         initListeners()
     }
 
+    /**
+     * Contract
+     */
 
     override fun openCategoryAddFragment(icon: String) {
         val bundle = Bundle()
-        bundle.putString("moneyType", getMoneyType().toString())
-        bundle.putString("icon", icon)
-        parentFragmentManager.setFragmentResult("requestKey", bundle)
+        bundle.putString(requireContext().getString(R.string.header_money_type), args.type.toString())
+        Toast.makeText(requireContext(), args.type.toString(), Toast.LENGTH_SHORT).show()
+        bundle.putString(requireContext().getString(R.string.header_icon), icon)
+        parentFragmentManager.setFragmentResult(Config.REQUEST_KEY_CATEGORY_ADD, bundle)
 
         findNavController().popBackStack()
     }
@@ -54,10 +60,11 @@ class IconPickerFragment: BaseFragment<FragmentIconPickerBinding>(), IconPickerC
         adapter.setData(data, color)
     }
 
-
-    private fun getMoneyType(): MoneyType = args.type
-
     override fun getColor(): Int = args.color
+
+    /**
+     * Help fun-s
+     */
 
     private fun initListeners(){
         binding.toolbarIconPicker.setBackButtonClickListener {
@@ -74,7 +81,6 @@ class IconPickerFragment: BaseFragment<FragmentIconPickerBinding>(), IconPickerC
         binding.rvIconPicker.layoutManager = GridLayoutManager(context,3)
         binding.rvIconPicker.adapter = adapter
     }
-
 
 
     companion object{

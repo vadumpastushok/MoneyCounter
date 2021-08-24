@@ -13,12 +13,12 @@
         <item name="colorOnSecondary">@color/black</item>
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:navigationBarColor">@color/white</item>
 
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
 
         <!-- Customize your theme here. -->
         <item name="buttonStyle">@style/Button</item>
