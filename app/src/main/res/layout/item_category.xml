@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
     android:layout_marginBottom="16dp">
 
     <com.example.moneycounter.ui.custom.RoundTextButton
         android:id="@+id/rbt_category"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_category_close"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/icon_close"
+        android:tint="@color/dark_gray"
+        android:layout_gravity="center|top"
+        android:layout_marginStart="40dp"
+        android:visibility="invisible" />
+</FrameLayout>

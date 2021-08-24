@@ -38,14 +38,15 @@ class RoundTextButton @JvmOverloads constructor(
         ).apply {
             try {
                 attrs?.let {
-                    val icon = getString(R.styleable.RoundTextButton_btn_icon) ?: return
+                    val icon = getString(R.styleable.RoundTextButton_btn_icon)
                     val colorId = getResourceId(R.styleable.RoundTextButton_btn_color, R.color.light_blue)
                     val color = context.getColor(colorId)
-                    val title = getResourceId(R.styleable.RoundTextButton_text_title, R.string.category_title_add)
+                    val title = getString(R.styleable.RoundTextButton_text_title)
 
-                    setIcon(icon)
+
+                    icon?.let { setIcon(icon) }
                     setColor(color)
-                    setTitle(title)
+                    title?.let { setTitle(title)}
                 }
 
             } finally {
@@ -60,9 +61,12 @@ class RoundTextButton @JvmOverloads constructor(
     fun setColor(color: Int){
         binding.ibIcon.backgroundTintList = ColorStateList.valueOf(color)
     }
-    fun setTitle(title: Int){
-        binding.tvTitle.setText(title)
+    fun setTitle(title: String){
+        binding.tvTitle.text = title
     }
+
+
+
 
 
 }

@@ -8,140 +8,140 @@ import com.example.moneycounter.model.entity.ui.MoneyType
 object DefaultData {
     val categories = mutableListOf(
         Category(
-            R.string.category_title_food,
+            context.getString(R.string.category_title_food),
             context.resources.getResourceEntryName(R.drawable.category_icon_food),
             context.getColor(R.color.dark_blue),
             MoneyType.COSTS,
             0
         ),
         Category(
-            R.string.category_title_utility_services,
+            context.getString(R.string.category_title_utility_services),
             context.resources.getResourceEntryName(R.drawable.category_icon_utility_services),
             context.getColor(R.color.red),
             MoneyType.COSTS,
             1
          ),
         Category(
-            R.string.category_title_communication,
+            context.getString(R.string.category_title_communication),
             context.resources.getResourceEntryName(R.drawable.category_icon_communication),
             context.getColor(R.color.purple),
             MoneyType.COSTS,
             2
          ),
         Category(
-            R.string.category_title_clothes,
+            context.getString(R.string.category_title_clothes),
             context.resources.getResourceEntryName(R.drawable.category_icon_clothes),
             context.getColor(R.color.light_blue),
             MoneyType.COSTS,
             3
             ),
         Category(
-            R.string.category_title_transport,
+            context.getString(R.string.category_title_transport),
             context.resources.getResourceEntryName(R.drawable.category_icon_transport),
             context.getColor(R.color.green),
             MoneyType.COSTS,
             4
          ),
         Category(
-            R.string.category_title_games,
+            context.getString(R.string.category_title_games),
             context.resources.getResourceEntryName(R.drawable.category_icon_games),
             context.getColor(R.color.yellow),
             MoneyType.COSTS,
         5
         ),
         Category(
-            R.string.category_title_relax,
+            context.getString(R.string.category_title_relax),
             context.resources.getResourceEntryName(R.drawable.category_icon_relax),
             context.getColor(R.color.dark_blue),
             MoneyType.COSTS,
             6
           ),
         Category(
-            R.string.category_title_education,
+            context.getString(R.string.category_title_education),
             context.resources.getResourceEntryName(R.drawable.category_icon_education),
             context.getColor(R.color.red),
             MoneyType.COSTS,
             7
          ),
         Category(
-            R.string.category_title_kids,
+            context.getString(R.string.category_title_kids),
             context.resources.getResourceEntryName(R.drawable.category_icon_kids),
             context.getColor(R.color.purple),
             MoneyType.COSTS,
             8
         ),
         Category(
-            R.string.category_title_parents,
+            context.getString(R.string.category_title_parents),
             context.resources.getResourceEntryName(R.drawable.category_icon_parents),
             context.getColor(R.color.light_blue),
             MoneyType.COSTS,
             9
          ),
         Category(
-            R.string.category_title_love,
+            context.getString(R.string.category_title_love),
             context.resources.getResourceEntryName(R.drawable.category_icon_love),
             context.getColor(R.color.green),
             MoneyType.COSTS,
             10
         ),
         Category(
-            R.string.category_title_personal_care,
+            context.getString(R.string.category_title_personal_care),
             context.resources.getResourceEntryName(R.drawable.category_icon_personal_care),
             context.getColor(R.color.yellow),
             MoneyType.COSTS,
             11
          ),
         Category(
-            R.string.category_title_home_care,
+            context.getString(R.string.category_title_home_care),
             context.resources.getResourceEntryName(R.drawable.category_icon_home_care),
             context.getColor(R.color.dark_blue),
             MoneyType.COSTS,
             12
          ),
         Category(
-            R.string.category_title_sport,
+            context.getString(R.string.category_title_sport),
             context.resources.getResourceEntryName(R.drawable.category_icon_sport),
             context.getColor(R.color.red),
             MoneyType.COSTS,
             13
         ),
         Category(
-            R.string.category_title_gift,
+            context.getString(R.string.category_title_gift),
             context.resources.getResourceEntryName(R.drawable.category_icon_gift),
             context.getColor(R.color.purple),
             MoneyType.COSTS,
             14
         ),
         Category(
-            R.string.category_title_pet,
+            context.getString(R.string.category_title_pet),
             context.resources.getResourceEntryName(R.drawable.category_icon_pet),
             context.getColor(R.color.light_blue),
             MoneyType.COSTS,
             15
         ),
         Category(
-            R.string.category_title_hobby,
+            context.getString(R.string.category_title_hobby),
             context.resources.getResourceEntryName(R.drawable.category_icon_hobby),
             context.getColor(R.color.green),
             MoneyType.COSTS,
             16
         ),
         Category(
-            R.string.category_title_loans,
+            context.getString(R.string.category_title_loans),
             context.resources.getResourceEntryName(R.drawable.category_icon_loans),
             context.getColor(R.color.yellow),
             MoneyType.COSTS,
             17
         ),
         Category(
-            R.string.category_title_insurance,
+            context.getString(R.string.category_title_insurance),
             context.resources.getResourceEntryName(R.drawable.category_icon_insurance),
             context.getColor(R.color.dark_blue),
             MoneyType.COSTS,
             18
         ),
         Category(
-            R.string.category_title_repair,
+            context.getString(R.string.category_title_repair),
             context.resources.getResourceEntryName(R.drawable.category_icon_repair),
             context.getColor(R.color.red),
             MoneyType.COSTS,
@@ -153,91 +153,91 @@ object DefaultData {
 
 
         Category(
-            R.string.category_title_salary,
+            context.getString(R.string.category_title_salary),
             context.resources.getResourceEntryName(R.drawable.category_icon_salary),
             context.getColor(R.color.dark_blue),
             MoneyType.INCOME,
             0
         ),
         Category(
-            R.string.category_title_sponsor,
+            context.getString(R.string.category_title_sponsor),
             context.resources.getResourceEntryName(R.drawable.category_icon_sponsor),
             context.getColor(R.color.red),
             MoneyType.INCOME,
             1
         ),
         Category(
-            R.string.category_title_rollback,
+            context.getString(R.string.category_title_rollback),
             context.resources.getResourceEntryName(R.drawable.category_icon_rollback),
             context.getColor(R.color.purple),
             MoneyType.INCOME,
             2
         ),
         Category(
-            R.string.category_title_gift,
+            context.getString(R.string.category_title_gift),
             context.resources.getResourceEntryName(R.drawable.category_icon_gift),
             context.getColor(R.color.light_blue),
             MoneyType.INCOME,
             3
         ),
         Category(
-            R.string.category_title_dividend,
+            context.getString(R.string.category_title_dividend),
             context.resources.getResourceEntryName(R.drawable.category_icon_dividend),
             context.getColor(R.color.green),
             MoneyType.INCOME,
             4
         ),
         Category(
-            R.string.category_title_investments,
+            context.getString(R.string.category_title_investments),
             context.resources.getResourceEntryName(R.drawable.category_icon_investments),
             context.getColor(R.color.yellow),
             MoneyType.INCOME,
             5
         ),
         Category(
-            R.string.category_title_business,
+            context.getString(R.string.category_title_business),
             context.resources.getResourceEntryName(R.drawable.category_icon_business),
             context.getColor(R.color.dark_blue),
             MoneyType.INCOME,
             6
         ),
         Category(
-            R.string.category_title_property,
+            context.getString(R.string.category_title_property),
             context.resources.getResourceEntryName(R.drawable.category_icon_property),
             context.getColor(R.color.red),
             MoneyType.INCOME,
             7
         ),
         Category(
-            R.string.category_title_insurance,
+            context.getString(R.string.category_title_insurance),
             context.resources.getResourceEntryName(R.drawable.category_icon_insurance),
             context.getColor(R.color.purple),
             MoneyType.INCOME,
             8
         ),
         Category(
-            R.string.category_title_stock,
+            context.getString(R.string.category_title_stock),
             context.resources.getResourceEntryName(R.drawable.category_icon_stock),
             context.getColor(R.color.light_blue),
             MoneyType.INCOME,
             9
         ),
         Category(
-            R.string.category_title_loans,
+            context.getString(R.string.category_title_loans),
             context.resources.getResourceEntryName(R.drawable.category_icon_loans),
             context.getColor(R.color.green),
             MoneyType.INCOME,
             10
         ),
         Category(
-            R.string.category_title_unexpected,
+            context.getString(R.string.category_title_unexpected),
             context.resources.getResourceEntryName(R.drawable.category_icon_unexpected),
             context.getColor(R.color.yellow),
             MoneyType.INCOME,
             11
         ),
         Category(
-            R.string.category_title_state_benefits,
+            context.getString(R.string.category_title_state_benefits),
             context.resources.getResourceEntryName(R.drawable.category_icon_state_benefits),
             context.getColor(R.color.purple),
             MoneyType.INCOME,

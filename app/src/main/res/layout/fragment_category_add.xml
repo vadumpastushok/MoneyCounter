@@ -1,15 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.example.moneycounter.ui.custom.MCToolbar
+        android:id="@+id/category_add_titlebar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:icon_color="@color/red"
         app:is_right_button="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.example.moneycounter.ui.custom.RoundTextButton
+        android:id="@+id/btn_icon_category_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:btn_color="@color/red"
+        app:btn_icon="icon_add"
+        app:layout_constraintBottom_toTopOf="@+id/btn_color_pick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:text_title="@string/icon" />
+
+    <TextView
+        android:id="@+id/btn_color_pick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
+        android:paddingStart="32dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="32dp"
+        android:paddingBottom="8dp"
+        android:text="@string/select_color"
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_category_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_category_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:background="@drawable/tv_transparent_with_borders"
+        android:fontFamily="@font/roboto_medium"
+        android:hint="@string/name"
+        android:inputType="text"
+        android:maxLength="20"
+        android:padding="16dp"
+        android:textColor="@color/dark_text"
+        android:textColorHint="@color/hint_text"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_category_add"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_rounded_intro"
+        android:backgroundTint="@color/red"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

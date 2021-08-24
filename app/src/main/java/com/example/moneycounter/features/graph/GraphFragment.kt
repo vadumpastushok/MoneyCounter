@@ -137,8 +137,12 @@ class GraphFragment : BaseFragment<FragmentGraphBinding>(), GraphContract {
         lineChart.xAxis.spaceMax = 0.1f
         lineChart.xAxis.spaceMin = 0.1f
 
-        lineChart.setNoDataText("Недостаточно данных") // TEMP
-        lineChart.setNoDataTextColor(context?.getColor(R.color.dark_blue) ?: return)
+        lineChart.setNoDataText("Недостаточно данных")
+        if(moneyType == MoneyType.INCOME){
+            lineChart.setNoDataTextColor(context?.getColor(R.color.dark_blue) ?: return)
+        }else{
+            lineChart.setNoDataTextColor(context?.getColor(R.color.red) ?: return)
+        }
         lineChart.setNoDataTextTypeface(ResourcesCompat.getFont(requireContext(), R.font.roboto_medium))
 
         if(data.size >= 2){

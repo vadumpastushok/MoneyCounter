@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="100dp"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:id="@+id/layout_income_category">
 
     <androidx.appcompat.widget.AppCompatImageView

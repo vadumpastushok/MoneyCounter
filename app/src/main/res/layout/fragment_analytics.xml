@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:icon_color="@color/light_blue"
-        app:toolbar_title="@string/title_analytics"
+        app:toolbar_title="title_analytics"
         app:is_right_button="false" />
 
     <androidx.fragment.app.FragmentContainerView

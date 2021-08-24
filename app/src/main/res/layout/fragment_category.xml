@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,21 +10,37 @@
         android:id="@+id/category_titlebar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:is_right_button="true"
-        app:toolbar_title="@string/title_income"
+        app:is_right_button="false"
+        app:toolbar_title="title_income"
         app:icon_color="@color/light_blue"
-        app:right_btn_icon="@drawable/toolbar_icon_search" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/category_edit_save"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/edit_to_save"
+        app:lottie_colorFilter="@color/light_blue"
+        android:padding="4dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_category"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_gravity="center"
-        android:paddingTop="16dp"
         android:clipToPadding="false"
+        android:paddingTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/category_titlebar" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

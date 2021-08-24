@@ -2,7 +2,6 @@ package com.example.moneycounter.features.analytics
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -38,7 +37,7 @@ class AnalyticsFragment : BaseFragment<FragmentAnalyticsBinding>(), AnalyticsCon
         findNavController().popBackStack()
     }
 
-    override fun setTitleText(@StringRes text: Int){
+    override fun setTitleText(text: String){
         binding.MCToolbarAnalytics.setupTitleText(text)
     }
 

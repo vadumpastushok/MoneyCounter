@@ -1,7 +1,10 @@
 package com.example.moneycounter.features.home
 
+import android.content.Context
+import android.view.MenuItem
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
+import com.example.moneycounter.R
 import com.example.moneycounter.app.App
 import com.example.moneycounter.app.Config
 import com.example.moneycounter.base.BasePresenter
@@ -10,8 +13,6 @@ import com.example.moneycounter.model.db.DBConfig
 import com.example.moneycounter.model.db.DatabaseManager
 import com.example.moneycounter.model.entity.ui.MoneyType
 import kotlinx.coroutines.launch
-import kotlin.math.cos
-import kotlin.random.Random
 
 class HomePresenter: BasePresenter<HomeContract>() {
     private lateinit var databaseManager: DatabaseManager
@@ -28,8 +29,10 @@ class HomePresenter: BasePresenter<HomeContract>() {
         ).build()
         databaseManager = DatabaseManager(db.categoryDao(), db.financeDao())
 
-        if(incomeAmount == 0f && costsAmount == 0f)getFinanceData() // Data has not been initialized
+        if(incomeAmount == 0f && costsAmount == 0f)getFinanceData()
         else setFinanceAmount(null)
+
+        setupMenu()
     }
 
     private fun getFinanceData(){
@@ -71,6 +74,21 @@ class HomePresenter: BasePresenter<HomeContract>() {
         }
     }
 
+    private fun setupMenu(){
+        val root = rootView ?: return
+        val size = root.getSideBarMenuSize()
+
+        for(index in 0 until size){
+            val item = root.getSideBarMenuItem(index)
+            if(item.title.equals(App.context.getString(R.string.sidebar_text_notifications))){
+                root.setItemEnabled(item, getNotification())
+            }else if(item.title.equals(App.context.getString(R.string.sidebar_text_sound_notifications))){
+                root.setItemEnabled(item, getSoundNotification())
+            }
+        }
+    }
+
+
     fun onButtonIncomeClicked(){
         rootView?.openCategoriesIncome()
     }
@@ -81,6 +99,10 @@ class HomePresenter: BasePresenter<HomeContract>() {
 
     fun onButtonAnalyticsClicked(){
         rootView?.openCategoriesAnalytics()
+    }
+
+    fun onMenuButtonClicked(){
+        rootView?.openSideBar()
     }
 
     fun onFinanceSelected(amount: Float){
@@ -104,6 +126,88 @@ class HomePresenter: BasePresenter<HomeContract>() {
         }
     }
 
+    fun onSidebarItemSelected(item: MenuItem){
+        when(item.title){
+            App.context.getString(R.string.sidebar_text_notifications) ->
+                setNotification(
+                    item,
+                    !getNotification()
+                )
+            App.context.getString(R.string.sidebar_text_sound_notifications) ->
+                setSoundNotification(
+                    item,
+                    !getSoundNotification()
+                )
+            App.context.getString(R.string.sidebar_text_import_data) -> {
+                showToast("3")
+            }
+            App.context.getString(R.string.sidebar_text_export_data) ->
+                showToast(
+                    "4"
+                )
+            App.context.getString(R.string.sidebar_text_renew_subscription) ->
+                showToast(
+                    "5"
+                )
+            App.context.getString(R.string.sidebar_text_lock_settings) ->
+                showToast(
+                    "6"
+                )
+            App.context.getString(R.string.sidebar_text_write_to_us) ->
+                showToast(
+                    "7"
+                )
+            App.context.getString(R.string.sidebar_text_rate_app) ->
+                showToast(
+                    "8"
+                )
+            App.context.getString(R.string.sidebar_text_share_app) ->
+                showToast(
+                    "9"
+                )
+            App.context.getString(R.string.sidebar_text_info) ->
+                rootView?.openInfoFragment()
+        }
+    }
+
+    private val preferences by lazy { App.context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE) }
+
+
+    private fun getNotification(): Boolean{
+        return preferences?.getBoolean(Config.PREF_IS_NOTIFICATION_ENABLED, true) ?: true
+    }
+
+    private fun setNotification(item: MenuItem, isEnabled: Boolean){
+        preferences?.edit()?.putBoolean(Config.PREF_IS_NOTIFICATION_ENABLED, isEnabled)?.apply()
+        rootView?.setItemEnabled(item, isEnabled)
+    }
+
+
+    private fun getSoundNotification(): Boolean{
+        return preferences?.getBoolean(Config.PREF_IS_SOUND_NOTIFICATION_ENABLED, true) ?: true
+    }
+
+    private fun setSoundNotification(item: MenuItem, isEnabled: Boolean){
+        preferences?.edit()?.putBoolean(Config.PREF_IS_SOUND_NOTIFICATION_ENABLED, isEnabled)?.apply()
+        rootView?.setItemEnabled(item, isEnabled)
+    }
+
+    fun onSlide(width: Int, slideOffset: Float){
+        val alpha = 0.5f.coerceAtMost(slideOffset) * 2
+        rootView?.setScrimAlpha(alpha)
+
+        val translation = width * slideOffset
+        rootView?.setMainLayoutTranslation(translation)
+    }
+
+
+
+
+
+
+    private fun showToast(text: String){
+        //  TEMP
+    }
 
 
 }

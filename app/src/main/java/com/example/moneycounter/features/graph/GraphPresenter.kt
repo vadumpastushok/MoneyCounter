@@ -37,7 +37,7 @@ class GraphPresenter: BasePresenter<GraphContract>() {
 
     private suspend fun formatData(data: MutableList<Finance>, moneyType: MoneyType): MutableMap<Long, GraphEntity?> {
         val graphDataList = data
-            .map { GraphEntity(it.amount, it.date, databaseManager.getMoneyTypeById(it.category_id)) }
+            .map { GraphEntity(it.amount, it.date, databaseManager.getMoneyTypeById(it.category_id) ?: moneyType) }
             .filter { it.moneyType == moneyType }
             .sortedBy { it.date }
             .toMutableList()

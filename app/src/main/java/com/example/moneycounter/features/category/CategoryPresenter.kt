@@ -3,7 +3,6 @@ package com.example.moneycounter.features.category
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import com.example.moneycounter.R
-import com.example.moneycounter.app.App
 import com.example.moneycounter.app.App.Companion.context
 import com.example.moneycounter.base.BasePresenter
 import com.example.moneycounter.model.db.AppDatabase
@@ -15,54 +14,63 @@ import kotlinx.coroutines.launch
 
 class CategoryPresenter: BasePresenter<CategoryContract>() {
 
+    private var categories: MutableList<Category> = mutableListOf()
+    private var isEditable: Boolean = false
+
     private val db = Room.databaseBuilder(
-        App.context,
+        context,
         AppDatabase::class.java, DBConfig.DB_NAME
     ).build()
     private val dbManager = DatabaseManager(db.categoryDao(), db.financeDao())
-    private var categories: MutableList<Category> = mutableListOf()
 
     override fun onViewAttached() {
+        updateData()
+    }
+
+
+    private fun updateData(){
         if(rootView?.getMoneyType() == MoneyType.INCOME){
-            rootView?.setTitleText(R.string.title_income)
+            rootView?.setTitleText(context.getString(R.string.title_income))
 
             viewModelScope.launch {
                 categories = dbManager.getCategoryByType(MoneyType.INCOME)
-                categories.add(
-                    Category(
-                        R.string.category_title_add,
-                        context.resources.getResourceEntryName(R.drawable.category_icon_add),
-                        context.getColor(R.color.dark_text),
-                        MoneyType.COSTS,
-                        Int.MAX_VALUE
-                    )
-                )
+                insertAddButton(MoneyType.INCOME)
                 categories.sortBy { it.order }
                 rootView?.setData(categories)
             }
         }
         else {
-            rootView?.setTitleText(R.string.title_costs)
+            rootView?.setTitleText(context.getString(R.string.title_costs))
             viewModelScope.launch {
                 categories = dbManager.getCategoryByType(MoneyType.COSTS)
-                categories.add(
-                    Category(
-                        R.string.category_title_add,
-                        context.resources.getResourceEntryName(R.drawable.category_icon_add),
-                        context.getColor(R.color.dark_text),
-                        MoneyType.COSTS,
-                        Int.MAX_VALUE
-                    )
-                )
+                insertAddButton(MoneyType.COSTS)
                 categories.sortBy { it.order }
                 rootView?.setData(categories)
             }
         }
+
+    }
+
+
+
+
+    private fun insertAddButton(moneyType: MoneyType){
+        categories.add(
+            Category(
+                context.getString(R.string.category_title_add),
+                context.resources.getResourceEntryName(R.drawable.icon_add),
+                context.getColor(R.color.dark_text),
+                moneyType,
+                Int.MAX_VALUE
+            )
+        )
     }
 
     fun onCategorySelected(order: Int){
+        if(isEditable) return
+
         val item = categories[order]
-        if(item.title == R.string.category_title_add) {
+        if(item.title == context.getString(R.string.category_title_add)) {
             rootView?.openAddCategoryFragment()
         } else {
             rootView?.openInputAmountFragment(item.id)
@@ -77,9 +85,42 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
         }
     }
 
-
-    fun onBackClicked(){
-        rootView?.openLastFragment()
+    fun onDeleteCategoryClicked(index: Int){
+        if(index == -1)return
+        categories.removeAt(index)
+        rootView?.notifyItemRemoved(index)
     }
 
+    private fun applyChanges(){
+        val list: MutableList<Category> = categories.toMutableList()
+        list.removeAt(list.lastIndex)
+        viewModelScope.launch {
+            dbManager.deleteCategoriesByMoneyType(rootView?.getMoneyType() ?: MoneyType.INCOME)
+            dbManager.insertCategory(list)
+        }
+
+    }
+
+
+
+
+
+    fun onBackClicked(){
+        rootView?.openHomeFragment()
+    }
+
+    fun onRightClicked(){
+        isEditable = !isEditable
+        rootView?.setIsEditable(isEditable)
+
+        if(isEditable){
+            val index = categories.lastIndex
+            categories.removeAt(index)
+            rootView?.notifyItemRemoved(index)
+        }else{
+            insertAddButton(rootView?.getMoneyType() ?: MoneyType.INCOME)
+            rootView?.notifyItemInserted(categories.lastIndex)
+            applyChanges()
+        }
+    }
 }

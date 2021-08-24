@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center">
+
+    <com.example.moneycounter.ui.custom.RoundTextButton
+        android:id="@+id/categoryView_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:btn_color="@color/red"
+        app:btn_icon="category_icon_gift"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:text_title="@string/category_title_food" />
+
+
+    <com.skydoves.colorpickerview.ColorPickerView
+        android:id="@+id/colorPicker_dialog"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:actionMode="always"
+        app:alpha_flag="1"
+        app:alpha_selector="0.48"
+        app:debounceDuration="10"
+        app:initialColor="@color/yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/categoryView_dialog"
+        app:preferenceName="MyColorPicker"
+        app:selector="@drawable/wheel"
+        app:selector_size="8dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_rounded_intro"
+        android:backgroundTint="@color/red"
+        android:padding="16dp"
+        android:text="@string/accept"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/colorPicker_dialog" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

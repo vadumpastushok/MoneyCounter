@@ -1,6 +1,7 @@
 package com.example.moneycounter.features.analytics
 
 import com.example.moneycounter.R
+import com.example.moneycounter.app.App
 import com.example.moneycounter.base.BasePresenter
 
 class AnalyticsPresenter: BasePresenter<AnalyticsContract>() {
@@ -10,10 +11,10 @@ class AnalyticsPresenter: BasePresenter<AnalyticsContract>() {
     }
 
     fun onGraphPageSelected(){
-        rootView?.setTitleText(R.string.title_analytics)
+        rootView?.setTitleText(App.context.getString(R.string.title_analytics))
     }
 
     fun onListPageSelected(){
-        rootView?.setTitleText(R.string.home_text_income)
+        rootView?.setTitleText(App.context.getString(R.string.title_analytics))
     }
 }

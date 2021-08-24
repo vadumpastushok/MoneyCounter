@@ -34,9 +34,6 @@ class AnalyticsListFragment(val moneyType: MoneyType) : BaseFragment<FragmentAna
         initListeners()
     }
 
-    fun test() {
-        showToast("WORK")
-    }
 
     /**
      * Contract

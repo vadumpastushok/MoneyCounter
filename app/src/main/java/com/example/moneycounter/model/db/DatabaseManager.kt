@@ -22,6 +22,9 @@ class DatabaseManager(
 
     suspend fun getMoneyTypeById(id: Long): MoneyType = categoryDao.getMoneyTypeById(id)
 
+    suspend fun getCategoryIcons(): MutableList<String> = categoryDao.getCategoryIcons().toMutableSet().toMutableList()
+
+
     suspend fun getCategoryWithFinancesByMoneyType(moneyType: MoneyType): List<CategoryWithFinances> =
         categoryDao.getCategoryWithFinancesByMoneyType(moneyType)
 
@@ -35,6 +38,10 @@ class DatabaseManager(
 
     suspend fun deleteCategory(category: Category) = categoryDao.deleteCategory(category)
 
+    suspend fun deleteCategoriesByMoneyType(moneyType: MoneyType) = categoryDao.deleteCategoriesByMoneyType(moneyType)
+
+    suspend fun getNumberOfCategoriesByMoneyType(moneyType: MoneyType): Int = categoryDao.getNumberOfCategoriesByMoneyType(moneyType)
+
 
     suspend fun getAllFinance(): MutableList<Finance> = financeDao.getAllFinance()
 
@@ -43,4 +50,5 @@ class DatabaseManager(
     suspend fun insertFinance(finance: Finance) = financeDao.insertFinance(finance)
 
     suspend fun deleteFinance(finance: Finance) = financeDao.deleteFinance(finance)
+
 }

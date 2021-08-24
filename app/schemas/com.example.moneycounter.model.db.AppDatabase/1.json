@@ -2,16 +2,16 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1f4d895b56810e93f1c6e33190dfab76",
+    "identityHash": "28e3741e74d31850b8a345bd66d222c4",
     "entities": [
       {
         "tableName": "categories",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` INTEGER NOT NULL, `icon` TEXT NOT NULL, `color` INTEGER NOT NULL, `type` TEXT NOT NULL, `order` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `icon` TEXT NOT NULL, `color` INTEGER NOT NULL, `type` TEXT NOT NULL, `order` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "title",
             "columnName": "title",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -96,7 +96,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1f4d895b56810e93f1c6e33190dfab76')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '28e3741e74d31850b8a345bd66d222c4')"
     ]
   }
 }

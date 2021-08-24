@@ -46,12 +46,11 @@ class AnalyticsListAdapter(private val moneyType: MoneyType, private val context
         binding.ivIconAnalytics.imageTintList =
             ColorStateList.valueOf(item.icon_color)
 
-        binding.tvTitleAnalytics.setText(item.title)
+        binding.tvTitleAnalytics.text = item.title
 
         binding.tvAmountAnalytics.text = item.amount.toString()
 
 
-        val context = context ?: return
         binding.tvAmountAnalytics.setTextColor(
             when (moneyType) {
                 MoneyType.COSTS -> ContextCompat.getColor(context, R.color.red)

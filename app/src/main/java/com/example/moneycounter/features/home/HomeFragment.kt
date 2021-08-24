@@ -1,22 +1,27 @@
 package com.example.moneycounter.features.home
 
-import android.util.Log
+import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
+import androidx.core.view.get
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.room.Room
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentHomeBinding
 import com.example.moneycounter.features.analytics.AnalyticsFragment
 import com.example.moneycounter.features.category.CategoryFragment
-import com.example.moneycounter.model.db.AppDatabase
-import com.example.moneycounter.model.db.DBConfig
-import com.example.moneycounter.model.db.DatabaseManager
-import com.example.moneycounter.model.entity.db.Finance
+import com.example.moneycounter.features.info.InfoFragment
 import com.example.moneycounter.model.entity.ui.MoneyType
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
@@ -24,15 +29,21 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.google.android.material.internal.NavigationMenuView
 import com.ssynhtn.waveview.WaveView
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
+import kotlin.collections.set
 
 
 class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
 
     private val presenter: HomePresenter by lazy { HomePresenter() }
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var toolbar: Toolbar
+    private lateinit var drawerToggle: ActionBarDrawerToggle
+
+    private var lastTranslation = 0f
+    private var isDrawerOpened = false
+
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -46,7 +57,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
     }
 
     override fun initView() {
-        setupPieChart()
+        setupChart()
+        setupSideBar()
         initListeners()
     }
 
@@ -58,6 +70,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
     override fun onResume() {
         super.onResume()
         binding.homeWaveView.resumeAnimation()
+        if(isDrawerOpened){
+            presenter.onSlide(lastTranslation.toInt(), 1f)
+        }
     }
 
     override fun setWaves(wavesList: MutableList<WaveView.WaveData>) {
@@ -97,12 +112,12 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         val label = "label"
 
         val typeAmountMap: MutableMap<String, Float> = HashMap()
-        typeAmountMap[" "] = incomeAmount
-        typeAmountMap["  "] = costsAmount
+        typeAmountMap[" "] = costsAmount
+        typeAmountMap["  "] = incomeAmount
 
         val colors: ArrayList<Int> = ArrayList()
-        colors.add(App.context.getColor(R.color.light_blue))
         colors.add(App.context.getColor(R.color.costs_color))
+        colors.add(App.context.getColor(R.color.light_blue))
 
         for (type in typeAmountMap.keys) {
             pieEntries.add(PieEntry(typeAmountMap[type]!!.toFloat(), type))
@@ -114,8 +129,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
 
         val pieData = PieData(pieDataSet)
 
-        binding.pieChart.data = pieData
-        binding.pieChart.invalidate()
+        binding.homeFinanceChart.data = pieData
+        binding.homeFinanceChart.invalidate()
     }
 
 
@@ -131,28 +146,107 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         AnalyticsFragment.start(findNavController())
     }
 
+    override fun openInfoFragment(){
+        InfoFragment.start(findNavController())
+    }
+
+    override fun openSideBar() {
+        drawerLayout.open()
+    }
+
+    override fun setItemEnabled(item: MenuItem, isEnabled: Boolean){
+        if(isEnabled){
+            item.icon.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                Color.TRANSPARENT,
+                BlendModeCompat.SRC_ATOP
+            )
+        }else{
+            item.icon.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                requireContext().getColor(R.color.unabled),
+                BlendModeCompat.SRC_ATOP
+            )
+        }
+    }
+
+    override fun getSideBarMenuSize(): Int = binding.homeSidebar.menu.size()
+
+    override fun getSideBarMenuItem(index: Int): MenuItem = binding.homeSidebar.menu[index]
+
+    override fun setScrimAlpha(alpha: Float) {
+        binding.scrimLayout.alpha = alpha
+    }
+
+    override fun setMainLayoutTranslation(translation: Float) {
+        lastTranslation = translation
+        binding.homeMainLayout.translationX = translation
+    }
+
     /**
      * Help fun-s
      */
 
-    private fun setupPieChart(){
-        binding.pieChart.description.isEnabled=false
-        binding.pieChart.legend.isEnabled = false
-        binding.pieChart.isRotationEnabled = false
-        binding.pieChart.isHighlightPerTapEnabled = true
+    private fun setupChart(){
+        binding.homeFinanceChart.description.isEnabled=false
+        binding.homeFinanceChart.legend.isEnabled = false
+        binding.homeFinanceChart.isRotationEnabled = false
+        binding.homeFinanceChart.isHighlightPerTapEnabled = true
 
-        binding.pieChart.setHoleColor(requireContext().getColor(R.color.transparent))
-        binding.pieChart.holeRadius = 90f
+        binding.homeFinanceChart.setHoleColor(requireContext().getColor(R.color.transparent))
+        binding.homeFinanceChart.holeRadius = 90f
 
-        binding.pieChart.renderer.paintRender.setShadowLayer(
+        binding.homeFinanceChart.renderer.paintRender.setShadowLayer(
             1f,
             0f,
-            12f,
+            16f,
             ContextCompat.getColor(requireContext(),
                 R.color.shadow)
         )
     }
 
+    private fun setupSideBar(){
+        toolbar = binding.homeToolbar
+
+        val activity = activity as AppCompatActivity
+        activity.setSupportActionBar(toolbar)
+
+        drawerLayout = binding.homeDrawerLayout
+        drawerLayout.setScrimColor(requireContext().getColor(R.color.transparent))
+        drawerLayout.drawerElevation = 0f
+
+        drawerToggle = ActionBarDrawerToggle(
+            getActivity(),
+            drawerLayout,
+            R.string.add,
+            R.string.app_name
+        )
+
+        drawerToggle.syncState()
+
+
+        val navMenuView = binding.homeSidebar.getChildAt(0) as NavigationMenuView
+        navMenuView.addItemDecoration(
+            com.example.moneycounter.ui.adapter.DividerItemDecoration(requireContext())
+        )
+
+        binding.homeSidebar.itemIconTintList = null
+
+        drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener{
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                presenter.onSlide(drawerView.width, slideOffset)
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+                isDrawerOpened = true
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                isDrawerOpened = false
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {}
+        })
+
+    }
 
     private fun initListeners() {
         binding.buttonHomeIncome.setOnClickListener {
@@ -164,10 +258,9 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         binding.buttonHomeAnalytics.setOnClickListener {
             presenter.onButtonAnalyticsClicked()
         }
-        binding.pieChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener
+        binding.homeFinanceChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener
         {
             override fun onValueSelected(e: Entry, h: Highlight?) {
-                //Log.d("PieChart", e.y.toString())
                 presenter.onFinanceSelected(e.y)
             }
 
@@ -175,6 +268,14 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
                 presenter.onNothingSelected()
             }
         })
+        binding.homeMenuButton.setOnClickListener {
+            presenter.onMenuButtonClicked()
+        }
+
+        binding.homeSidebar.setNavigationItemSelectedListener {
+            presenter.onSidebarItemSelected(it)
+            true
+        }
     }
 
     companion object {

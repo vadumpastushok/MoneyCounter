@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/notification"
+        android:icon="@drawable/sidebar_icon_notifications"
+        android:title="@string/sidebar_text_notifications"/>
+    <item
+        android:id="@+id/sound_notifications"
+        android:icon="@drawable/sidebar_icon_sound_notifications"
+        android:title="@string/sidebar_text_sound_notifications" />
+    <item
+        android:id="@+id/import_data"
+        android:icon="@drawable/sidebar_icon_import_data"
+        android:title="@string/sidebar_text_import_data" />
+    <item
+        android:id="@+id/export_data"
+        android:icon="@drawable/sidebar_icon_export_data"
+        android:title="@string/sidebar_text_export_data" />
+    <item
+        android:id="@+id/renew_subscription"
+        android:icon="@drawable/sidebar_icon_renew_subscription"
+        android:title="@string/sidebar_text_renew_subscription" />
+    <item
+        android:id="@+id/lock_settings"
+        android:icon="@drawable/sidebar_icon_lock_settings"
+        android:title="@string/sidebar_text_lock_settings" />
+    <item
+        android:id="@+id/write_to_us"
+        android:icon="@drawable/sidebar_icon_write_to_us"
+        android:title="@string/sidebar_text_write_to_us" />
+    <item
+        android:id="@+id/rate_app"
+        android:icon="@drawable/sidebar_icon_rate_app"
+        android:title="@string/sidebar_text_rate_app" />
+    <item
+        android:id="@+id/share_app"
+        android:icon="@drawable/sidebar_icon_share_app"
+        android:title="@string/sidebar_text_share_app" />
+    <item
+        android:id="@+id/info"
+        android:icon="@drawable/sidebar_icon_info"
+        android:title="@string/sidebar_text_info" />
+
+</menu>

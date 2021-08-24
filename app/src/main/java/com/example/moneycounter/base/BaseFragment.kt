@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import java.lang.Exception
 
 abstract class BaseFragment<
         VB : ViewBinding

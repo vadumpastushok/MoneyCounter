@@ -25,6 +25,8 @@
     <color name="transparent">#00000000</color>
     <color name="costs_color">#FF8C7F</color>
     <color name="shadow">#29696969</color>
+    <color name="home_scrim">#80FFFFFF</color>
+    <color name="home_background">#0E97D9</color>
 
 
 </resources>

@@ -1,10 +1,27 @@
 <resources>
     <string name="app_name">MoneyCounter</string>
-    <string name="drawable_folder">"drawable"</string>
+    <string name="drawable_folder">drawable</string>
+    <string name="accept">Подтвердить</string>
+    <string name="name">Название</string>
     <string name="next">Далее</string>
     <string name="skip">Пропустить</string>
     <string name="zero">0</string>
     <string name="save">Сохранить</string>
+    <string name="add">Добавить</string>
+    <string name="icon">Иконка</string>
+    <string name="select_color">Выбрать цвет</string>
+
+
+    <string name="notification_text">…</string>
+
+    <string name="channelId_with_sound">channelId_with_sound</string>
+    <string name="channelId_without_sound">channelId_without_sound</string>
+
+    <string name="notification_name_with_sound">Напоминание со звуком </string>
+    <string name="notification_name_without_sound">Беззвучное напоминание </string>
+
+    <string name="descriptionText">подпись</string>
+
 
     <string name="intro_title_mission">Миссия</string>
     <string name="intro_title_costs">Расходы</string>
@@ -21,7 +38,7 @@
     <string name="intro_text_work_hour">Расчитывается исходя из расходов за последний месяц, показывает минимальную необходимую стоимость часа работы.</string>
     <string name="intro_text_budget">В приложении можно сделать экспорт и импорт своих данных при смене девайса</string>
     <string name="intro_text_offline">Контролируете финансы, анализируете свой бюджет, копите деньги, рассчитываете стоимость своей работы — и все это оффлайн.</string>
-    
+
     <string name="intro_policy_terms">
 \n<b>1.</b> Идейные соображения высшего.
 \n<b>1.1.</b> Порядка, а также сложившаяся структура организации требуют определения и уточнения форм развития.
@@ -42,12 +59,25 @@
     <string name="home_text_analytics">Аналитика</string>
     <string name="home_text_development">Развитие личности</string>
     <string name="home_text_deposit">Депозитные программы</string>
-
     
+    
+    <string name="sidebar_text_settings">Настройки</string>
+    <string name="sidebar_text_notifications">Уведомления</string>
+    <string name="sidebar_text_sound_notifications">Звук уведомлений</string>
+    <string name="sidebar_text_import_data">Импортировать данные</string>
+    <string name="sidebar_text_export_data">Экспортировать данные</string>
+    <string name="sidebar_text_renew_subscription">Продлить подписку</string>
+    <string name="sidebar_text_lock_settings">Настройка блокировки</string>
+    <string name="sidebar_text_write_to_us">Напиши нам</string>
+    <string name="sidebar_text_rate_app">Оцени приложение</string>
+    <string name="sidebar_text_share_app">Поделись приложением</string>
+    <string name="sidebar_text_info">О приложении</string>
+
+
     <string name="home_expression">Я знаю, нельзя иметь всего сразу, поэтому я начну с малого — с денег.</string>
     <string name="home_author_expression">Януш Васильковский</string>
-    
-    
+
+
     <string name="category_title_salary">Заработная плата</string>
     <string name="category_title_sponsor">Спонсор</string>
     <string name="category_title_rollback">Вхятка, откат</string>
@@ -87,13 +117,18 @@
     <string name="title_main">Основная</string>
     <string name="title_costs">Расходы</string>
     <string name="title_business">Бизнес</string>
-    <string name="title_add_business">Добавить бизнес</string>
+    <string name="title_create_category">Добавить категорию</string>
     <string name="title_choose_icon">Выберите иконку</string>
     <string name="title_analytics">Аналитика</string>
     <string name="title_piggy_bank">Копилка</string>
     <string name="title_calculate_independence">Расчёт финансовой независимости</string>
 
-
+    <string name="text_info">
+Приложение разработано компанией <b>ITS</b>. \n \n
+Для сотрудничества, отзывов и предложений. Свяжитесь с нами в разделе: <b>Настройки > Напишите нам</b>. \n \n
+Приложение разработано для формирования финансовой грамотности пользователя. \n \n
+<b>2019</b>
+    </string>
 
 
 </resources>

@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.moneycounter.R
 import com.example.moneycounter.databinding.ElMcToolbarBinding
@@ -18,9 +16,14 @@ class MCToolbar @JvmOverloads constructor(
 
     private var binding: ElMcToolbarBinding
     private var backButtonClickListener: () -> Unit = {}
+    private var rightButtonClickListener: () -> Unit = {}
 
     fun setBackButtonClickListener(listener: () -> Unit) {
         backButtonClickListener = listener
+    }
+
+    fun setRightButtonClickListener(listener: () -> Unit) {
+        rightButtonClickListener = listener
     }
 
     init {
@@ -32,6 +35,9 @@ class MCToolbar @JvmOverloads constructor(
         binding = ElMcToolbarBinding.bind(view)
         binding.titleLeftButton.setOnClickListener {
             backButtonClickListener.invoke()
+        }
+        binding.titleRightButton.setOnClickListener {
+            rightButtonClickListener.invoke()
         }
         initAttrs(attrs)
     }
@@ -45,16 +51,18 @@ class MCToolbar @JvmOverloads constructor(
             0
         ).apply {
             try {
-
-                val icon = getResourceId(R.styleable.MCToolbar_right_btn_icon, R.drawable.home_menu)
-                val colorId: Int = getResourceId(R.styleable.MCToolbar_icon_color, R.color.red)
+                val icon = getString(R.styleable.MCToolbar_right_btn_icon)
+                val colorId = getResourceId(R.styleable.MCToolbar_icon_color, R.color.red)
                 val color = context.getColor(colorId)
-                val title = getResourceId(R.styleable.MCToolbar_toolbar_title, R.string.category_title_add)
+                val title = getString(R.styleable.MCToolbar_toolbar_title)
                 val isRightButton = getBoolean(R.styleable.MCToolbar_is_right_button,false)
 
 
+
                 setupLeftButton(color)
-                setupTitleText(title)
+                title?.let{
+                    setupTitleText(title)
+                }
                 if(isRightButton){
                     setupRightButton(icon, color)
                 }
@@ -71,18 +79,25 @@ class MCToolbar @JvmOverloads constructor(
                ColorStateList.valueOf(color)
     }
 
-    fun setupTitleText (@StringRes title : Int){
-        binding.titleText.setText(title)
+    fun setupTitleText (title : String){
+        binding.titleText.text = title
     }
 
-    fun setupRightButton(@DrawableRes icon : Int){
-        binding.titleRightButton.setImageResource(icon)
-    }
+    fun setupRightButton(icon : String? = null, color : Int? = null){
+        icon?.let {
+            binding.titleRightButton.setImageResource(
+                context.resources.getIdentifier(
+                    icon,
+                    context.getString(R.string.drawable_folder),
+                    context.packageName
+                )
+            )
+        }
 
-    fun setupRightButton(@DrawableRes icon : Int, color : Int){
+        color?.let {
             binding.titleRightButton.imageTintList =
                 ColorStateList.valueOf(color)
-            binding.titleRightButton.setImageResource(icon)
+        }
     }
 
     fun setupBottomLine(color: Int){

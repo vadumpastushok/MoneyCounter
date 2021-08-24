@@ -1,8 +1,8 @@
 package com.example.moneycounter.features.category
 
+import android.animation.ValueAnimator
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -18,9 +18,10 @@ import com.example.moneycounter.model.entity.ui.MoneyType
 
 
 class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContract {
-    private val adapter: CategoryAdapter by lazy { CategoryAdapter() }
+    private val adapter: CategoryAdapter by lazy { CategoryAdapter(binding.rvCategory) }
     private val args: CategoryFragmentArgs by navArgs()
     private val presenter: CategoryPresenter by lazy { CategoryPresenter() }
+
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -38,7 +39,7 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
         initListeners()
     }
 
-    override fun openLastFragment(){
+    override fun openHomeFragment(){
         findNavController().popBackStack()
     }
 
@@ -50,7 +51,7 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
         InputAmountFragment.start(findNavController(), id, getMoneyType())
     }
 
-    override fun setTitleText(@StringRes text: Int){
+    override fun setTitleText(text: String){
         binding.categoryTitlebar.setupTitleText(text)
     }
 
@@ -60,6 +61,35 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
 
     override fun getMoneyType(): MoneyType = args.type
 
+
+    private fun startAnim(fromValue: Float, toValue: Float){
+        ValueAnimator.ofFloat(fromValue, toValue).apply {
+            duration = 500
+            addUpdateListener {
+                binding.categoryEditSave.progress = it.animatedValue as Float
+            }
+            start()
+        }
+    }
+
+    override fun setIsEditable(editable: Boolean) {
+        CategoryTouchCallback.setIsMovementEnabled(editable)
+        adapter.setIsEditable(editable)
+
+        if(editable){
+            startAnim(0f, 1f)
+        }else{
+            startAnim(1f, 0f)
+        }
+    }
+
+    override fun notifyItemRemoved(position: Int) {
+        adapter.notifyItemRemoved(position)
+    }
+    override fun notifyItemInserted(position: Int) {
+        adapter.notifyItemInserted(position)
+    }
+
     /**
      * Help fun-s
      */
@@ -68,8 +98,17 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
         binding.categoryTitlebar.setBackButtonClickListener {
             presenter.onBackClicked()
         }
+
+        binding.categoryEditSave.setOnClickListener {
+            presenter.onRightClicked()
+        }
+
         adapter.setCategoryClickedListener { order ->
             presenter.onCategorySelected(order)
+        }
+
+        adapter.setDeleteCategoryClickedListener { index ->
+            presenter.onDeleteCategoryClicked(index)
         }
     }
 
@@ -77,10 +116,12 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
         binding.rvCategory.layoutManager = GridLayoutManager(context,3)
         binding.rvCategory.adapter = adapter
 
+
         val callback: ItemTouchHelper.Callback = CategoryTouchCallback(adapter)
         { presenter.onCategoryPositionChanged(adapter.getData()) }
         val touchHelper = ItemTouchHelper(callback)
         touchHelper.attachToRecyclerView(binding.rvCategory)
+        CategoryTouchCallback.setIsMovementEnabled(false)
     }
 
     companion object {

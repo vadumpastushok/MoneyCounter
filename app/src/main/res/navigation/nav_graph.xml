@@ -36,6 +36,23 @@
         app:popUpTo="@id/nav_graph"
         app:popUpToInclusive="true"/>
 
+<!--    IconPicker-->
+    <fragment
+        android:id="@+id/IconPickerFragment"
+        android:name="com.example.moneycounter.features.icon_picker.IconPickerFragment"
+        android:label="IconPickerFragment"
+        tools:layout="@layout/fragment_icon_picker" >
+        <argument
+            android:name="type"
+            app:argType="com.example.moneycounter.model.entity.ui.MoneyType" />
+        <argument
+            android:name="color"
+            app:argType="integer" />
+    </fragment>
+
+    <action android:id="@+id/action_to_icon_picker"
+        app:destination="@id/IconPickerFragment" />
+
 <!--    Category-->
     <fragment
         android:id="@+id/CategoryFragment"
@@ -59,6 +76,12 @@
         <argument
             android:name="type"
             app:argType="com.example.moneycounter.model.entity.ui.MoneyType" />
+        <argument
+            android:name="icon"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
     </fragment>
 
     <action android:id="@+id/action_to_category_add"
@@ -92,5 +115,14 @@
     <action android:id="@+id/action_to_analytics"
         app:destination="@id/AnalyticsFragment" />
 
+<!--    Info-->
+    <fragment
+        android:id="@+id/InfoFragment"
+        android:name="com.example.moneycounter.features.info.InfoFragment"
+        android:label="InfoFragment"
+        tools:layout="@layout/fragment_info" />
+
+    <action android:id="@+id/action_to_info"
+        app:destination="@id/InfoFragment" />
 
 </navigation>

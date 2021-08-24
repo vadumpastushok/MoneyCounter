@@ -8,9 +8,11 @@ import com.ssynhtn.waveview.WaveView
 
 object Config {
 
-    val PREFERENCES_NAME = "preferences"
-    val PREF_IS_POLICY_CONFIRMED = "isPolicyConfirmed"
-    val PREF_IS_DATABASE_INITALIZED = "isDatabaseInitialized"
+    const val PREFERENCES_NAME = "preferences"
+    const val PREF_IS_POLICY_CONFIRMED = "isPolicyConfirmed"
+    const val PREF_IS_DATABASE_INITALIZED = "isDatabaseInitialized"
+    const val PREF_IS_NOTIFICATION_ENABLED = "isNotificationEnabled"
+    const val PREF_IS_SOUND_NOTIFICATION_ENABLED = "isSoundNotificationEnabled"
 
     val introData = mutableListOf(
         Intro(
