@@ -9,15 +9,16 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.moneycounter.R
 import com.example.moneycounter.app.Config.PREFERENCES_NAME
+import com.example.moneycounter.app.Config.PREF_IS_DATABASE_INITALIZED
 import com.example.moneycounter.app.Config.PREF_IS_POLICY_CONFIRMED
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentStartScreenBinding
 import com.example.moneycounter.features.home.HomeFragment
 import com.example.moneycounter.features.intro.IntroFragment
 
-class StartScreenFragment : BaseFragment<FragmentStartScreenBinding>() {
+class StartScreenFragment : BaseFragment<FragmentStartScreenBinding>(), StartScreenContract {
 
-    private var preferences: SharedPreferences? = null
+    private val presenter by lazy { StartScreenPresenter() }
 
     override fun createViewBinding(
         inflater: LayoutInflater,
@@ -26,29 +27,17 @@ class StartScreenFragment : BaseFragment<FragmentStartScreenBinding>() {
         return FragmentStartScreenBinding.bind(LayoutInflater.from(context).inflate(R.layout.fragment_start_screen,container,false))
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initPreferences()
-
-        if(getIsPolicyConfirmed()) {
-            openHomeScreen()
-        } else if(!getIsPolicyConfirmed()){
-            openIntro()
-        }
+    override fun attachToPresenter() {
+        presenter.attachView(this)
     }
 
-    private fun initPreferences(){
-        preferences = context?.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE) ?: return
-    }
 
-    private fun getIsPolicyConfirmed(): Boolean = preferences?.getBoolean(PREF_IS_POLICY_CONFIRMED, false) ?: false
 
-    private fun openHomeScreen(){
+    override fun openHomeScreen(){
         HomeFragment.start(findNavController())
     }
 
-    private fun openIntro(){
+    override fun openIntro(){
         IntroFragment.start(findNavController())
     }
-
 }

@@ -2,7 +2,7 @@ package com.example.moneycounter.features.intro
 
 import androidx.annotation.StringRes
 import com.example.moneycounter.base.BaseContract
-import com.example.moneycounter.model.entity.Intro
+import com.example.moneycounter.model.entity.ui.Intro
 
 interface IntroContract : BaseContract {
 
@@ -11,8 +11,6 @@ interface IntroContract : BaseContract {
     fun scrollToNext()
 
     fun getCurrentViewPagerPosition(): Int
-
-    fun acceptPolicyTerms()
 
     fun openHome()
 

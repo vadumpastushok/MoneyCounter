@@ -1,10 +1,10 @@
 package com.example.moneycounter.ui.custom
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import com.example.moneycounter.R
 import com.example.moneycounter.databinding.ElRoundTextButtonBinding
 
@@ -38,17 +38,14 @@ class RoundTextButton @JvmOverloads constructor(
         ).apply {
             try {
                 attrs?.let {
-                    val icon = getResourceId(
-                        R.styleable.RoundTextButton_btn_icon,
-                        R.drawable.home_icon_costs
-                    )
-                    val color = getResourceId(R.styleable.RoundTextButton_btn_color, R.color.light_blue)
-                    val title = getString(R.styleable.RoundTextButton_text_title)
+                    val icon = getString(R.styleable.RoundTextButton_btn_icon) ?: return
+                    val colorId = getResourceId(R.styleable.RoundTextButton_btn_color, R.color.light_blue)
+                    val color = context.getColor(colorId)
+                    val title = getResourceId(R.styleable.RoundTextButton_text_title, R.string.category_title_add)
 
-                    binding.ibIcon.setImageResource(icon)
-                    binding.ibIcon.backgroundTintList =
-                        ContextCompat.getColorStateList(context, color)
-                    title?.let { binding.tvTitle.text = title }
+                    setIcon(icon)
+                    setColor(color)
+                    setTitle(title)
                 }
 
             } finally {
@@ -56,14 +53,15 @@ class RoundTextButton @JvmOverloads constructor(
             }
         }
     }
-    fun setIcon(icon: Int){
-        binding.ibIcon.setImageResource(icon)
+    fun setIcon(icon: String){
+        if(context == null)return
+        binding.ibIcon.setImageResource(context.resources.getIdentifier(icon, context.resources.getString(R.string.drawable_folder), context.packageName ))
     }
     fun setColor(color: Int){
-        binding.ibIcon.backgroundTintList= ContextCompat.getColorStateList(context, color)
+        binding.ibIcon.backgroundTintList = ColorStateList.valueOf(color)
     }
     fun setTitle(title: Int){
-        binding.tvTitle.text=resources.getString(title)
+        binding.tvTitle.setText(title)
     }
 
 

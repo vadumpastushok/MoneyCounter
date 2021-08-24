@@ -2,14 +2,16 @@ package com.example.moneycounter.app
 
 import android.graphics.Color
 import com.example.moneycounter.R
-import com.example.moneycounter.model.entity.Intro
-import com.example.moneycounter.model.entity.IntroType
+import com.example.moneycounter.model.entity.ui.Intro
+import com.example.moneycounter.model.entity.ui.IntroType
 import com.ssynhtn.waveview.WaveView
 
 object Config {
 
     val PREFERENCES_NAME = "preferences"
     val PREF_IS_POLICY_CONFIRMED = "isPolicyConfirmed"
+    val PREF_IS_DATABASE_INITALIZED = "isDatabaseInitialized"
+
     val introData = mutableListOf(
         Intro(
             R.string.intro_title_mission,
@@ -58,7 +60,7 @@ object Config {
         WaveView.WaveData(
             1500f,
             133f,
-            300f,
+            180f,
             1125f,
             Color.WHITE,
             Color.WHITE,
@@ -69,7 +71,7 @@ object Config {
         WaveView.WaveData(
             1500f,
             133f,
-            200f,
+            120f,
             750f,
             Color.WHITE,
             Color.WHITE,
@@ -80,7 +82,7 @@ object Config {
         WaveView.WaveData(
             1500f,
             133f,
-            100f,
+            60f,
             375f,
             Color.WHITE,
             Color.WHITE,

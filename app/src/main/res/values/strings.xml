@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">MoneyCounter</string>
+    <string name="drawable_folder">"drawable"</string>
     <string name="next">Далее</string>
     <string name="skip">Пропустить</string>
     <string name="zero">0</string>
@@ -80,6 +81,7 @@
     <string name="category_title_add">""</string>
 
 
+    <string name="title_general">Общее</string>
     <string name="title_income">Доходы</string>
     <string name="title_salary">Зарплата</string>
     <string name="title_main">Основная</string>

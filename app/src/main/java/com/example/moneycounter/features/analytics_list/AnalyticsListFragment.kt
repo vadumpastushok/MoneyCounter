@@ -1,19 +1,23 @@
 package com.example.moneycounter.features.analytics_list
 
-import android.os.Bundle
+import android.animation.ValueAnimator
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moneycounter.R
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentAnalyticsListBinding
-import com.example.moneycounter.features.analytics_pager.AnalyticsListAdapter
-import com.example.moneycounter.model.entity.Analytics
-import com.example.moneycounter.model.entity.MoneyType
+import com.example.moneycounter.model.entity.ui.Analytics
+import com.example.moneycounter.model.entity.ui.MoneyType
+import com.example.moneycounter.utils.RecycleDiffUtilCallback
 
-class AnalyticsListFragment(val moneyType: MoneyType) : BaseFragment<FragmentAnalyticsListBinding>() {
 
+class AnalyticsListFragment(val moneyType: MoneyType) : BaseFragment<FragmentAnalyticsListBinding>(), AnalyticsListContract {
+
+    private val adapter: AnalyticsListAdapter by lazy { AnalyticsListAdapter(moneyType, context) }
+    private val presenter by lazy { AnalyticsListPresenter() }
     override fun createViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -21,42 +25,78 @@ class AnalyticsListFragment(val moneyType: MoneyType) : BaseFragment<FragmentAna
         return FragmentAnalyticsListBinding.bind(LayoutInflater.from(context).inflate(R.layout.fragment_analytics_list,container,false))
     }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupRecycler()
+    override fun attachToPresenter() {
+        presenter.attachView(this)
     }
+
+    override fun initView() {
+        setupRecycler()
+        initListeners()
+    }
+
+    fun test() {
+        showToast("WORK")
+    }
+
+    /**
+     * Contract
+     */
+
+    override fun setData(oldList : MutableList<Analytics>, newList : MutableList<Analytics>){
+        val recycleDiffUtilCallback = RecycleDiffUtilCallback(oldList, newList)
+        val productDiffResult = DiffUtil.calculateDiff(recycleDiffUtilCallback)
+        adapter.setData(newList)
+        productDiffResult.dispatchUpdatesTo(adapter)
+
+    }
+
+    override fun getAnalyticsMoneyType(): MoneyType = moneyType
+
+
+    private var isByDescending: Boolean = true
+    override fun reverseSortImage() {
+
+        val toValue = if (isByDescending) 180f else 0f
+        ValueAnimator.ofFloat(binding.ivAnalyticsListSort.rotation, toValue).apply {
+            duration = 420
+            addUpdateListener {
+                binding.ivAnalyticsListSort.rotation = it.animatedValue as Float
+            }
+            start()
+        }
+
+
+        isByDescending = !isByDescending
+    }
+
+    /**
+     * Help fun-s
+     */
+
+
+    private fun initListeners(){
+        binding.ivAnalyticsListSort.setOnClickListener {
+            presenter.onSortViewClicked()
+        }
+    }
+
     private fun setupRecycler() {
-        val data = mutableListOf(
-            Analytics(R.drawable.category_icon_pet, R.color.yellow,R.string.category_title_pet,100),
-            Analytics(R.drawable.category_icon_gift ,R.color.red,R.string.category_title_gift,100),
-            Analytics(R.drawable.category_icon_games, R.color.light_blue,R.string.category_title_games,100),
-            Analytics(R.drawable.category_icon_pet, R.color.yellow,R.string.category_title_pet,100),
-            Analytics(R.drawable.category_icon_gift ,R.color.red,R.string.category_title_gift,100),
-            Analytics(R.drawable.category_icon_games, R.color.light_blue,R.string.category_title_games,100),
-            Analytics(R.drawable.category_icon_pet, R.color.yellow,R.string.category_title_pet,100),
-            Analytics(R.drawable.category_icon_gift ,R.color.red,R.string.category_title_gift,100),
-            Analytics(R.drawable.category_icon_games, R.color.light_blue,R.string.category_title_games,100),
-            Analytics(R.drawable.category_icon_pet, R.color.yellow,R.string.category_title_pet,100),
-            Analytics(R.drawable.category_icon_gift ,R.color.red,R.string.category_title_gift,100),
-            Analytics(R.drawable.category_icon_games, R.color.light_blue,R.string.category_title_games,100),
-            Analytics(R.drawable.category_icon_pet, R.color.yellow,R.string.category_title_pet,100),
-            Analytics(R.drawable.category_icon_gift ,R.color.red,R.string.category_title_gift,100),
-            Analytics(R.drawable.category_icon_games, R.color.light_blue,R.string.category_title_games,100),
-            Analytics(R.drawable.category_icon_pet, R.color.yellow,R.string.category_title_pet,100),
-            Analytics(R.drawable.category_icon_gift ,R.color.red,R.string.category_title_gift,100),
-            Analytics(R.drawable.category_icon_games, R.color.light_blue,R.string.category_title_games,100),
-        )
-        val context = context ?: return
-        val adapter= AnalyticsListAdapter(moneyType, context)
+        if(getAnalyticsMoneyType() == MoneyType.INCOME) {
+            binding.ivAnalyticsListSort.imageTintList =
+                ColorStateList.valueOf(requireContext().getColor(R.color.dark_blue))
+        }else{
+            binding.ivAnalyticsListSort.imageTintList =
+                ColorStateList.valueOf(requireContext().getColor(R.color.red))
+        }
+
         val manager = LinearLayoutManager(context)
-        binding.analyticsList.adapter = adapter
-        binding.analyticsList.layoutManager = manager
+        binding.rcAnalyticsList.adapter = adapter
+        binding.rcAnalyticsList.layoutManager = manager
 
         val dividerItemDecoration = com.example.moneycounter.ui.adapter.
-        DividerItemDecoration(binding.analyticsList.context)
-        binding.analyticsList.addItemDecoration(dividerItemDecoration)
-
-        adapter.setData(data)
+        DividerItemDecoration(binding.rcAnalyticsList.context)
+        binding.rcAnalyticsList.addItemDecoration(dividerItemDecoration)
     }
+
 }
+

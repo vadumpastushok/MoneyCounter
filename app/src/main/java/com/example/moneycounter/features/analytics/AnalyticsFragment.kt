@@ -1,8 +1,6 @@
 package com.example.moneycounter.features.analytics
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.navigation.NavController
@@ -12,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.moneycounter.R
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentAnalyticsBinding
+
 
 class AnalyticsFragment : BaseFragment<FragmentAnalyticsBinding>(), AnalyticsContract {
 
@@ -35,18 +34,12 @@ class AnalyticsFragment : BaseFragment<FragmentAnalyticsBinding>(), AnalyticsCon
     }
 
 
-
-
     override fun openLastFragment(){
         findNavController().popBackStack()
     }
 
-    override fun openGraphPage(){
-        binding.MCToolbarAnalytics.setupTitleText(R.string.title_analytics)
-    }
-
-    override fun openListPage(){
-        binding.MCToolbarAnalytics.setupTitleText(R.string.home_text_income)
+    override fun setTitleText(@StringRes text: Int){
+        binding.MCToolbarAnalytics.setupTitleText(text)
     }
 
     /**
@@ -62,7 +55,7 @@ class AnalyticsFragment : BaseFragment<FragmentAnalyticsBinding>(), AnalyticsCon
     private fun initListeners(){
         binding.MCToolbarAnalytics.setBackButtonClickListener { presenter.onBackButtonClicked() }
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+        navController.addOnDestinationChangedListener{ _, destination, _ ->
             when(destination.id) {
                 R.id.graphFragment -> {
                     presenter.onGraphPageSelected()
@@ -73,8 +66,6 @@ class AnalyticsFragment : BaseFragment<FragmentAnalyticsBinding>(), AnalyticsCon
             }
         }
     }
-
-
 
     companion object {
         fun start(navController: NavController) {

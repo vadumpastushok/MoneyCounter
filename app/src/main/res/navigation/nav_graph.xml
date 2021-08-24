@@ -44,11 +44,26 @@
         tools:layout="@layout/fragment_category" >
         <argument
             android:name="type"
-            app:argType="com.example.moneycounter.model.entity.MoneyType" />
+            app:argType="com.example.moneycounter.model.entity.ui.MoneyType" />
     </fragment>
 
     <action android:id="@+id/action_to_category"
         app:destination="@id/CategoryFragment"/>
+
+<!--    CategoryAdd-->
+    <fragment
+        android:id="@+id/CategoryAddFragment"
+        android:name="com.example.moneycounter.features.category_add.CategoryAddFragment"
+        android:label="CategoryAddFragment"
+        tools:layout="@layout/fragment_category_add">
+        <argument
+            android:name="type"
+            app:argType="com.example.moneycounter.model.entity.ui.MoneyType" />
+    </fragment>
+
+    <action android:id="@+id/action_to_category_add"
+        app:destination="@id/CategoryAddFragment" />
+
 
 <!--    InputAmount-->
     <fragment
@@ -58,10 +73,10 @@
         tools:layout="@layout/fragment_input_amount" >
         <argument
             android:name="id"
-            app:argType="integer" />
+            app:argType="long" />
         <argument
             android:name="type"
-            app:argType="com.example.moneycounter.model.entity.MoneyType" />
+            app:argType="com.example.moneycounter.model.entity.ui.MoneyType" />
     </fragment>
 
     <action android:id="@+id/action_to_input_amount"
@@ -76,7 +91,6 @@
 
     <action android:id="@+id/action_to_analytics"
         app:destination="@id/AnalyticsFragment" />
-
 
 
 </navigation>

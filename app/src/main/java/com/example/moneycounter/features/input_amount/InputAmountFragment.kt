@@ -1,23 +1,19 @@
 package com.example.moneycounter.features.input_amount
 
 import android.content.Context
-import android.os.Bundle
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.moneycounter.NavGraphDirections
-import com.example.moneycounter.app.App
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentInputAmountBinding
-import com.example.moneycounter.features.category.CategoryPresenter
 import com.example.moneycounter.features.home.HomeFragment
-import com.example.moneycounter.model.entity.Category
-import com.example.moneycounter.model.entity.MoneyType
+import com.example.moneycounter.model.entity.db.Category
+import com.example.moneycounter.model.entity.ui.MoneyType
 
 class InputAmountFragment: BaseFragment<FragmentInputAmountBinding>(), InputAmountContract {
     private val args: InputAmountFragmentArgs by navArgs()
@@ -35,15 +31,15 @@ class InputAmountFragment: BaseFragment<FragmentInputAmountBinding>(), InputAmou
     }
 
     override fun initView() {
-        val item: Category = when(args.type){
-            MoneyType.INCOME -> App.incomeCategories.firstOrNull { it.id == args.id }!!
-            MoneyType.COSTS -> App.costsCategories.firstOrNull { it.id == args.id }!!
-        }
-        setup(item)
-
         initListeners()
         showKeyboard()
     }
+
+    /**
+     * Contract
+     */
+
+    override fun getFragmentArgs(): InputAmountFragmentArgs = args
 
     override fun showKeyboard(){
         if(binding.editInputAmount.requestFocus()) {
@@ -67,20 +63,26 @@ class InputAmountFragment: BaseFragment<FragmentInputAmountBinding>(), InputAmou
         findNavController().popBackStack()
     }
 
-    /**
-     * Help fun-s
-     */
-
-    private fun setup(item : Category){
+    override fun setupView(item : Category){
         binding.MCToolbar.setupLeftButton(item.color)
         binding.MCToolbar.setupTitleText(item.title)
+        binding.MCToolbar.setupBottomLine(item.color)
 
         binding.imageInputAmount.setIcon(item.icon)
         binding.imageInputAmount.setColor(item.color)
 
         binding.btnInputAmount.backgroundTintList =
-            ContextCompat.getColorStateList(requireContext(), item.color)
+            ColorStateList.valueOf(item.color)
     }
+
+    override fun getAmount(): String {
+        return binding.editInputAmount.text.toString()
+    }
+
+    /**
+     * Help fun-s
+     */
+
 
     private fun initListeners(){
         binding.MCToolbar.setBackButtonClickListener {
@@ -93,9 +95,8 @@ class InputAmountFragment: BaseFragment<FragmentInputAmountBinding>(), InputAmou
     }
 
 
-
     companion object{
-        fun start(navController : NavController, id : Int, type : MoneyType){
+        fun start(navController : NavController, id : Long, type : MoneyType){
             val direction = NavGraphDirections.actionToInputAmount(id, type)
             navController.navigate(direction)
         }

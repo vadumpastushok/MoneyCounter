@@ -22,7 +22,7 @@
         android:id="@+id/analyticsListFragment"
         android:name="com.example.moneycounter.features.analytics_pager.AnalyticsPagerFragment"
         android:label="AnalyticsIncomeFragment"
-        tools:layout="@layout/fragment_analytics_pager" />
+        tools:layout="@layout/fragment_analytics_pager"/>
 
     <action android:id="@+id/action_to_analytics_income"
         app:destination="@id/analyticsListFragment"

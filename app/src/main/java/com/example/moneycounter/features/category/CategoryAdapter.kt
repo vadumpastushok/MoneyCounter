@@ -5,16 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moneycounter.R
 import com.example.moneycounter.databinding.ItemCategoryBinding
-import com.example.moneycounter.model.entity.Category
+import com.example.moneycounter.model.entity.db.Category
+import java.util.*
 
 
-class CategoryAdapter() : RecyclerView.Adapter<CategoryViewHolder>() {
+class CategoryAdapter :
+    RecyclerView.Adapter<CategoryViewHolder>(),
+    CategoryTouchAdapter {
 
     private var data: MutableList<Category> = mutableListOf()
-    private var categoryListener: (position: Int) -> Unit = {}
+    private var categoryClickedListener: (position: Int) -> Unit = {}
 
-    fun setCategoryListener(listener: (position: Int) -> Unit){
-        categoryListener = listener
+    fun setCategoryClickedListener(listener: (order: Int) -> Unit){
+        categoryClickedListener = listener
     }
 
     fun setData(newData: MutableList<Category>) {
@@ -23,6 +26,27 @@ class CategoryAdapter() : RecyclerView.Adapter<CategoryViewHolder>() {
     }
 
     fun getData() = data
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
+
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                Collections.swap(data, i, i + 1)
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                Collections.swap(data, i, i - 1)
+            }
+        }
+
+        for(i in 0 until data.size-1)data[i].order = i
+
+
+        notifyItemMoved(fromPosition, toPosition)
+        return true
+    }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         return CategoryViewHolder(
@@ -38,7 +62,7 @@ class CategoryAdapter() : RecyclerView.Adapter<CategoryViewHolder>() {
 
     override fun onBindViewHolder(viewHolder: CategoryViewHolder, position: Int) {
         viewHolder.itemView.setOnClickListener {
-            categoryListener.invoke(position)
+            categoryClickedListener.invoke(viewHolder.adapterPosition)
         }
 
         val binding = ItemCategoryBinding.bind(viewHolder.itemView)

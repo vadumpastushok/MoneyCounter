@@ -9,6 +9,14 @@ interface HomeContract: BaseContract {
 
     fun startWaves()
 
+    fun setGeneral(sum: Int)
+
+    fun setIncome(percent: Float, sum: Int)
+
+    fun setCosts(percent: Float, sum: Int)
+
+    fun setChartData(incomeAmount: Float, costsAmount: Float )
+
     fun openCategoriesIncome()
 
     fun openCategoriesCosts()

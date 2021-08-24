@@ -1,6 +1,9 @@
 package com.example.moneycounter.features.intro
 
+import android.content.Context
 import com.example.moneycounter.R
+import com.example.moneycounter.app.App
+import com.example.moneycounter.app.App.Companion.context
 import com.example.moneycounter.app.Config
 import com.example.moneycounter.base.BasePresenter
 
@@ -20,7 +23,8 @@ class IntroPresenter : BasePresenter<IntroContract>() {
         if(nextPosition < Config.introData.size) {
             rootView?.scrollToNext()
         } else {
-            rootView?.acceptPolicyTerms()
+            val preferences = context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE)
+            preferences.edit().putBoolean(Config.PREF_IS_POLICY_CONFIRMED, true).apply()
             rootView?.openHome()
         }
     }

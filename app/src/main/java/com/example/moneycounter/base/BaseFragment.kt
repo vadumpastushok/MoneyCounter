@@ -12,7 +12,7 @@ import java.lang.Exception
 
 abstract class BaseFragment<
         VB : ViewBinding
-> : Fragment(){
+> : Fragment(), BaseContract {
 
     private var viewBinding: VB? = null
 
@@ -39,7 +39,7 @@ abstract class BaseFragment<
 
     open fun attachToPresenter() {}
 
-    fun showToast(text: String) {
+    override fun showToast(text: String) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 

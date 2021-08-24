@@ -1,5 +1,6 @@
 package com.example.moneycounter.features.analytics
 
+import com.example.moneycounter.R
 import com.example.moneycounter.base.BasePresenter
 
 class AnalyticsPresenter: BasePresenter<AnalyticsContract>() {
@@ -9,10 +10,10 @@ class AnalyticsPresenter: BasePresenter<AnalyticsContract>() {
     }
 
     fun onGraphPageSelected(){
-        rootView?.openGraphPage()
+        rootView?.setTitleText(R.string.title_analytics)
     }
 
     fun onListPageSelected(){
-        rootView?.openListPage()
+        rootView?.setTitleText(R.string.home_text_income)
     }
 }

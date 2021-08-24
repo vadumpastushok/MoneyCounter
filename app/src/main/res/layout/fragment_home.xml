@@ -15,15 +15,13 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_wave_view"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@id/home_wave_view">
 
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/home_meny_button"
+        android:id="@+id/home_menu_button"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
@@ -38,12 +36,12 @@
         android:id="@+id/home_wave_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/imageView"
+        app:layout_constraintBottom_toBottomOf="@id/pieChart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
@@ -55,7 +53,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/home_diagram" />
+        />
+
+    <TextView
+        android:id="@+id/finance_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/roboto_regular"
+        tools:text="Доход"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/finance_percent_view"
+        app:layout_constraintEnd_toEndOf="@+id/pieChart"
+        app:layout_constraintStart_toStartOf="@+id/pieChart" />
+
+    <TextView
+        android:id="@+id/finance_percent_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_light"
+        tools:text="66.9%"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="@+id/pieChart"
+        app:layout_constraintEnd_toEndOf="@+id/pieChart"
+        app:layout_constraintStart_toStartOf="@+id/pieChart"
+        app:layout_constraintTop_toTopOf="@+id/pieChart" />
+
+    <TextView
+        android:id="@+id/finance_sum_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto_regular"
+        tools:text="5480.00"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/pieChart"
+        app:layout_constraintStart_toStartOf="@+id/pieChart"
+        app:layout_constraintTop_toBottomOf="@+id/finance_percent_view" />
 
     <TextView
         android:id="@+id/tv_home_expression"
@@ -96,7 +133,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginBottom="24dp"
         app:btn_color="@color/yellow"
-        app:btn_icon="@drawable/home_icon_income"
+        app:btn_icon="home_icon_income"
         app:layout_constraintBottom_toTopOf="@+id/button_home_development"
         app:layout_constraintStart_toStartOf="parent"
         app:text_title="@string/home_text_income" />
@@ -107,7 +144,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         app:btn_color="@color/purple"
-        app:btn_icon="@drawable/home_icon_costs"
+        app:btn_icon="home_icon_costs"
         app:layout_constraintBottom_toTopOf="@+id/button_home_deposit"
         app:layout_constraintEnd_toStartOf="@+id/button_home_analytics"
         app:layout_constraintStart_toEndOf="@+id/button_home_income"
@@ -120,7 +157,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         app:btn_color="@color/red"
-        app:btn_icon="@drawable/home_icon_analytics"
+        app:btn_icon="home_icon_analytics"
         app:layout_constraintBottom_toTopOf="@+id/button_home_deposit"
         app:layout_constraintEnd_toEndOf="parent"
         app:text_title="@string/home_text_analytics" />
@@ -131,7 +168,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         app:btn_color="@color/green"
-        app:btn_icon="@drawable/home_icon_development"
+        app:btn_icon="home_icon_development"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_home_costs"
         app:layout_constraintStart_toEndOf="@+id/button_home_income"
@@ -143,7 +180,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         app:btn_color="@color/light_blue"
-        app:btn_icon="@drawable/home_icon_deposit"
+        app:btn_icon="home_icon_deposit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_home_analytics"
         app:layout_constraintStart_toEndOf="@+id/button_home_costs"

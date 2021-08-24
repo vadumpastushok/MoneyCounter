@@ -5,6 +5,7 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+    <color name="black_65">#EFEFEF</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
@@ -22,5 +23,8 @@
     <color name="dark_text">#444444</color>
     <color name="selected_item">#2F80ED</color>
     <color name="transparent">#00000000</color>
+    <color name="costs_color">#FF8C7F</color>
+    <color name="shadow">#29696969</color>
+
 
 </resources>

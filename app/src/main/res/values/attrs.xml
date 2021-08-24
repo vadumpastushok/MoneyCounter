@@ -1,6 +1,6 @@
 <resources>
     <declare-styleable name="RoundTextButton">
-        <attr name="btn_icon" format="reference" />
+        <attr name="btn_icon" format="string" />
         <attr name="btn_color" format="reference" />
         <attr name="text_title" format="reference" />
     </declare-styleable>

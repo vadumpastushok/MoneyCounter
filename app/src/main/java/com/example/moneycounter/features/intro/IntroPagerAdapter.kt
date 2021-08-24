@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moneycounter.R
 import com.example.moneycounter.databinding.PolicyItemIntroBinding
 import com.example.moneycounter.databinding.StandardItemIntroBinding
-import com.example.moneycounter.model.entity.Intro
-import com.example.moneycounter.model.entity.IntroType
+import com.example.moneycounter.model.entity.ui.Intro
+import com.example.moneycounter.model.entity.ui.IntroType
 
 
 class IntroPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
