@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.moneycounter.base.BaseActivity
 import com.example.moneycounter.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun createViewBinding(inflater: LayoutInflater): ActivityMainBinding {

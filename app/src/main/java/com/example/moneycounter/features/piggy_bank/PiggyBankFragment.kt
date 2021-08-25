@@ -19,14 +19,18 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.google.android.material.slider.Slider
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-
+@AndroidEntryPoint
 class PiggyBankFragment: BaseFragment<FragmentPiggyBankBinding>(), PiggyBankContract {
 
-    private val presenter by lazy { PiggyBankPresenter() }
+    @Inject
+    lateinit var presenter: PiggyBankPresenter
+
     override fun createViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -39,7 +43,6 @@ class PiggyBankFragment: BaseFragment<FragmentPiggyBankBinding>(), PiggyBankCont
     }
 
     override fun initView() {
-
         setupChart(binding.piggyBankDateChart)
         setupChart(binding.piggyBankSavedChart)
         initListeners()

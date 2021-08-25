@@ -224,6 +224,9 @@
         android:name="com.example.moneycounter.features.calculate.CalculateFragment"
         android:label="CalculateFragment"
         tools:layout="@layout/fragment_calculate" >
+        <argument
+            android:name="currencyId"
+            app:argType="long" />
     </fragment>
 
     <action android:id="@+id/action_to_calculate"

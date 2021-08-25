@@ -12,10 +12,14 @@ import com.example.moneycounter.databinding.FragmentStartScreenBinding
 import com.example.moneycounter.features.home.HomeFragment
 import com.example.moneycounter.features.intro.IntroFragment
 import com.example.moneycounter.ui.custom.NumberButton
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class StartScreenFragment : BaseFragment<FragmentStartScreenBinding>(), StartScreenContract {
 
-    private val presenter by lazy { StartScreenPresenter() }
+    @Inject
+    lateinit var presenter: StartScreenPresenter
 
     override fun createViewBinding(
         inflater: LayoutInflater,

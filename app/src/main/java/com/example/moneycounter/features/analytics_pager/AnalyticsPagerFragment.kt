@@ -11,15 +11,18 @@ import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentAnalyticsPagerBinding
 import com.example.moneycounter.features.analytics_list.AnalyticsListFragment
 import com.example.moneycounter.model.entity.ui.MoneyType
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class AnalyticsPagerFragment : BaseFragment<FragmentAnalyticsPagerBinding>(), AnalyticsPagerContract {
 
+    @Inject
+    lateinit var presenter: AnalyticsPagerPresenter
     private val fragments = listOf(
         AnalyticsListFragment(MoneyType.INCOME),
         AnalyticsListFragment(MoneyType.COSTS)
     )
-    private val presenter by lazy { AnalyticsPagerPresenter() }
 
     override fun createViewBinding(
         inflater: LayoutInflater,

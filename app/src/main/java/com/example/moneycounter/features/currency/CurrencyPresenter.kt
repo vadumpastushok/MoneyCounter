@@ -2,40 +2,26 @@ package com.example.moneycounter.features.currency
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App
 import com.example.moneycounter.app.Config
 import com.example.moneycounter.base.BasePresenter
-import com.example.moneycounter.model.api.GetCurrency
-import com.example.moneycounter.model.db.AppDatabase
-import com.example.moneycounter.model.db.DBConfig
+import com.example.moneycounter.model.api.ApiModel
 import com.example.moneycounter.model.db.DatabaseManager
 import com.example.moneycounter.model.entity.api.ApiCurrency
 import com.example.moneycounter.model.entity.db.Currency
 import com.example.moneycounter.model.entity.ui.CurrencyType
 import com.mynameismidori.currencypicker.ExtendedCurrency
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
+import javax.inject.Inject
 
-class CurrencyPresenter: BasePresenter<CurrencyContract>() {
-
-    private lateinit var databaseManager: DatabaseManager
-    private var myCompositeDisposable: CompositeDisposable? = null
+class CurrencyPresenter @Inject constructor(
+    private val databaseManager: DatabaseManager,
+    private val apiModel: ApiModel
+): BasePresenter<CurrencyContract>() {
 
     override fun onViewAttached() {
-        val db = Room.databaseBuilder(
-            App.context,
-            AppDatabase::class.java, DBConfig.DB_NAME
-        ).build()
-        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
-
         loadData()
         if(!isDataRecentlyUpdated()) {
             setupApiConnection()
@@ -77,26 +63,17 @@ class CurrencyPresenter: BasePresenter<CurrencyContract>() {
         preferences.edit().putLong(Config.PREF_LAST_TIME_UPDATE_CURRENCIES, System.currentTimeMillis()).apply()
     }
 
-
-
+    fun onCurrencyClicked(id: Long){
+        rootView?.openCalculateFragment(id)
+    }
 
     private fun setupApiConnection(){
-        myCompositeDisposable = CompositeDisposable()
-
-        val requestInterface = Retrofit.Builder()
-            .baseUrl(App.context.getString(R.string.api_base_url))
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build().create(GetCurrency::class.java)
-
-
-        myCompositeDisposable?.add(requestInterface.getCurrency()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
+        apiModel.getCurrency()
             .subscribe(
                 { list -> handleResponse(list)},
                 { checkIsRecycleEmpty()}
-            ))
+            )
+            .let { myCompositeDisposable.add(it) }
     }
 
     private fun checkIsRecycleEmpty(){
@@ -121,8 +98,6 @@ class CurrencyPresenter: BasePresenter<CurrencyContract>() {
                 val fromCurrency = generalCurrencyList.find { it.numericCode == apiCurrency.currencyCodeB }
                 val toCurrency = generalCurrencyList.find { it.numericCode == apiCurrency.currencyCodeA }
 
-
-
                 val rateBuy = apiCurrency.rateBuy
                 val rateSell = apiCurrency.rateSell
                 val rateCross = apiCurrency.rateCross
@@ -143,7 +118,7 @@ class CurrencyPresenter: BasePresenter<CurrencyContract>() {
                 ExtendedCurrency.getCurrencyByISO(toCurrency.currencyCode) != null
             ) {
 
-                    val flag = App.context.resources.getResourceEntryName(ExtendedCurrency.getCurrencyByISO(toCurrency.currencyCode).flag)
+                val flag = App.context.resources.getResourceEntryName(ExtendedCurrency.getCurrencyByISO(toCurrency.currencyCode).flag)
 
                 val newCurrency = Currency(
                         toCurrency.getDisplayName(Locale(App.context.getString(R.string.ru))),
@@ -159,16 +134,13 @@ class CurrencyPresenter: BasePresenter<CurrencyContract>() {
                         resultList.add(Currency("", "", "", "", "", CurrencyType.CurrencySeparator, 6))
                     }
             }
-
         }
-
-
         rootView?.setupRecycleView(resultList)
         updateData(resultList)
     }
 
     fun onFragmentDestroyed(){
-        myCompositeDisposable?.clear()
+        myCompositeDisposable.clear()
     }
 
     fun onBackClicked(){

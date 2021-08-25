@@ -22,7 +22,6 @@
     <string name="action_change">изменить</string>
     <string name="action_remove">удалить</string>
 
-    <string name="api_base_url">https://api.monobank.ua/bank/</string>
     <string name="no_internet">Нет соединения с интернетом</string>
     <string name="last_update">Последнее обновление</string>
     <string name="at">в</string>

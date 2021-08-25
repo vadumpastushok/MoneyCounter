@@ -54,11 +54,15 @@ interface HomeContract: BaseContract {
 
     fun openWriteToUsFragment()
 
+    fun checkPermissionAndRequest(): Boolean
+
+    fun openChooseFileDialog()
+
+    fun openChooseDirectoryDialog()
+
     fun openLockSettingsFragment()
 
     fun openInfoFragment()
-
-    fun onDataImported(incomeAmount: Float, costsAmount: Float)
 
     fun setScrimAlpha(alpha: Float)
 

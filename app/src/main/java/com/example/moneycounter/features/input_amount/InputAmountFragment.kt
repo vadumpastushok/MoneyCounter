@@ -14,10 +14,15 @@ import com.example.moneycounter.databinding.FragmentInputAmountBinding
 import com.example.moneycounter.features.home.HomeFragment
 import com.example.moneycounter.model.entity.db.Category
 import com.example.moneycounter.model.entity.ui.MoneyType
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class InputAmountFragment: BaseFragment<FragmentInputAmountBinding>(), InputAmountContract {
+
+    @Inject
+    lateinit var presenter: InputAmountPresenter
     private val args: InputAmountFragmentArgs by navArgs()
-    private val presenter: InputAmountPresenter by lazy { InputAmountPresenter() }
 
     override fun createViewBinding(
         inflater: LayoutInflater,

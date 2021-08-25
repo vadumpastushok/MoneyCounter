@@ -20,12 +20,16 @@ import com.example.moneycounter.features.category_add.CategoryAddFragment
 import com.example.moneycounter.features.input_amount.InputAmountFragment
 import com.example.moneycounter.model.entity.db.Category
 import com.example.moneycounter.model.entity.ui.MoneyType
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContract {
+
+    @Inject
+    lateinit var presenter: CategoryPresenter
     private val adapter: CategoryAdapter by lazy { CategoryAdapter(binding.rvCategory) }
     private val args: CategoryFragmentArgs by navArgs()
-    private val presenter: CategoryPresenter by lazy { CategoryPresenter() }
 
     override fun createViewBinding(
         inflater: LayoutInflater,

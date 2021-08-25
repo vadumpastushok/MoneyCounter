@@ -5,8 +5,9 @@ import com.example.moneycounter.R
 import com.example.moneycounter.app.App
 import com.example.moneycounter.app.Config
 import com.example.moneycounter.base.BasePresenter
+import javax.inject.Inject
 
-class SetPasswordPresenter: BasePresenter<SetPasswordContract>() {
+class SetPasswordPresenter @Inject constructor(): BasePresenter<SetPasswordContract>() {
 
     private val preferences by lazy { App.context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE) }
     private var currentPassword: String = ""
@@ -33,9 +34,6 @@ class SetPasswordPresenter: BasePresenter<SetPasswordContract>() {
             }
         }
     }
-
-
-
 
     private fun getPassword(){
         val password = preferences.getString(Config.PREF_PASSWORD, "")

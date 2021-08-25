@@ -18,6 +18,4 @@ interface CurrencyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCurrency(currencies: MutableList<Currency>)
 
-    @Query("DELETE FROM ${DBConfig.Currency.TABLE_NAME}")
-    suspend fun deleteCurrencies()
 }

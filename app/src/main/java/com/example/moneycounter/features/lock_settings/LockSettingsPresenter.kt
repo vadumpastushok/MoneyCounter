@@ -5,14 +5,14 @@ import androidx.biometric.BiometricManager
 import com.example.moneycounter.app.App
 import com.example.moneycounter.app.Config
 import com.example.moneycounter.base.BasePresenter
+import javax.inject.Inject
 
-class LockSettingsPresenter: BasePresenter<LockSettingsContract>() {
+class LockSettingsPresenter @Inject constructor(): BasePresenter<LockSettingsContract>() {
 
     private val preferences by lazy { App.context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE) }
     override fun onViewAttached() {
         getPasswordSettings()
     }
-
 
     private fun getPasswordSettings() {
         val password = preferences.getString(Config.PREF_PASSWORD, "") ?: ""

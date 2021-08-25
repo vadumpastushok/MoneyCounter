@@ -8,6 +8,8 @@ interface CurrencyContract: BaseContract {
 
     fun openLastFragment()
 
+    fun openCalculateFragment(id: Long)
+
     fun setupRecycleView(data: MutableList<Currency>)
 
     fun getRecycleView() : RecyclerView

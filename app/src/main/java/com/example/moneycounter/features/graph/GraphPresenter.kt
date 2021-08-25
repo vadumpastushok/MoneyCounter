@@ -1,28 +1,19 @@
 package com.example.moneycounter.features.graph
 
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
-import com.example.moneycounter.app.App
 import com.example.moneycounter.base.BasePresenter
-import com.example.moneycounter.model.db.AppDatabase
-import com.example.moneycounter.model.db.DBConfig
 import com.example.moneycounter.model.db.DatabaseManager
 import com.example.moneycounter.model.entity.db.Finance
 import com.example.moneycounter.model.entity.db.GraphEntity
 import com.example.moneycounter.model.entity.ui.MoneyType
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class GraphPresenter: BasePresenter<GraphContract>() {
-    private lateinit var databaseManager: DatabaseManager
+class GraphPresenter @Inject constructor(
+    private val databaseManager: DatabaseManager
+): BasePresenter<GraphContract>() {
 
     override fun onViewAttached() {
-        val db = Room.databaseBuilder(
-            App.context,
-            AppDatabase::class.java,
-            DBConfig.DB_NAME
-        ).build()
-        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
-
         getFinances()
     }
 
@@ -37,7 +28,7 @@ class GraphPresenter: BasePresenter<GraphContract>() {
 
     private suspend fun formatData(data: MutableList<Finance>, moneyType: MoneyType): MutableMap<Long, GraphEntity?> {
         val graphDataList = data
-            .map { GraphEntity(it.amount, it.date, databaseManager.getMoneyTypeById(it.category_id) ?: moneyType) }
+            .map { GraphEntity(it.amount, it.date, databaseManager.getMoneyTypeById(it.category_id)) }
             .filter { it.moneyType == moneyType }
             .sortedBy { it.date }
             .toMutableList()

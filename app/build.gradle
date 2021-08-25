@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-kapt'
 }
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 
 android {
@@ -91,6 +92,7 @@ dependencies {
 
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
     //MPAndroidChart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
@@ -119,5 +121,8 @@ dependencies {
 
     //Country Flag
     implementation 'com.github.midorikocak:currency-picker-android:1.2.1'
-    
+
+    // Dagger + Hilt
+    implementation "com.google.dagger:hilt-android:2.38.1"
+    kapt "com.google.dagger:hilt-compiler:2.38.1"
 }

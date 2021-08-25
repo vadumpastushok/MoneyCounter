@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
 class CategoryTouchCallback(
     adapter: CategoryAdapter,
-    val categoryMovedListener: () -> Unit
+    private val categoryMovedListener: () -> Unit
 ) :
     ItemTouchHelper.Callback() {
 

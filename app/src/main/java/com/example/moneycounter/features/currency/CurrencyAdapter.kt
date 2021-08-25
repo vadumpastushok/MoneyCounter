@@ -16,6 +16,7 @@ import com.example.moneycounter.model.entity.ui.CurrencyType
 class CurrencyAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var data = mutableListOf<Currency>()
+    private var onCurrencyClicked: (id: Long) -> Unit = {}
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             CurrencyType.Currency.type -> {
@@ -68,7 +69,15 @@ class CurrencyAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 currencyVH.binding.tvFirstRate.text = data[position].firstRate
             }
             currencyVH.binding.tvSecondRate.text = data[position].secondRate
+
+            currencyVH.binding.layoutItemCurrency.setOnClickListener {
+                onCurrencyClicked(data[position].id)
+            }
         }
+    }
+
+    fun setOnCurrencyClicked(listener: (id: Long) -> Unit){
+        onCurrencyClicked = listener
     }
 
     override fun getItemCount(): Int {

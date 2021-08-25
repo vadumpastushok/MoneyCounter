@@ -3,8 +3,9 @@ package com.example.moneycounter.features.analytics
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App
 import com.example.moneycounter.base.BasePresenter
+import javax.inject.Inject
 
-class AnalyticsPresenter: BasePresenter<AnalyticsContract>() {
+class AnalyticsPresenter @Inject constructor(): BasePresenter<AnalyticsContract>() {
 
     fun onBackButtonClicked(){
         rootView?.openLastFragment()

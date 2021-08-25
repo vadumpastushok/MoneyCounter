@@ -5,11 +5,13 @@ import com.example.moneycounter.model.entity.db.Currency
 
 interface CalculateContract: BaseContract {
 
+    fun getCurrencyId(): Long
+
     fun hideKeyboard()
 
     fun openLastFragment()
 
-    fun setupRecycleView(data: MutableList<Currency>)
+    fun setData(data: MutableList<Currency>)
 
     fun showMessage(message: String)
 

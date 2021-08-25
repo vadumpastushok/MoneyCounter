@@ -11,12 +11,16 @@ import com.example.moneycounter.NavGraphDirections
 import com.example.moneycounter.R
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentCurrencyBinding
+import com.example.moneycounter.features.calculate.CalculateFragment
 import com.example.moneycounter.model.entity.db.Currency
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class CurrencyFragment: BaseFragment<FragmentCurrencyBinding>(), CurrencyContract {
 
-    private val presenter by lazy { CurrencyPresenter() }
-
+    @Inject
+    lateinit var presenter: CurrencyPresenter
     override fun createViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -41,9 +45,20 @@ class CurrencyFragment: BaseFragment<FragmentCurrencyBinding>(), CurrencyContrac
      * Contract
      */
 
+
+
+    override fun openLastFragment() {
+        findNavController().popBackStack()
+    }
+
+    override fun openCalculateFragment(id: Long) {
+        CalculateFragment.start(findNavController(), id)
+    }
+
     override fun setupRecycleView(data: MutableList<Currency>){
         val adapter = CurrencyAdapter()
         adapter.setData(data)
+        adapter.setOnCurrencyClicked { presenter.onCurrencyClicked(it) }
         binding.rvCurrency.adapter = adapter
         binding.rvCurrency.layoutManager = LinearLayoutManager(requireContext())
 
@@ -61,13 +76,10 @@ class CurrencyFragment: BaseFragment<FragmentCurrencyBinding>(), CurrencyContrac
         binding.tvMessageCurrencies.text = message
         binding.tvMessageCurrencies.isVisible = true
     }
+
     /**
      * Help fun-s
      */
-
-    override fun openLastFragment() {
-        findNavController().popBackStack()
-    }
 
     private fun initListeners(){
         binding.toolbarCurrency.setBackButtonClickListener {

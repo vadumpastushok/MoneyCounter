@@ -1,31 +1,23 @@
 package com.example.moneycounter.features.category
 
-import android.widget.Toast
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App.Companion.context
 import com.example.moneycounter.base.BasePresenter
-import com.example.moneycounter.model.db.AppDatabase
-import com.example.moneycounter.model.db.DBConfig
 import com.example.moneycounter.model.db.DatabaseManager
 import com.example.moneycounter.model.entity.db.Category
 import com.example.moneycounter.model.entity.db.Finance
 import com.example.moneycounter.model.entity.ui.MoneyType
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CategoryPresenter: BasePresenter<CategoryContract>() {
+class CategoryPresenter @Inject constructor(
+    private val databaseManager: DatabaseManager
+): BasePresenter<CategoryContract>() {
 
     private var categories: MutableList<Category> = mutableListOf()
     private var financesToDelete: MutableList<Finance> = mutableListOf()
     private var isEditable: Boolean = false
-
-
-    private val db = Room.databaseBuilder(
-        context,
-        AppDatabase::class.java, DBConfig.DB_NAME
-    ).build()
-    private val dbManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
 
     override fun onViewAttached() {
         updateData()
@@ -36,7 +28,7 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
             rootView?.setTitleText(context.getString(R.string.title_income))
 
             viewModelScope.launch {
-                categories = dbManager.getCategoryByType(MoneyType.INCOME)
+                categories = databaseManager.getCategoryByType(MoneyType.INCOME)
                 insertAddButton(MoneyType.INCOME)
                 categories.sortBy { it.order }
                 rootView?.setData(categories)
@@ -45,7 +37,7 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
         else {
             rootView?.setTitleText(context.getString(R.string.title_costs))
             viewModelScope.launch {
-                categories = dbManager.getCategoryByType(MoneyType.COSTS)
+                categories = databaseManager.getCategoryByType(MoneyType.COSTS)
                 categories.remove(categories.find { it.title == context.getString(R.string.title_piggy_bank) })
                 insertAddButton(MoneyType.COSTS)
                 categories.sortBy { it.order }
@@ -83,16 +75,14 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
     private fun applyChanges(){
         viewModelScope.launch {
             val categories =
-                dbManager.getCategoryByType(rootView?.getMoneyType() ?: MoneyType.INCOME)
+                databaseManager.getCategoryByType(rootView?.getMoneyType() ?: MoneyType.INCOME)
             categories.forEach {
                 if (it.title != context.getString(R.string.title_piggy_bank)) {
-                    dbManager.deleteCategory(it)
+                    databaseManager.deleteCategory(it)
                 }
-                dbManager.insertCategory(prepareList())
+                databaseManager.insertCategory(prepareList())
             }
-
-            Toast.makeText(context, financesToDelete.toString(), Toast.LENGTH_SHORT).show()
-            dbManager.deleteFinance(financesToDelete)
+            databaseManager.deleteFinance(financesToDelete)
         }
     }
 
@@ -126,7 +116,7 @@ class CategoryPresenter: BasePresenter<CategoryContract>() {
         categoryDeleting = index
         viewModelScope.launch {
             val id = categories[index].id
-            val financeList = dbManager.getFinancesByCategoryId(id)
+            val financeList = databaseManager.getFinancesByCategoryId(id)
             if(financeList.size > 0) {
                 rootView?.showDeletingDialog()
                 financesToDelete += financeList

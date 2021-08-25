@@ -7,10 +7,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.moneycounter.R
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentInfoBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class InfoFragment: BaseFragment<FragmentInfoBinding>(), InfoContract {
 
-    private val presenter: InfoPresenter by lazy { InfoPresenter() }
+    @Inject
+    lateinit var presenter: InfoPresenter
 
     override fun createViewBinding(
         inflater: LayoutInflater,

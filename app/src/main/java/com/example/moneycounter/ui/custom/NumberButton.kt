@@ -1,7 +1,6 @@
 package com.example.moneycounter.ui.custom
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -59,14 +58,6 @@ class NumberButton @JvmOverloads constructor(
             } finally {
                 recycle()
             }
-        }
-    }
-
-    fun setActive(isActive: Boolean){
-        if(isActive){
-            binding.numberButton.backgroundTintList = ColorStateList.valueOf(ResourcesCompat.getColor(context.resources, R.color.light_blue, null))
-        }else{
-            binding.numberButton.backgroundTintList = ColorStateList.valueOf(ResourcesCompat.getColor(context.resources, R.color.light_gray, null))
         }
     }
 

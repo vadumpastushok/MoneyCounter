@@ -9,17 +9,23 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.moneycounter.NavGraphDirections
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentCalculateBinding
 import com.example.moneycounter.model.entity.db.Currency
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class CalculateFragment: BaseFragment<FragmentCalculateBinding>(), CalculateContract {
-    private val presenter by lazy { CalculatePresenter() }
-    private lateinit var dialog: BottomSheetDialog
+
+    @Inject
+    lateinit var presenter: CalculatePresenter
+    private val args : CalculateFragmentArgs by navArgs()
+    private lateinit var dialogRecycler: RecyclerBottomSheetDialog
     private var ignoreChanges = false
 
     override fun createViewBinding(
@@ -34,7 +40,7 @@ class CalculateFragment: BaseFragment<FragmentCalculateBinding>(), CalculateCont
     }
 
     override fun initView() {
-        dialog = BottomSheetDialog()
+        dialogRecycler = RecyclerBottomSheetDialog()
         initListeners()
     }
 
@@ -47,6 +53,8 @@ class CalculateFragment: BaseFragment<FragmentCalculateBinding>(), CalculateCont
      * Contract
      */
 
+    override fun getCurrencyId(): Long = args.currencyId
+
     override fun hideKeyboard() {
         (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
             .hideSoftInputFromWindow(view?.windowToken, 0)
@@ -56,8 +64,8 @@ class CalculateFragment: BaseFragment<FragmentCalculateBinding>(), CalculateCont
         findNavController().popBackStack()
     }
 
-    override fun setupRecycleView(data: MutableList<Currency>) {
-        dialog.setData(data)
+    override fun setData(data: MutableList<Currency>) {
+        dialogRecycler.setData(data)
     }
 
     override fun showMessage(message: String) {
@@ -66,11 +74,11 @@ class CalculateFragment: BaseFragment<FragmentCalculateBinding>(), CalculateCont
     }
 
     override fun showDialog() {
-       dialog.show(parentFragmentManager, "1")
+       dialogRecycler.show(parentFragmentManager, "1")
     }
 
     override fun closeDialog(){
-        dialog.dismiss()
+        dialogRecycler.dismiss()
     }
 
     override fun setCurrencyValue(isFirstCurrency: Boolean, value: String) {
@@ -119,7 +127,7 @@ class CalculateFragment: BaseFragment<FragmentCalculateBinding>(), CalculateCont
         binding.layoutSecondCurrency.setOnClickListener {
             presenter.onSecondCurrencyClicked()
         }
-        dialog.setOnItemSelectedListener {
+        dialogRecycler.setOnItemSelectedListener {
             presenter.onCurrencyChosen(it)
         }
         binding.editFirstCurrency.doAfterTextChanged {
@@ -136,8 +144,8 @@ class CalculateFragment: BaseFragment<FragmentCalculateBinding>(), CalculateCont
     }
 
     companion object{
-        fun start(navController: NavController){
-            val direction = NavGraphDirections.actionToCalculate()
+        fun start(navController: NavController, currencyId: Long = 2){
+            val direction = NavGraphDirections.actionToCalculate(currencyId)
             navController.navigate(direction)
         }
     }

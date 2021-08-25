@@ -1,29 +1,19 @@
 package com.example.moneycounter.features.input_amount
 
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
-import com.example.moneycounter.app.App
 import com.example.moneycounter.base.BasePresenter
-import com.example.moneycounter.model.db.AppDatabase
-import com.example.moneycounter.model.db.DBConfig
 import com.example.moneycounter.model.db.DatabaseManager
 import com.example.moneycounter.model.entity.db.Category
 import com.example.moneycounter.model.entity.db.Finance
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
-class InputAmountPresenter: BasePresenter<InputAmountContract>() {
-
-    lateinit var databaseManager: DatabaseManager
+class InputAmountPresenter @Inject constructor(
+    private val databaseManager: DatabaseManager
+): BasePresenter<InputAmountContract>() {
 
     override fun onViewAttached() {
-        val db = Room.databaseBuilder(
-            App.context,
-            AppDatabase::class.java, DBConfig.DB_NAME
-        ).build()
-        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
-
-
         val root = rootView ?: return
         viewModelScope.launch {
             val item: Category = databaseManager.getCategoryById(root.getFragmentArgs().id)

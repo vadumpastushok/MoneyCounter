@@ -2,36 +2,36 @@ package com.example.moneycounter.features.home
 
 import android.content.Context
 import android.view.MenuItem
-import androidx.fragment.app.Fragment
+import android.widget.Toast
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App
 import com.example.moneycounter.app.Config
 import com.example.moneycounter.base.BasePresenter
 import com.example.moneycounter.features.data_manager.ExportDataManager
 import com.example.moneycounter.features.data_manager.ImportDataManager
-import com.example.moneycounter.model.db.AppDatabase
-import com.example.moneycounter.model.db.DBConfig
 import com.example.moneycounter.model.db.DatabaseManager
 import com.example.moneycounter.model.entity.ui.MoneyType
 import kotlinx.coroutines.launch
+import java.io.File
+import javax.inject.Inject
 
-class HomePresenter: BasePresenter<HomeContract>() {
-    private lateinit var databaseManager: DatabaseManager
+class HomePresenter @Inject constructor(
+    private val databaseManager: DatabaseManager
+): BasePresenter<HomeContract>() {
+
+    @Inject
+    lateinit var importDataManager: ImportDataManager
+
+    @Inject
+    lateinit var exportDataManager: ExportDataManager
+
     private var incomeAmount: Float = 0f
     private var costsAmount: Float = 0f
 
     override fun onViewAttached() {
         rootView?.setWaves(Config.wavesData)
         rootView?.startWaves()
-
-        val db = Room.databaseBuilder(
-            App.context,
-            AppDatabase::class.java, DBConfig.DB_NAME
-        ).build()
-        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
-
         getFinanceData()
         setupMenu()
     }
@@ -154,9 +154,13 @@ class HomePresenter: BasePresenter<HomeContract>() {
                     !getSoundNotification()
                 )
             App.context.getString(R.string.sidebar_text_import_data) ->
-                ImportDataManager(rootView as Fragment).importData()
+                if(rootView?.checkPermissionAndRequest() == true){
+                    rootView?.openChooseFileDialog()
+                }
             App.context.getString(R.string.sidebar_text_export_data) ->
-                ExportDataManager(rootView as Fragment).exportData()
+                if(rootView?.checkPermissionAndRequest() == true){
+                    rootView?.openChooseDirectoryDialog()
+                }
             App.context.getString(R.string.sidebar_text_lock_settings) ->
                 rootView?.openLockSettingsFragment()
             App.context.getString(R.string.sidebar_text_write_to_us) ->
@@ -174,7 +178,7 @@ class HomePresenter: BasePresenter<HomeContract>() {
         rootView?.setMainLayoutTranslation(translation)
     }
 
-    fun onDataImported(income: Float, costs: Float){
+    private fun onDataImported(income: Float, costs: Float){
         incomeAmount = income
         costsAmount = costs
         setFinanceAmount(null)
@@ -215,6 +219,27 @@ class HomePresenter: BasePresenter<HomeContract>() {
                 rootView?.setItemClickable(item, isClickable)
                 rootView?.setItemEnabled(item, (getSoundNotification() && isClickable))
             }
+        }
+    }
+
+    fun onFileImportChosen(path: String){
+        val file = File(path)
+        if(file.extension != "csv"){
+            Toast.makeText(App.context, App.context.getString(R.string.csv_required), Toast.LENGTH_SHORT).show()
+            return
+        }
+        viewModelScope.launch {
+            val result = importDataManager.loadDataFromFile(file)
+            val incomeAmount = result[0]
+            val costsAmount = result[1]
+            onDataImported(incomeAmount, costsAmount)
+        }
+
+    }
+
+    fun onDirectoryExportChosen(path: String){
+        viewModelScope.launch {
+            exportDataManager.convertDB(path)
         }
     }
 

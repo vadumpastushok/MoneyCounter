@@ -10,11 +10,14 @@ import com.example.moneycounter.R
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentAnalyticsBinding
 import com.example.moneycounter.ui.custom.MCToolbar
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class AnalyticsFragment : BaseFragment<FragmentAnalyticsBinding>(), AnalyticsContract {
 
-    private val presenter:AnalyticsPresenter by lazy { AnalyticsPresenter() }
+    @Inject
+    lateinit var presenter: AnalyticsPresenter
     private lateinit var navController: NavController
 
     override fun createViewBinding(

@@ -19,12 +19,15 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class GraphFragment : BaseFragment<FragmentGraphBinding>(), GraphContract {
-    private val presenter by lazy { GraphPresenter() }
+    @Inject
+    lateinit var presenter: GraphPresenter
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentGraphBinding {
         return FragmentGraphBinding.inflate(inflater, container, false)

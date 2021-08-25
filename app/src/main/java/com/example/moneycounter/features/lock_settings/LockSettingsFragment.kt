@@ -11,10 +11,15 @@ import com.example.moneycounter.R
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentLockSettingsBinding
 import com.example.moneycounter.features.set_password.SetPasswordFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LockSettingsFragment: BaseFragment<FragmentLockSettingsBinding>(), LockSettingsContract {
 
-    private val presenter by lazy { LockSettingsPresenter() }
+    @Inject
+    lateinit var presenter: LockSettingsPresenter
+
     override fun createViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?

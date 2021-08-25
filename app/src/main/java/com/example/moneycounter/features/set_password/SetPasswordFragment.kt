@@ -15,10 +15,14 @@ import com.example.moneycounter.R
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentSetPasswordBinding
 import com.example.moneycounter.ui.custom.NumberButton
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SetPasswordFragment: BaseFragment<FragmentSetPasswordBinding>(), SetPasswordContract {
 
-    private val presenter by lazy { SetPasswordPresenter() }
+    @Inject
+    lateinit var presenter: SetPasswordPresenter
     private val args: SetPasswordFragmentArgs by navArgs()
 
     override fun createViewBinding(

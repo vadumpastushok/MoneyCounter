@@ -13,12 +13,16 @@ import com.example.moneycounter.features.analytics.AnalyticsFragment
 import com.example.moneycounter.model.entity.ui.Analytics
 import com.example.moneycounter.model.entity.ui.MoneyType
 import com.example.moneycounter.utils.RecycleDiffUtilCallback
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class AnalyticsListFragment(val moneyType: MoneyType) : BaseFragment<FragmentAnalyticsListBinding>(), AnalyticsListContract {
 
+    @Inject
+    lateinit var presenter: AnalyticsListPresenter
     private val adapter: AnalyticsListAdapter by lazy { AnalyticsListAdapter(moneyType, context) }
-    private val presenter by lazy { AnalyticsListPresenter() }
+
     override fun createViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?

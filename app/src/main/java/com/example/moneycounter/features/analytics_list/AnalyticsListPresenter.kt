@@ -1,29 +1,24 @@
 package com.example.moneycounter.features.analytics_list
 
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App.Companion.context
 import com.example.moneycounter.base.BasePresenter
-import com.example.moneycounter.model.db.AppDatabase
-import com.example.moneycounter.model.db.DBConfig
 import com.example.moneycounter.model.db.DatabaseManager
 import com.example.moneycounter.model.entity.ui.Analytics
 import com.example.moneycounter.model.entity.ui.MoneyType
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class AnalyticsListPresenter: BasePresenter<AnalyticsListContract>() {
+class AnalyticsListPresenter @Inject constructor(
+    private val databaseManager: DatabaseManager
+): BasePresenter<AnalyticsListContract>() {
 
-    private lateinit var databaseManager: DatabaseManager
     private lateinit var analyticsList: MutableList<Analytics>
 
     override fun onViewAttached() {
-        val db = Room.databaseBuilder(
-            context,
-            AppDatabase::class.java, DBConfig.DB_NAME
-        ).build()
-        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
+
 
         val root = rootView ?: return
         getAnalyticsList(root.getAnalyticsMoneyType())

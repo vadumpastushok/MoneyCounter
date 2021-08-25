@@ -1,30 +1,20 @@
 package com.example.moneycounter.features.category_add
 
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App.Companion.context
 import com.example.moneycounter.base.BasePresenter
-import com.example.moneycounter.model.db.AppDatabase
-import com.example.moneycounter.model.db.DBConfig
 import com.example.moneycounter.model.db.DatabaseManager
 import com.example.moneycounter.model.entity.db.Category
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CategoryAddPresenter: BasePresenter<CategoryAddContract>() {
+class CategoryAddPresenter @Inject constructor(): BasePresenter<CategoryAddContract>() {
 
-    private lateinit var databaseManager: DatabaseManager
+    @Inject lateinit var databaseManager: DatabaseManager
     private var title = ""
     private var color = 0
     private var icon = ""
-
-    override fun onViewAttached() {
-        val db = Room.databaseBuilder(
-            context,
-            AppDatabase::class.java, DBConfig.DB_NAME
-        ).build()
-        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
-    }
 
     private fun checkAllData(){
         val root = rootView ?: return

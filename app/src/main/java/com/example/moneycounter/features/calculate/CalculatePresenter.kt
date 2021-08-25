@@ -2,38 +2,27 @@ package com.example.moneycounter.features.calculate
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App
 import com.example.moneycounter.app.Config
 import com.example.moneycounter.base.BasePresenter
-import com.example.moneycounter.model.api.GetCurrency
-import com.example.moneycounter.model.db.AppDatabase
-import com.example.moneycounter.model.db.DBConfig
+import com.example.moneycounter.model.api.ApiModel
 import com.example.moneycounter.model.db.DatabaseManager
 import com.example.moneycounter.model.entity.api.ApiCurrency
 import com.example.moneycounter.model.entity.db.Currency
 import com.example.moneycounter.model.entity.ui.CurrencyType
 import com.mynameismidori.currencypicker.ExtendedCurrency
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
+import javax.inject.Inject
 
-class CalculatePresenter: BasePresenter<CalculateFragment>() {
+class CalculatePresenter @Inject constructor(
+    private val databaseManager: DatabaseManager,
+    private val apiModel: ApiModel
+): BasePresenter<CalculateFragment>() {
 
-    private lateinit var databaseManager: DatabaseManager
     private val preferences by lazy { App.context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE) }
     override fun onViewAttached() {
-        val db = Room.databaseBuilder(
-            App.context,
-            AppDatabase::class.java, DBConfig.DB_NAME
-        ).build()
-        databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
         loadPrevData()
         loadDataFromDatabase()
         if(checkLastTimeUpdate()){
@@ -43,14 +32,14 @@ class CalculatePresenter: BasePresenter<CalculateFragment>() {
 
     private fun loadPrevData(){
         viewModelScope.launch {
-            val currency = databaseManager.getAllCurrencies().find { it.symbol == App.context.getString(R.string.USD) } ?: return@launch
+            val currency = databaseManager.getAllCurrencies().find { it.id == rootView?.getCurrencyId() } ?: return@launch
             rootView?.setupSecondCurrency(currency.flag, currency.symbol)
             secondRate = currency.secondRate.toFloat()
         }
     }
 
     private fun updatePrevData(list: MutableList<Currency>){
-        val currency = list.find { it.symbol == App.context.getString(R.string.USD) } ?: return
+        val currency = list.find { it.id == rootView?.getCurrencyId() } ?: return
         rootView?.setupSecondCurrency(currency.flag, currency.symbol)
         secondRate = currency.secondRate.toFloat()
     }
@@ -84,7 +73,7 @@ class CalculatePresenter: BasePresenter<CalculateFragment>() {
     private fun loadDataFromDatabase(){
         viewModelScope.launch {
             val list = databaseManager.getAllCurrencies()
-            rootView?.setupRecycleView(list)
+            rootView?.setData(list)
         }
     }
 
@@ -98,24 +87,13 @@ class CalculatePresenter: BasePresenter<CalculateFragment>() {
         }
     }
 
-    private var myCompositeDisposable: CompositeDisposable? = null
     private fun loadFromAPI(){
-        myCompositeDisposable = CompositeDisposable()
-
-        val requestInterface = Retrofit.Builder()
-            .baseUrl(App.context.getString(R.string.api_base_url))
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build().create(GetCurrency::class.java)
-
-
-        myCompositeDisposable?.add(requestInterface.getCurrency()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
+        apiModel.getCurrency()
             .subscribe(
                 { list -> handleResponse(list)},
                 { checkIsRecycleEmpty()}
-            ))
+            )
+            .let { myCompositeDisposable.add(it) }
     }
 
     private fun handleResponse(apiCurrencyList: List<ApiCurrency>) {
@@ -128,8 +106,6 @@ class CalculatePresenter: BasePresenter<CalculateFragment>() {
                 apiCurrency ->
             val fromCurrency = generalCurrencyList.find { it.numericCode == apiCurrency.currencyCodeB }
             val toCurrency = generalCurrencyList.find { it.numericCode == apiCurrency.currencyCodeA }
-
-
 
             val rateBuy = apiCurrency.rateBuy
             val rateSell = apiCurrency.rateSell
@@ -171,7 +147,7 @@ class CalculatePresenter: BasePresenter<CalculateFragment>() {
 
         val newList = mutableListOf<Currency>()
         newList += resultList
-        rootView?.setupRecycleView(newList)
+        rootView?.setData(newList)
         updateData(resultList)
         updatePrevData(resultList)
     }
@@ -193,11 +169,11 @@ class CalculatePresenter: BasePresenter<CalculateFragment>() {
             }else {
                 rootView?.setCurrencyValue(false, secondValue.toString())
             }
-        }else{
+        } else {
             firstValue = secondValue * secondRate / firstRate
-            if(firstValue == 0f){
+            if (firstValue == 0f) {
                 rootView?.setCurrencyValue(true, "")
-            }else {
+            } else {
                 rootView?.setCurrencyValue(true, firstValue.toString())
             }
         }
@@ -216,57 +192,42 @@ class CalculatePresenter: BasePresenter<CalculateFragment>() {
     fun onCurrencyChosen(id: Long){
         rootView?.closeDialog()
         viewModelScope.launch {
-            if (whichCurrencyChoosing == 1) {
-                if(id == 0L){
-
-                    val currency = java.util.Currency.getAvailableCurrencies().find { it.currencyCode == App.context.getString(R.string.UAH) } ?: return@launch
-                    firstRate = 1f
-                    rootView?.setupFirstCurrency(
-                        App.context.resources.getResourceEntryName(ExtendedCurrency.getCurrencyByISO(currency.currencyCode).flag),
-                        currency.currencyCode.toString()
-                    )
-                    updateCurrencyValues()
-
-                }else {
-
-                    val currency = databaseManager.getCurrency(id)
-                    firstRate = currency.firstRate.toFloat()
-                    rootView?.setupFirstCurrency(
-                        currency.flag,
-                        currency.symbol
-                    )
-                    updateCurrencyValues()
-
-                }
-            } else if (whichCurrencyChoosing == 2) {
-                if(id == 0L){
-
-                    val currency = java.util.Currency.getAvailableCurrencies().find { it.currencyCode == App.context.getString(R.string.UAH) } ?: return@launch
-                    secondRate = 1f
-                    rootView?.setupSecondCurrency(
-                        App.context.resources.getResourceEntryName(ExtendedCurrency.getCurrencyByISO(currency.currencyCode).flag),
-                        currency.currencyCode.toString()
-                    )
-                    updateCurrencyValues()
-
-                }else {
-
-                    val currency = databaseManager.getCurrency(id)
-                    secondRate = currency.secondRate.toFloat()
-                    rootView?.setupSecondCurrency(
-                        currency.flag,
-                        currency.symbol
-                    )
-                    updateCurrencyValues()
-
-                }
+            if(id == 0L && whichCurrencyChoosing == 1){ // UAH
+                val currency = java.util.Currency.getAvailableCurrencies().find { it.currencyCode == App.context.getString(R.string.UAH) } ?: return@launch
+                firstRate = 1f
+                rootView?.setupFirstCurrency(
+                    App.context.resources.getResourceEntryName(ExtendedCurrency.getCurrencyByISO(currency.currencyCode).flag),
+                    currency.currencyCode.toString()
+                )
+            } else if(id == 0L && whichCurrencyChoosing == 2){ // UAH
+                val currency = java.util.Currency.getAvailableCurrencies().find { it.currencyCode == App.context.getString(R.string.UAH) } ?: return@launch
+                secondRate = 1f
+                rootView?.setupSecondCurrency(
+                    App.context.resources.getResourceEntryName(ExtendedCurrency.getCurrencyByISO(currency.currencyCode).flag),
+                    currency.currencyCode.toString()
+                )
+            } else if(id != 0L && whichCurrencyChoosing == 1){ // not UAH
+                val currency = databaseManager.getCurrency(id)
+                firstRate = currency.firstRate.toFloat()
+                rootView?.setupFirstCurrency(
+                    currency.flag,
+                    currency.symbol
+                )
+            } else if(id != 0L && whichCurrencyChoosing == 2){ // not UAH
+                val currency = databaseManager.getCurrency(id)
+                secondRate = currency.secondRate.toFloat()
+                rootView?.setupSecondCurrency(
+                    currency.flag,
+                    currency.symbol
+                )
             }
+            updateCurrencyValues()
             whichCurrencyChoosing = 0
         }
     }
 
     fun onFragmentDestroyed(){
-        myCompositeDisposable?.clear()
+        myCompositeDisposable.clear()
     }
 
     fun onBackClicked(){

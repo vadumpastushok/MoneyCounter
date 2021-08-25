@@ -12,10 +12,14 @@ import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentIntroBinding
 import com.example.moneycounter.features.home.HomeFragment
 import com.example.moneycounter.model.entity.ui.Intro
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class IntroFragment: BaseFragment<FragmentIntroBinding>(), IntroContract {
 
-    private val presenter: IntroPresenter by lazy { IntroPresenter() }
+    @Inject
+    lateinit var presenter: IntroPresenter
     private val adapter: IntroPagerAdapter by lazy { IntroPagerAdapter() }
 
     override fun createViewBinding(

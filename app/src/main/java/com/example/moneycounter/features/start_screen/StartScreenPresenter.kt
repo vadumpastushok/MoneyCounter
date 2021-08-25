@@ -6,19 +6,19 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App.Companion.context
 import com.example.moneycounter.app.Config
 import com.example.moneycounter.app.notification.AlarmHandler
 import com.example.moneycounter.base.BasePresenter
-import com.example.moneycounter.model.db.AppDatabase
-import com.example.moneycounter.model.db.DBConfig
 import com.example.moneycounter.model.db.DatabaseManager
 import com.example.moneycounter.model.db.DefaultData
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class StartScreenPresenter: BasePresenter<StartScreenContract>() {
+class StartScreenPresenter @Inject constructor(
+    private val databaseManager: DatabaseManager
+): BasePresenter<StartScreenContract>() {
 
     private val preferences by lazy { context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE) }
 
@@ -66,20 +66,12 @@ class StartScreenPresenter: BasePresenter<StartScreenContract>() {
         preferences?.getBoolean(Config.PREF_IS_FINGERPRINT_ENABLED, false) ?: false
 
     private fun initializeDatabase(){
-        val db = Room.databaseBuilder(
-            context,
-            AppDatabase::class.java, DBConfig.DB_NAME
-        ).build()
-
-        val databaseManager = DatabaseManager(db.categoryDao(), db.financeDao(), db.currencyDao())
         viewModelScope.launch {
             databaseManager.insertCategory(
                 DefaultData.categories
             )
         }
-
         preferences?.edit()?.putBoolean(Config.PREF_IS_DATABASE_INITIALIZED, true)?.apply()
-
     }
 
 

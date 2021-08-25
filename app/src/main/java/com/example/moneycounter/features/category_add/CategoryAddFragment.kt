@@ -23,11 +23,15 @@ import com.example.moneycounter.features.home.HomeFragment
 import com.example.moneycounter.features.icon_picker.IconPickerFragment
 import com.example.moneycounter.model.entity.ui.MoneyType
 import com.skydoves.colorpickerview.listeners.ColorListener
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryAddContract {
+
+    @Inject
+    lateinit var presenter: CategoryAddPresenter
     private val args: CategoryAddFragmentArgs by navArgs()
-    private val presenter by lazy { CategoryAddPresenter() }
     private lateinit var alertDialog: AlertDialog
     private lateinit var dialogBinding: DialogCategoryAddBinding
 

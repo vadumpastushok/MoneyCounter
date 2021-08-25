@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -42,12 +43,19 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.android.material.internal.NavigationMenuView
 import com.ssynhtn.waveview.WaveView
+import dagger.hilt.android.AndroidEntryPoint
+import ir.androidexception.filepicker.dialog.DirectoryPickerDialog
+import ir.androidexception.filepicker.dialog.SingleFilePickerDialog
+import ir.androidexception.filepicker.utility.Util
+import java.io.File
+import javax.inject.Inject
 import kotlin.collections.set
 
-
+@AndroidEntryPoint
 class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
 
-    private val presenter: HomePresenter by lazy { HomePresenter() }
+    @Inject
+    lateinit var presenter: HomePresenter
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toolbar: Toolbar
     private lateinit var drawerToggle: ActionBarDrawerToggle
@@ -214,6 +222,38 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         InfoFragment.start(findNavController())
     }
 
+    override fun checkPermissionAndRequest(): Boolean {
+        return if(Util.permissionGranted(requireContext())) {
+            true
+        } else {
+            Util.requestPermission(requireActivity())
+            false
+        }
+    }
+
+    override fun openChooseFileDialog() {
+        SingleFilePickerDialog(requireContext(),
+        {
+        },
+        { files: Array<File> ->
+            presenter.onFileImportChosen(files[0].path)
+        }).show()
+    }
+
+    override fun openChooseDirectoryDialog() {
+        DirectoryPickerDialog (requireContext(),
+        {
+        },
+        { files: Array<File> ->
+            presenter.onDirectoryExportChosen(files[0].path)
+            Toast.makeText(
+                requireContext(),
+                App.context.getString(R.string.saved),
+                Toast.LENGTH_SHORT
+            ).show()
+        }).show()
+    }
+
     override fun openLockSettingsFragment() {
         LockSettingsFragment.start(findNavController())
     }
@@ -224,10 +264,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
 
     override fun closeApp() {
         requireActivity().finishAndRemoveTask()
-    }
-
-    override fun onDataImported(incomeAmount: Float, costsAmount: Float){
-        presenter.onDataImported(incomeAmount, costsAmount)
     }
 
     override fun openSideBar() {

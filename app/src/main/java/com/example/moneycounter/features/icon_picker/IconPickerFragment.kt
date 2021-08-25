@@ -3,7 +3,6 @@ package com.example.moneycounter.features.icon_picker
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -14,12 +13,15 @@ import com.example.moneycounter.app.Config
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentIconPickerBinding
 import com.example.moneycounter.model.entity.ui.MoneyType
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class IconPickerFragment: BaseFragment<FragmentIconPickerBinding>(), IconPickerContract {
 
+    @Inject
+    lateinit var presenter: IconPickerPresenter
     private val args: IconPickerFragmentArgs by navArgs()
-    private val presenter: IconPickerPresenter by lazy { IconPickerPresenter() }
     private val adapter: IconPickerAdapter by lazy { IconPickerAdapter() }
 
     override fun createViewBinding(
@@ -45,7 +47,6 @@ class IconPickerFragment: BaseFragment<FragmentIconPickerBinding>(), IconPickerC
     override fun openCategoryAddFragment(icon: String) {
         val bundle = Bundle()
         bundle.putString(requireContext().getString(R.string.header_money_type), args.type.toString())
-        Toast.makeText(requireContext(), args.type.toString(), Toast.LENGTH_SHORT).show()
         bundle.putString(requireContext().getString(R.string.header_icon), icon)
         parentFragmentManager.setFragmentResult(Config.REQUEST_KEY_CATEGORY_ADD, bundle)
 
