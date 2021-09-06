@@ -31,24 +31,19 @@ class NotificationHandler {
         if (isSoundEnabled) {
             channelId = App.context.getString(R.string.channelId_with_sound)
             notificationName = App.context.getString(R.string.notification_name_with_sound)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                importance = NotificationManager.IMPORTANCE_DEFAULT
-            }
+            importance = NotificationManager.IMPORTANCE_DEFAULT
         } else {
             channelId = App.context.getString(R.string.channelId_without_sound)
             notificationName = App.context.getString(R.string.notification_name_without_sound)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                importance = NotificationManager.IMPORTANCE_LOW
-            }
+            importance = NotificationManager.IMPORTANCE_LOW
         }
 
         showNotification(App.context.getString(R.string.notification_text))
     }
 
     private fun showNotification(content: String) {
-
         val builder = NotificationCompat.Builder(App.context, channelId)
-            .setSmallIcon(R.drawable.icon_piggy_bank)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentText(content)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(setAction())

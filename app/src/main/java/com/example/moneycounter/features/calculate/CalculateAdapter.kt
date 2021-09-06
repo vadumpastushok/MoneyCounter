@@ -29,7 +29,6 @@ class CalculateAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             )
         )
 
-
         currencyVH.binding.tvCurrency.text = data[position].symbol
         currencyVH.binding.tvCountry.text = data[position].name
 

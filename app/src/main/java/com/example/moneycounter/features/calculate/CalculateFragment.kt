@@ -25,7 +25,7 @@ class CalculateFragment: BaseFragment<FragmentCalculateBinding>(), CalculateCont
     @Inject
     lateinit var presenter: CalculatePresenter
     private val args : CalculateFragmentArgs by navArgs()
-    private lateinit var dialogRecycler: RecyclerBottomSheetDialog
+    private lateinit var dialogCalculate: CalculateBottomSheetDialog
     private var ignoreChanges = false
 
     override fun createViewBinding(
@@ -40,7 +40,7 @@ class CalculateFragment: BaseFragment<FragmentCalculateBinding>(), CalculateCont
     }
 
     override fun initView() {
-        dialogRecycler = RecyclerBottomSheetDialog()
+        dialogCalculate = CalculateBottomSheetDialog()
         initListeners()
     }
 
@@ -65,7 +65,7 @@ class CalculateFragment: BaseFragment<FragmentCalculateBinding>(), CalculateCont
     }
 
     override fun setData(data: MutableList<Currency>) {
-        dialogRecycler.setData(data)
+        dialogCalculate.setData(data)
     }
 
     override fun showMessage(message: String) {
@@ -74,21 +74,11 @@ class CalculateFragment: BaseFragment<FragmentCalculateBinding>(), CalculateCont
     }
 
     override fun showDialog() {
-       dialogRecycler.show(parentFragmentManager, "1")
+       dialogCalculate.show(parentFragmentManager, "1")
     }
 
     override fun closeDialog(){
-        dialogRecycler.dismiss()
-    }
-
-    override fun setCurrencyValue(isFirstCurrency: Boolean, value: String) {
-        ignoreChanges = true
-        if(isFirstCurrency){
-            binding.editFirstCurrency.setText(value)
-        }else{
-            binding.editSecondCurrency.setText(value)
-        }
-        ignoreChanges = false
+        dialogCalculate.dismiss()
     }
 
     override fun setupFirstCurrency(flag: String, symbol: String) {
@@ -102,6 +92,12 @@ class CalculateFragment: BaseFragment<FragmentCalculateBinding>(), CalculateCont
         binding.tvFirstCurrency.text = symbol
     }
 
+    override fun setFirstCurrencyValue(value: String){
+        ignoreChanges = true
+        binding.editFirstCurrency.setText(value)
+        ignoreChanges = false
+    }
+
     override fun setupSecondCurrency(flag: String, symbol: String) {
         binding.ivSecondCurrency.setImageResource(
             App.context.resources.getIdentifier(
@@ -111,6 +107,12 @@ class CalculateFragment: BaseFragment<FragmentCalculateBinding>(), CalculateCont
             )
         )
         binding.tvSecondCurrency.text = symbol
+    }
+
+    override fun setSecondCurrencyValue(value: String){
+        ignoreChanges = true
+        binding.editSecondCurrency.setText(value)
+        ignoreChanges = false
     }
 
     /**
@@ -127,17 +129,17 @@ class CalculateFragment: BaseFragment<FragmentCalculateBinding>(), CalculateCont
         binding.layoutSecondCurrency.setOnClickListener {
             presenter.onSecondCurrencyClicked()
         }
-        dialogRecycler.setOnItemSelectedListener {
+        dialogCalculate.setOnItemSelectedListener {
             presenter.onCurrencyChosen(it)
         }
         binding.editFirstCurrency.doAfterTextChanged {
             if(!ignoreChanges) {
-                presenter.onValueChanged(true, it.toString())
+                presenter.onFirstCurrencyValueChanged(it.toString())
             }
         }
         binding.editSecondCurrency.doAfterTextChanged {
             if(!ignoreChanges) {
-                presenter.onValueChanged(false, it.toString())
+                presenter.onSecondCurrencyValueChanged(it.toString())
             }
         }
 

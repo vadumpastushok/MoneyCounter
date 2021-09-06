@@ -4,9 +4,6 @@ import com.example.moneycounter.base.BasePresenter
 
 class WriteToUsPresenter: BasePresenter<WriteToUsContract>() {
 
-    override fun onViewAttached() {
-    }
-
     fun editIsEmpty(isEmpty: Boolean){
         rootView?.setEditEnabled(!isEmpty)
     }

@@ -30,7 +30,6 @@ class AlarmHandler {
     }
 
     private fun setAlarm(time: Long){
-
         val intent = Intent(App.context, NotificationBroadcastReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
             App.context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT

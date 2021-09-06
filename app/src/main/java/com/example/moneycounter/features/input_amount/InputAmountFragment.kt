@@ -92,7 +92,6 @@ class InputAmountFragment: BaseFragment<FragmentInputAmountBinding>(), InputAmou
         binding.MCToolbar.setBackButtonClickListener {
             presenter.onBackButtonClicked()
         }
-
         binding.btnInputAmount.setOnClickListener {
             presenter.onInputAmountButtonClicked()
         }

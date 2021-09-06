@@ -48,9 +48,6 @@ class SetPasswordPresenter @Inject constructor(): BasePresenter<SetPasswordContr
         }
     }
 
-
-
-
     private fun passwordReady(){
         if(isVerifying){
             if(currentPassword == requiredPassword){
@@ -78,6 +75,7 @@ class SetPasswordPresenter @Inject constructor(): BasePresenter<SetPasswordContr
             }
         }
     }
+
     fun onNumberClicked(order: String){
         currentPassword += order
         rootView?.setCompletedLinesOnProgressbar(currentPassword.length)
@@ -85,7 +83,6 @@ class SetPasswordPresenter @Inject constructor(): BasePresenter<SetPasswordContr
             passwordReady()
         }
     }
-
 
     fun onClearClicked(){
         if(currentPassword.isEmpty())return

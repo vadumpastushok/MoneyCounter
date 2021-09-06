@@ -18,8 +18,6 @@ class AnalyticsListPresenter @Inject constructor(
     private lateinit var analyticsList: MutableList<Analytics>
 
     override fun onViewAttached() {
-
-
         val root = rootView ?: return
         getAnalyticsList(root.getAnalyticsMoneyType())
     }
@@ -46,7 +44,7 @@ class AnalyticsListPresenter @Inject constructor(
                 .sortedByDescending { it.amount }
                 .toMutableList()
             if(analyticsList.size != 0){
-                setAnalyticsList(analyticsList, analyticsList)
+                rootView?.setRecycleData(analyticsList)
             }else{
                 when(moneyType){
                     MoneyType.INCOME ->
@@ -56,10 +54,6 @@ class AnalyticsListPresenter @Inject constructor(
                 }
             }
         }
-    }
-
-    private fun setAnalyticsList(oldList : MutableList<Analytics>, newList : MutableList<Analytics>){
-        rootView?.setData(oldList, newList)
     }
 
     fun onBackClicked(){

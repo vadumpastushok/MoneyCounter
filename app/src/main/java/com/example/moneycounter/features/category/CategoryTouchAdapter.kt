@@ -10,5 +10,4 @@ interface CategoryTouchAdapter {
     fun onItemMove(fromPosition: Int, toPosition: Int): Boolean
 
     fun onItemClear(itemView : View)
-
 }

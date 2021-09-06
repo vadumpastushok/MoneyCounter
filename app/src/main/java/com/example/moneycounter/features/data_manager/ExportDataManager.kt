@@ -12,7 +12,7 @@ class ExportDataManager @Inject constructor(
     private val databaseManager: DatabaseManager
     ){
 
-    suspend fun convertDB(path: String){
+    suspend fun exportDB(path: String) {
         val data: MutableList<MutableList<String>> = mutableListOf()
         data.add(Config.tableHeader)
 
@@ -21,7 +21,7 @@ class ExportDataManager @Inject constructor(
         for(it in dbData){
 
             val finances: MutableList<Finance> = it.finances.toMutableList()
-            var i =0
+            var i = 0
             do{
                 val row = mutableListOf<String>()
 
@@ -48,11 +48,11 @@ class ExportDataManager @Inject constructor(
                 i++
             }while(i < finances.size)
         }
-        createFile(path, data)
+        storeToFile(path, data)
 
     }
 
-    private fun createFile(path: String, data: MutableList<MutableList<String>>){
+    private fun storeToFile(path: String, data: MutableList<MutableList<String>>){
         val calendar = Calendar.getInstance()
         var name = ""
         name += calendar[Calendar.DAY_OF_MONTH].toString()

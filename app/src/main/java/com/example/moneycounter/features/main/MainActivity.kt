@@ -18,4 +18,5 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
     }
+
 }

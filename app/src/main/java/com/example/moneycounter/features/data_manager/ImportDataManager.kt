@@ -1,9 +1,7 @@
 package com.example.moneycounter.features.data_manager
 
-import android.content.Context
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App
-import com.example.moneycounter.app.Config
 import com.example.moneycounter.model.db.DatabaseManager
 import com.example.moneycounter.model.entity.db.Category
 import com.example.moneycounter.model.entity.db.Finance
@@ -17,16 +15,14 @@ class ImportDataManager @Inject constructor(
     private val databaseManager: DatabaseManager
 ) {
 
-    suspend fun loadDataFromFile(file: File): List<Float> {
-        var incomeAmount = 0
-        var costsAmount = 0
+    var incomeAmount = 0
+    var costsAmount = 0
 
+    suspend fun importDataFromFile(file: File){
         val rows: List<Map<String, String>> = csvReader().readAllWithHeader(file)
 
-        databaseManager.deleteAll()
-        val preferences =
-            App.context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE)
-        preferences.edit().putLong(Config.PREF_LAST_TIME_UPDATE_CURRENCIES, 0).apply()
+        databaseManager.deleteAllFinances()
+        databaseManager.deleteAllCategories()
 
         for (row in rows) {
             val moneyTypeString: String =
@@ -69,6 +65,5 @@ class ImportDataManager @Inject constructor(
                 )
             )
         }
-        return listOf(incomeAmount.toFloat(), costsAmount.toFloat())
     }
 }

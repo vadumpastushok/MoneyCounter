@@ -70,6 +70,7 @@ class IntroPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         binding.tvIntroText.setText(data[position].text)
         binding.imageIntroItem.setImageResource(data[position].image)
     }
+
     private fun bindPolicy(binding: PolicyItemIntroBinding) {
         binding.radioIntroPolicy.setOnClickListener {
             radioButtonListener?.invoke()

@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moneycounter.R
 import com.example.moneycounter.base.BaseFragment
@@ -12,7 +11,6 @@ import com.example.moneycounter.databinding.FragmentAnalyticsListBinding
 import com.example.moneycounter.features.analytics.AnalyticsFragment
 import com.example.moneycounter.model.entity.ui.Analytics
 import com.example.moneycounter.model.entity.ui.MoneyType
-import com.example.moneycounter.utils.RecycleDiffUtilCallback
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -43,11 +41,8 @@ class AnalyticsListFragment(val moneyType: MoneyType) : BaseFragment<FragmentAna
      * Contract
      */
 
-    override fun setData(oldList : MutableList<Analytics>, newList : MutableList<Analytics>){
-        val recycleDiffUtilCallback = RecycleDiffUtilCallback(oldList, newList)
-        val productDiffResult = DiffUtil.calculateDiff(recycleDiffUtilCallback)
-        adapter.setData(newList)
-        productDiffResult.dispatchUpdatesTo(adapter)
+    override fun setRecycleData(list : MutableList<Analytics>){
+        adapter.setData(list)
     }
 
     override fun setNoDataMessage(title: String) {

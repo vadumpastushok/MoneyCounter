@@ -18,4 +18,5 @@ interface InputAmountContract: BaseContract {
     fun openLastFragment()
 
     fun setupView(item : Category)
+
 }

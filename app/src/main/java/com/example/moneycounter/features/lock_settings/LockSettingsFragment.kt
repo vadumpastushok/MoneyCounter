@@ -35,7 +35,9 @@ class LockSettingsFragment: BaseFragment<FragmentLockSettingsBinding>(), LockSet
         initListeners()
     }
 
-
+    /**
+     * Contract
+     */
 
     override fun setupProtectedByPassword() {
         binding.switchPassword.isChecked = true
@@ -70,8 +72,6 @@ class LockSettingsFragment: BaseFragment<FragmentLockSettingsBinding>(), LockSet
         binding.switchBiometric.isChecked = isChecked
     }
 
-
-
     override fun setupCreatePassword() {
         SetPasswordFragment.start(findNavController(), requireContext().getString(R.string.action_create))
     }
@@ -92,6 +92,9 @@ class LockSettingsFragment: BaseFragment<FragmentLockSettingsBinding>(), LockSet
 
     override fun lifecycleOwner(): LifecycleOwner = viewLifecycleOwner
 
+    /**
+     * Help fun-s
+     */
 
     private fun initListeners(){
         binding.switchPassword.setOnCheckedChangeListener {
@@ -112,7 +115,6 @@ class LockSettingsFragment: BaseFragment<FragmentLockSettingsBinding>(), LockSet
             presenter.onBackClicked()
         }
     }
-
 
      companion object{
         fun start(navController: NavController){

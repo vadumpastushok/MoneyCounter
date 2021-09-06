@@ -23,5 +23,4 @@ abstract class BaseActivity<
     }
 
     protected abstract fun createViewBinding(inflater: LayoutInflater): VB
-
 }

@@ -12,7 +12,6 @@ class IconPickerAdapter: RecyclerView.Adapter<IconPickerAdapter.IconViewHolder>(
     private var data: MutableList<String> = mutableListOf()
     private var color: Int = 0
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IconViewHolder {
         return IconViewHolder(ItemIconPickerBinding.bind(LayoutInflater.from(parent.context).inflate(
             R.layout.item_icon_picker, parent, false

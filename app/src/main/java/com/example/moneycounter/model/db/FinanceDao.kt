@@ -17,4 +17,7 @@ interface FinanceDao {
 
     @Delete
     suspend fun deleteFinance(finances: MutableList<Finance>)
+
+    @Query("DELETE FROM ${DBConfig.Finance.TABLE_NAME}")
+    suspend fun deleteAllFinances()
 }

@@ -34,7 +34,9 @@ interface CategoryDao {
     @Delete
     suspend fun deleteCategory(category: Category)
 
+    @Query("DELETE FROM ${DBConfig.Category.TABLE_NAME}")
+    suspend fun deleteAllCategories()
+
     @Query("SELECT COUNT(${DBConfig.Category.Columns.TYPE}) FROM ${DBConfig.Category.TABLE_NAME} WHERE :moneyType == ${DBConfig.Category.Columns.TYPE}")
     suspend fun getNumberOfCategoriesByMoneyType(moneyType: MoneyType): Int
-
 }

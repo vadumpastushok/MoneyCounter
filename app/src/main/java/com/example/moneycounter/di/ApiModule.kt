@@ -19,11 +19,15 @@ import java.util.concurrent.TimeUnit
 object ApiModule {
 
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
-        val builder = OkHttpClient.Builder()
-        //Logs
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor{
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        return httpLoggingInterceptor
+    }
+
+    @Provides
+    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+        val builder = OkHttpClient.Builder()
         builder.addInterceptor(httpLoggingInterceptor)
 
         builder.readTimeout(1, TimeUnit.MINUTES)

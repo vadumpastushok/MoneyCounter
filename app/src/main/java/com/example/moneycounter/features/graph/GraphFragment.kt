@@ -151,7 +151,6 @@ class GraphFragment : BaseFragment<FragmentGraphBinding>(), GraphContract {
             lineChart.highlightValue(highlight)
         }
 
-
         lineChart.setVisibleXRangeMaximum(7f)
         lineChart.setVisibleXRangeMinimum(0f)
         lineChart.moveViewToX(Float.MAX_VALUE)

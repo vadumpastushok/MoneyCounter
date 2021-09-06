@@ -32,6 +32,10 @@ class StartScreenFragment : BaseFragment<FragmentStartScreenBinding>(), StartScr
         presenter.attachView(this)
     }
 
+    /**
+     * Contract
+     */
+
     override fun openHomeScreen(){
         HomeFragment.start(findNavController())
     }

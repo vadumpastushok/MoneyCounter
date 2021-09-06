@@ -36,6 +36,7 @@ class IconPickerFragment: BaseFragment<FragmentIconPickerBinding>(), IconPickerC
     }
 
     override fun initView() {
+        setupToolbar()
         setupPager()
         initListeners()
     }
@@ -77,12 +78,15 @@ class IconPickerFragment: BaseFragment<FragmentIconPickerBinding>(), IconPickerC
         }
     }
 
-    private fun setupPager(){
+    private fun setupToolbar(){
         binding.toolbarIconPicker.setupLeftButton(getColor())
+        binding.toolbarIconPicker.setupBottomLine(getColor())
+    }
+
+    private fun setupPager(){
         binding.rvIconPicker.layoutManager = GridLayoutManager(context,3)
         binding.rvIconPicker.adapter = adapter
     }
-
 
     companion object{
         fun start(navController: NavController, moneyType: MoneyType, color: Int){

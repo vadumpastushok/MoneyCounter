@@ -229,9 +229,10 @@ class HomePresenter @Inject constructor(
             return
         }
         viewModelScope.launch {
-            val result = importDataManager.loadDataFromFile(file)
-            val incomeAmount = result[0]
-            val costsAmount = result[1]
+            importDataManager.importDataFromFile(file)
+            val incomeAmount = importDataManager.incomeAmount.toFloat()
+            val costsAmount = importDataManager.costsAmount.toFloat()
+
             onDataImported(incomeAmount, costsAmount)
         }
 
@@ -239,7 +240,7 @@ class HomePresenter @Inject constructor(
 
     fun onDirectoryExportChosen(path: String){
         viewModelScope.launch {
-            exportDataManager.convertDB(path)
+            exportDataManager.exportDB(path)
         }
     }
 

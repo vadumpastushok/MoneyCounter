@@ -69,6 +69,7 @@ class SetPasswordFragment: BaseFragment<FragmentSetPasswordBinding>(), SetPasswo
     /**
      * Help fun-s
      */
+
     private fun setupTable(){
         val table: TableLayout = binding.tableSetPasswordNumbers
 
@@ -119,12 +120,10 @@ class SetPasswordFragment: BaseFragment<FragmentSetPasswordBinding>(), SetPasswo
         table.addView(row, 3)
     }
 
-
     companion object {
         fun start(navController: NavController, action: String) {
             val direction = NavGraphDirections.actionToSetPassword(action)
             navController.navigate(direction)
         }
     }
-
 }

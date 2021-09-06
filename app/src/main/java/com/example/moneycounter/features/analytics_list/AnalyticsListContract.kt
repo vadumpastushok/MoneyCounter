@@ -6,7 +6,7 @@ import com.example.moneycounter.model.entity.ui.MoneyType
 
 interface AnalyticsListContract: BaseContract {
 
-    fun setData(oldList : MutableList<Analytics>, newList : MutableList<Analytics>)
+    fun setRecycleData(list : MutableList<Analytics>)
 
     fun getAnalyticsMoneyType(): MoneyType
 

@@ -36,12 +36,11 @@ class CurrencyPresenter @Inject constructor(
 
     private fun updateData(list: MutableList<Currency>){
         viewModelScope.launch {
+            databaseManager.deleteAllCurrencies()
             databaseManager.insertCurrencies(list)
             setDataIsUpdated()
         }
     }
-
-
 
     private val preferences by lazy { App.context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE) }
     private fun isDataRecentlyUpdated(): Boolean {
@@ -85,7 +84,6 @@ class CurrencyPresenter @Inject constructor(
             }
         }
     }
-
 
     private fun handleResponse(apiCurrencyList: List<ApiCurrency>) {
         val resultList = mutableListOf<Currency>()

@@ -17,6 +17,5 @@ class App: Application() {
         @JvmStatic
         var context: Context by Delegates.notNull()
             private set
-
     }
 }

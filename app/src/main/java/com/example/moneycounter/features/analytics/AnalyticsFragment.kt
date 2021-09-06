@@ -49,6 +49,10 @@ class AnalyticsFragment : BaseFragment<FragmentAnalyticsBinding>(), AnalyticsCon
         binding.MCToolbarAnalytics.setupTitleText(text)
     }
 
+    /**
+     * Help fun-s
+     */
+
     private fun setupBottomBar(){
         val host: NavHostFragment = childFragmentManager.findFragmentById(R.id.nav_analytics_fragment) as NavHostFragment? ?: return
         navController = host.navController

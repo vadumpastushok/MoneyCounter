@@ -10,6 +10,7 @@ import com.example.moneycounter.model.api.ApiModel
 import com.example.moneycounter.model.db.DatabaseManager
 import com.example.moneycounter.model.entity.api.ApiCurrency
 import com.example.moneycounter.model.entity.db.Currency
+import com.example.moneycounter.model.entity.ui.CurrencyNumber
 import com.example.moneycounter.model.entity.ui.CurrencyType
 import com.mynameismidori.currencypicker.ExtendedCurrency
 import kotlinx.coroutines.launch
@@ -22,6 +23,16 @@ class CalculatePresenter @Inject constructor(
 ): BasePresenter<CalculateFragment>() {
 
     private val preferences by lazy { App.context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE) }
+
+    private var firstRate = 1f
+    private var secondRate = 1f
+
+    private var firstValue = 0f
+    private var secondValue = 0f
+
+    private var currencyLastChanged = CurrencyNumber.None
+    private var currencyChoosing = CurrencyNumber.None
+
     override fun onViewAttached() {
         loadPrevData()
         loadDataFromDatabase()
@@ -144,7 +155,6 @@ class CalculatePresenter @Inject constructor(
                 }
             }
         }
-
         val newList = mutableListOf<Currency>()
         newList += resultList
         rootView?.setData(newList)
@@ -152,68 +162,61 @@ class CalculatePresenter @Inject constructor(
         updatePrevData(resultList)
     }
 
-
-    private var firstRate = 1f
-    private var secondRate = 1f
-
-    private var firstValue = 0f
-    private var secondValue = 0f
-
-    private var isFirstCurrencyLastChanged = true
-
     private fun updateCurrencyValues(){
-        if(isFirstCurrencyLastChanged){
+        if(currencyLastChanged == CurrencyNumber.FirstCurrency){
             secondValue = firstValue * firstRate / secondRate
             if(secondValue == 0f){
-                rootView?.setCurrencyValue(false, "")
+                rootView?.setSecondCurrencyValue(App.context.getString(R.string.zero))
             }else {
-                rootView?.setCurrencyValue(false, secondValue.toString())
+                rootView?.setSecondCurrencyValue(secondValue.toString())
             }
         } else {
             firstValue = secondValue * secondRate / firstRate
             if (firstValue == 0f) {
-                rootView?.setCurrencyValue(true, "")
+                rootView?.setFirstCurrencyValue(App.context.getString(R.string.zero))
             } else {
-                rootView?.setCurrencyValue(true, firstValue.toString())
+                rootView?.setFirstCurrencyValue(firstValue.toString())
             }
         }
     }
 
-    fun onValueChanged(isFirstCurrency: Boolean, value: String){
-        isFirstCurrencyLastChanged = isFirstCurrency
-        if(isFirstCurrency){
-            firstValue = value.toFloatOrNull() ?: 0f
-        }else{
-            secondValue = value.toFloatOrNull() ?: 0f
-        }
+    fun onFirstCurrencyValueChanged(value: String){
+        currencyLastChanged = CurrencyNumber.FirstCurrency
+        firstValue = value.toFloatOrNull() ?: 0f
+        updateCurrencyValues()
+    }
+
+    fun onSecondCurrencyValueChanged(value: String){
+        currencyLastChanged = CurrencyNumber.SecondCurrency
+        secondValue = value.toFloatOrNull() ?: 0f
         updateCurrencyValues()
     }
 
     fun onCurrencyChosen(id: Long){
         rootView?.closeDialog()
         viewModelScope.launch {
-            if(id == 0L && whichCurrencyChoosing == 1){ // UAH
+            if(id == 0L && currencyChoosing == CurrencyNumber.FirstCurrency){ // UAH
                 val currency = java.util.Currency.getAvailableCurrencies().find { it.currencyCode == App.context.getString(R.string.UAH) } ?: return@launch
                 firstRate = 1f
                 rootView?.setupFirstCurrency(
                     App.context.resources.getResourceEntryName(ExtendedCurrency.getCurrencyByISO(currency.currencyCode).flag),
                     currency.currencyCode.toString()
                 )
-            } else if(id == 0L && whichCurrencyChoosing == 2){ // UAH
+            } else if(id == 0L && currencyChoosing == CurrencyNumber.SecondCurrency){ // UAH
                 val currency = java.util.Currency.getAvailableCurrencies().find { it.currencyCode == App.context.getString(R.string.UAH) } ?: return@launch
                 secondRate = 1f
                 rootView?.setupSecondCurrency(
                     App.context.resources.getResourceEntryName(ExtendedCurrency.getCurrencyByISO(currency.currencyCode).flag),
                     currency.currencyCode.toString()
                 )
-            } else if(id != 0L && whichCurrencyChoosing == 1){ // not UAH
+            } else if(id != 0L && currencyChoosing == CurrencyNumber.FirstCurrency){ // not UAH
                 val currency = databaseManager.getCurrency(id)
                 firstRate = currency.firstRate.toFloat()
                 rootView?.setupFirstCurrency(
                     currency.flag,
                     currency.symbol
                 )
-            } else if(id != 0L && whichCurrencyChoosing == 2){ // not UAH
+            } else if(id != 0L && currencyChoosing == CurrencyNumber.SecondCurrency){ // not UAH
                 val currency = databaseManager.getCurrency(id)
                 secondRate = currency.secondRate.toFloat()
                 rootView?.setupSecondCurrency(
@@ -222,7 +225,7 @@ class CalculatePresenter @Inject constructor(
                 )
             }
             updateCurrencyValues()
-            whichCurrencyChoosing = 0
+            currencyChoosing = CurrencyNumber.None
         }
     }
 
@@ -235,14 +238,13 @@ class CalculatePresenter @Inject constructor(
         rootView?.openLastFragment()
     }
 
-    private var whichCurrencyChoosing = 0
     fun onFirstCurrencyClicked(){
-        whichCurrencyChoosing = 1
+        currencyChoosing = CurrencyNumber.FirstCurrency
         rootView?.showDialog()
     }
 
     fun onSecondCurrencyClicked(){
-        whichCurrencyChoosing = 2
+        currencyChoosing = CurrencyNumber.SecondCurrency
         rootView?.showDialog()
     }
 }

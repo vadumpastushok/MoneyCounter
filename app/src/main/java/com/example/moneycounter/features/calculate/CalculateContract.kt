@@ -19,7 +19,9 @@ interface CalculateContract: BaseContract {
 
     fun closeDialog()
 
-    fun setCurrencyValue(isFirstCurrency: Boolean, value: String)
+    fun setFirstCurrencyValue(value: String)
+
+    fun setSecondCurrencyValue(value: String)
 
     fun setupFirstCurrency(flag: String, symbol: String)
 

@@ -35,7 +35,6 @@ class InputAmountPresenter @Inject constructor(
             return
         }
 
-
         val calendar = Calendar.getInstance()
         calendar[Calendar.HOUR_OF_DAY] = 0
         calendar.clear(Calendar.MINUTE)

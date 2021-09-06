@@ -1,6 +1,5 @@
 package com.example.moneycounter.model.db
 
-import com.example.moneycounter.app.App
 import com.example.moneycounter.model.entity.db.Category
 import com.example.moneycounter.model.entity.db.CategoryWithFinances
 import com.example.moneycounter.model.entity.db.Currency
@@ -32,7 +31,10 @@ class DatabaseManager @Inject constructor(
 
     suspend fun deleteCategory(category: Category) = categoryDao.deleteCategory(category)
 
+    suspend fun deleteAllCategories() = categoryDao.deleteAllCategories()
+
     suspend fun getNumberOfCategoriesByMoneyType(moneyType: MoneyType): Int = categoryDao.getNumberOfCategoriesByMoneyType(moneyType)
+
 
 
     suspend fun getAllFinances(): MutableList<Finance> = financeDao.getAllFinances()
@@ -43,6 +45,8 @@ class DatabaseManager @Inject constructor(
 
     suspend fun deleteFinance(finances: MutableList<Finance>) = financeDao.deleteFinance(finances)
 
+    suspend fun deleteAllFinances() = financeDao.deleteAllFinances()
+
 
     suspend fun getAllCurrencies() = currencyDao.getAllCurrencies()
 
@@ -50,9 +54,6 @@ class DatabaseManager @Inject constructor(
 
     suspend fun insertCurrencies(currencies: MutableList<Currency>) = currencyDao.insertCurrency(currencies)
 
-
-    fun deleteAll(){
-        App.context.deleteDatabase(DBConfig.DB_NAME)
-    }
+    suspend fun deleteAllCurrencies() = currencyDao.deleteAllCurrencies()
 
 }
