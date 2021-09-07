@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">MoneyCounter</string>
-    <string name="drawable_folder">drawable</string>
+    <string name="app_name" translatable="false">MoneyCounter</string>
+    <string name="drawable_folder" translatable="false">drawable</string>
     <string name="accept">Подтвердить</string>
     <string name="name">Название</string>
     <string name="next">Далее</string>
     <string name="skip">Пропустить</string>
-    <string name="one">1</string>
-    <string name="zero">0</string>
+    <string name="one" translatable="false">1</string>
+    <string name="zero" translatable="false">0</string>
     <string name="save">Сохранить</string>
     <string name="add">Добавить</string>
     <string name="icon">Иконка</string>
@@ -17,7 +17,7 @@
     <string name="wait">Подождите..</string>
     <string name="already_independent">Вы уже независимые </string>
     <string name="piggy_bank_empty">Копилка пустая</string>
-    <string name="default_icon">icon_add</string>
+    <string name="default_icon" translatable="false">icon_add</string>
     <string name="action_create">создать</string>
     <string name="action_change">изменить</string>
     <string name="action_remove">удалить</string>
@@ -26,10 +26,10 @@
     <string name="last_update">Последнее обновление</string>
     <string name="at">в</string>
     <string name="year">года</string>
-    <string name="ru">ru</string>
-    <string name="UAH">UAH</string>
-    <string name="PLN">PLN</string>
-    <string name="USD">$</string>
+    <string name="default_locale">ru</string>
+    <string name="UAH" translatable="false">UAH</string>
+    <string name="PLN" translatable="false">PLN</string>
+    <string name="USD" translatable="false">$</string>
 
     <string name="protect_app_by_password">Защитить приложение кодом для входа</string>
     <string name="change_password">Изменить код для входа</string>
@@ -70,8 +70,8 @@
     <string name="notification_text">Не забудьте записать расходы</string>
     <string name="descriptionText">Не забудьте записать расходы</string>
 
-    <string name="channelId_with_sound">channelId_with_sound</string>
-    <string name="channelId_without_sound">channelId_without_sound</string>
+    <string name="channelId_with_sound" translatable="false">channelId_with_sound</string>
+    <string name="channelId_without_sound" translatable="false">channelId_without_sound</string>
 
     <string name="notification_name_with_sound">Напоминание со звуком </string>
     <string name="notification_name_without_sound">Беззвучное напоминание </string>
@@ -95,7 +95,7 @@
     <string name="intro_text_budget">В приложении можно сделать экспорт и импорт своих данных при смене девайса</string>
     <string name="intro_text_offline">Контролируете финансы, анализируете свой бюджет, копите деньги, рассчитываете стоимость своей работы — и все это оффлайн.</string>
 
-    <string name="intro_policy_terms">
+    <string name="intro_policy_terms" translatable="false">
 \n<b>1.</b> Идейные соображения высшего.
 \n<b>1.1.</b> Порядка, а также сложившаяся структура организации требуют определения и уточнения форм развития.
 \n<b>1.2.</b> Задача организации, в особенности же новая модель организационной.
@@ -165,7 +165,7 @@
     <string name="category_title_pet">Питомец</string>
     <string name="category_title_hobby">Хобби</string>
     <string name="category_title_repair">Ремонт, мебель, техника</string>
-    <string name="category_title_add">""</string>
+    <string name="category_title_add" translatable="false">""</string>
 
 
     <string name="title_general">Общее</string>
@@ -181,7 +181,7 @@
     <string name="title_calculate_independence">Расчёт финансовой независимости</string>
 
     <string name="info_text">
-        Приложение разработано компанией <b>Пастушком Вадимом Андреевичем</b>. \n \n
+        Приложение разработано <b>Пастушком Вадимом Андреевичем</b>. \n \n
         Для сотрудничества, отзывов и предложений. Свяжитесь с нами в разделе: <b>Настройки > Напишите нам</b>. \n \n
         Приложение разработано для формирования финансовой грамотности пользователя. \n \n
         <b>2021</b>
@@ -190,15 +190,15 @@
     <string name="write_to_us_text">
         Напиши нам, если у вас есть предложения или комментарии к нашему приложению и мы вам обязательно ответим.
     </string>
-    <string name="header_category_id">category id</string>
-    <string name="header_name">name</string>
-    <string name="header_money_type">money type</string>
-    <string name="header_icon">icon</string>
-    <string name="header_color">color</string>
-    <string name="header_order">order</string>
-    <string name="header_finance_id">finance id</string>
-    <string name="header_date">date</string>
-    <string name="header_amount">amount</string>
+    <string name="header_category_id" translatable="false">category id</string>
+    <string name="header_name" translatable="false">name</string>
+    <string name="header_money_type" translatable="false">money type</string>
+    <string name="header_icon" translatable="false">icon</string>
+    <string name="header_color" translatable="false">color</string>
+    <string name="header_order" translatable="false">order</string>
+    <string name="header_finance_id" translatable="false">finance id</string>
+    <string name="header_date" translatable="false">date</string>
+    <string name="header_amount" translatable="false">amount</string>
 
 
     <string name="piggy_bank_first_instruction">Придумайте место, куда вы будете откладывать деньги в течении месяца.</string>
@@ -211,7 +211,10 @@
     <string name="piggy_bank_saved">Сбережения</string>
     <string name="piggy_bank_independence_time">Приблизительно через сколько вы будете финансово независимы</string>
     <string name="still_in_development">В стадии разработки</string>
-
+    <string name="currency_title">Валюта</string>
+    <string name="buy_title">Покупка</string>
+    <string name="sell_title">Продажа</string>
+    <string name="others_currency_title">Другие валюты</string>
 
 
 </resources>

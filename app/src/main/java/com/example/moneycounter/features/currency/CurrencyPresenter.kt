@@ -54,7 +54,7 @@ class CurrencyPresenter @Inject constructor(
         val lastTime = preferences.getLong(Config.PREF_LAST_TIME_UPDATE_CURRENCIES, 0)
         val date = Date(lastTime)
 
-        return String.format(Locale(App.context.getString(R.string.ru)),
+        return String.format(Locale(App.context.getString(R.string.default_locale)),
             "${App.context.getString(R.string.last_update)} %td %tB %tY ${App.context.getString(R.string.year)} ${App.context.getString(R.string.at)} %tH:%tM:%tS",date,date,date,date,date,date)
     }
 
@@ -119,8 +119,8 @@ class CurrencyPresenter @Inject constructor(
                 val flag = App.context.resources.getResourceEntryName(ExtendedCurrency.getCurrencyByISO(toCurrency.currencyCode).flag)
 
                 val newCurrency = Currency(
-                        toCurrency.getDisplayName(Locale(App.context.getString(R.string.ru))),
-                        toCurrency.getSymbol(Locale(App.context.getString(R.string.ru))),
+                        toCurrency.getDisplayName(Locale(App.context.getString(R.string.default_locale))),
+                        toCurrency.getSymbol(Locale(App.context.getString(R.string.default_locale))),
                         flag,
                         firstRate,
                         secondRate,

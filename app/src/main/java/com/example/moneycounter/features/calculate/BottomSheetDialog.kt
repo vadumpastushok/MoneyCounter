@@ -44,7 +44,7 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
 
         val newData = mutableListOf(
             Currency(
-                currency.getDisplayName(Locale(App.context.getString(R.string.ru))),
+                currency.getDisplayName(Locale(App.context.getString(R.string.default_locale))),
                 currency.currencyCode.toString(),
                 App.context.resources.getResourceEntryName(ExtendedCurrency.getCurrencyByISO(currency.currencyCode).flag),
                 "",
