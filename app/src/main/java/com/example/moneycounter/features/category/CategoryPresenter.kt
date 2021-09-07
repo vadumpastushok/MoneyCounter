@@ -38,7 +38,7 @@ class CategoryPresenter @Inject constructor(
             rootView?.setTitleText(context.getString(R.string.title_costs))
             viewModelScope.launch {
                 categories = databaseManager.getCategoryByType(MoneyType.COSTS)
-                categories.remove(categories.find { it.title == context.getString(R.string.title_piggy_bank) })
+                categories.remove(categories.find { it.icon == context.resources.getResourceEntryName(R.drawable.icon_piggy_bank) })
                 insertAddButton(MoneyType.COSTS)
                 categories.sortBy { it.order }
                 rootView?.setData(categories)
