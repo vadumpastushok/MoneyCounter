@@ -18,7 +18,7 @@ interface HomeContract: BaseContract {
 
     fun playSound()
 
-    fun setGeneral(sum: Int)
+    fun setGeneral(incomeAmount: Int, costsAmount: Int)
 
     fun setIncome(percent: Float, sum: Int)
 

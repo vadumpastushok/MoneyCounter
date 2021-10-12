@@ -147,10 +147,16 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         binding.homeWaveView.startAnimation()
     }
 
-    override fun setGeneral(sum: Int){
+    override fun setGeneral(incomeAmount: Int, costsAmount: Int){
         binding.financeTextView.text = context?.getString(R.string.title_general)
-        binding.financePercentView.text = sum.toString()
-        binding.financeSumView.text = null
+        val amount = incomeAmount + costsAmount
+        binding.financePercentView.text = amount.toString()
+        val difference = incomeAmount - costsAmount
+        if(difference > 0){
+            binding.financeSumView.text = "+$difference"
+        }else{
+            binding.financeSumView.text = difference.toString()
+        }
     }
 
     override fun setIncome(percent: Float, sum: Int){

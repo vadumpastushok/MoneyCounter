@@ -63,7 +63,7 @@ class HomePresenter @Inject constructor(
         root.setChartData(incomeAmount, costsAmount)
         when (moneyType) {
             null -> {
-                root.setGeneral(amount.toInt())
+                root.setGeneral(incomeAmount.toInt(), costsAmount.toInt())
             }
             MoneyType.INCOME -> {
                 root.setIncome(incomeAmount*100/amount, incomeAmount.toInt())
@@ -136,8 +136,7 @@ class HomePresenter @Inject constructor(
         if(incomeAmount == 0f && costsAmount == 0f) {
             getFinanceData()
         }else{
-            val amount = incomeAmount + costsAmount
-            rootView?.setGeneral(amount.toInt())
+            rootView?.setGeneral(incomeAmount.toInt(), costsAmount.toInt())
         }
     }
 
