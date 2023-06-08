@@ -8,7 +8,7 @@ interface CategoryContract: BaseContract {
 
     fun openAddCategoryFragment()
 
-    fun openInputAmountFragment(id: Long)
+    fun openFinancePlaceFragment(id: Long)
 
     fun openLastFragment()
 

@@ -1,8 +1,8 @@
-package com.example.moneycounter.features.category
+package com.example.moneycounter.features.financial_place
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.LayoutInflater
@@ -13,27 +13,21 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App
-import com.example.moneycounter.databinding.ItemCategoryBinding
-import com.example.moneycounter.model.entity.db.Category
+import com.example.moneycounter.databinding.ItemFinancialPlaceBinding
+import com.example.moneycounter.model.entity.db.FinancialPlace
 import java.util.*
 
 
-class CategoryAdapter: RecyclerView.Adapter<CategoryViewHolder>(), CategoryTouchAdapter {
+class FinancialPlaceAdapter: RecyclerView.Adapter<FinancialPlaceViewHolder>(), FinancialPlaceTouchAdapter {
 
-    private var data: MutableList<Category> = mutableListOf()
+    private var data: MutableList<FinancialPlace> = mutableListOf()
     private var categoryClickedListener: (position: Int) -> Unit = {}
     private var deleteCategoryClickedListener: (position: Int) -> Unit = {}
     private var isEditable: Boolean = false
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        return CategoryViewHolder(
-            ItemCategoryBinding.bind(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_category,
-                    parent,
-                    false
-                )
-            )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FinancialPlaceViewHolder {
+        return FinancialPlaceViewHolder(
+            ItemFinancialPlaceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
@@ -57,9 +51,8 @@ class CategoryAdapter: RecyclerView.Adapter<CategoryViewHolder>(), CategoryTouch
         return true
     }
 
-    override fun onBindViewHolder(viewHolder: CategoryViewHolder, position: Int) {
-        val binding = ItemCategoryBinding.bind(viewHolder.itemView)
-        binding.rbtCategory.apply {
+    override fun onBindViewHolder(viewHolder: FinancialPlaceViewHolder, position: Int) {
+        viewHolder.binding.rbtFinancialPlace.apply {
             setColor(data[position].color)
             setIcon(data[position].icon)
             setTitle(data[position].title)
@@ -68,15 +61,15 @@ class CategoryAdapter: RecyclerView.Adapter<CategoryViewHolder>(), CategoryTouch
             }
         }
 
-        binding.ivCategoryClose.isVisible = isEditable
-        binding.ivCategoryClose.setOnClickListener {
+        viewHolder.binding.ivFinancialPlaceClose.isVisible = isEditable
+        viewHolder.binding.ivFinancialPlaceClose.setOnClickListener {
             deleteCategoryClickedListener.invoke(viewHolder.adapterPosition)
         }
 
         animEdit(viewHolder.itemView)
     }
 
-    override fun onViewAttachedToWindow(holder: CategoryViewHolder) {
+    override fun onViewAttachedToWindow(holder: FinancialPlaceViewHolder) {
         super.onViewAttachedToWindow(holder)
         animEdit(holder.itemView)
     }
@@ -89,6 +82,7 @@ class CategoryAdapter: RecyclerView.Adapter<CategoryViewHolder>(), CategoryTouch
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setIsEditable(editable: Boolean) {
         isEditable = editable
         notifyDataSetChanged()
@@ -127,7 +121,8 @@ class CategoryAdapter: RecyclerView.Adapter<CategoryViewHolder>(), CategoryTouch
         animSelectedView(itemView, 1.2f, 1f)
     }
 
-    fun setData(newData: MutableList<Category>) {
+    @SuppressLint("NotifyDataSetChanged")
+    fun setData(newData: MutableList<FinancialPlace>) {
         data = newData
         notifyDataSetChanged()
     }
@@ -135,5 +130,4 @@ class CategoryAdapter: RecyclerView.Adapter<CategoryViewHolder>(), CategoryTouch
     fun getData() = data
 }
 
-
-class CategoryViewHolder(binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root)
+class FinancialPlaceViewHolder(val binding: ItemFinancialPlaceBinding) : RecyclerView.ViewHolder(binding.root)

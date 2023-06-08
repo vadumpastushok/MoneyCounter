@@ -1,16 +1,18 @@
 package com.example.moneycounter.model.db
 
-import com.example.moneycounter.model.entity.db.Category
-import com.example.moneycounter.model.entity.db.CategoryWithFinances
-import com.example.moneycounter.model.entity.db.Currency
-import com.example.moneycounter.model.entity.db.Finance
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.example.moneycounter.model.entity.db.*
 import com.example.moneycounter.model.entity.ui.MoneyType
 import javax.inject.Inject
 
 class DatabaseManager @Inject constructor(
     private val categoryDao: CategoryDao,
     private val financeDao: FinanceDao,
-    private val currencyDao: CurrencyDao
+    private val currencyDao: CurrencyDao,
+    private val financialPlaceDao: FinancialPlaceDao,
 ) {
 
     suspend fun getCategoryByType(type: MoneyType): MutableList<Category> = categoryDao.getCategoryByType(type)
@@ -55,5 +57,12 @@ class DatabaseManager @Inject constructor(
     suspend fun insertCurrencies(currencies: MutableList<Currency>) = currencyDao.insertCurrency(currencies)
 
     suspend fun deleteAllCurrencies() = currencyDao.deleteAllCurrencies()
+
+
+    suspend fun getAllFinancialPlaces() = financialPlaceDao.getAllFinancialPlaces()
+
+    suspend fun insertFinancialPlace(financialPlace: FinancialPlace) = financialPlaceDao.insertFinancialPlace(financialPlace)
+
+    suspend fun deleteFinancialPlace(financialPlace: FinancialPlace) = financialPlaceDao.deleteFinancialPlace(financialPlace)
 
 }

@@ -23,7 +23,9 @@
         android:fontFamily="@font/roboto_medium"
         android:gravity="center"
         android:textColor="@color/dark_gray"
-        android:textSize="24sp"
+        android:textSize="18sp"
+        android:singleLine="true"
+        tools:text="@string/add_financial_places"
         app:layout_constraintEnd_toStartOf="@+id/title_right_button"
         app:layout_constraintStart_toEndOf="@+id/title_left_button"
         app:layout_constraintTop_toTopOf="parent" />

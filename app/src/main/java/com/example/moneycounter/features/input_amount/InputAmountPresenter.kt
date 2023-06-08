@@ -48,7 +48,8 @@ class InputAmountPresenter @Inject constructor(
                 Finance(
                     root.getFragmentArgs().id,
                     root.getAmount().toInt(),
-                    time
+                    time,
+                    0,
                 )
             )
         }

@@ -49,7 +49,7 @@ class IconPickerFragment: BaseFragment<FragmentIconPickerBinding>(), IconPickerC
         val bundle = Bundle()
         bundle.putString(requireContext().getString(R.string.header_money_type), args.type.toString())
         bundle.putString(requireContext().getString(R.string.header_icon), icon)
-        parentFragmentManager.setFragmentResult(Config.REQUEST_KEY_CATEGORY_ADD, bundle)
+        parentFragmentManager.setFragmentResult(Config.REQUEST_KEY_ICON_SELECT, bundle)
 
         findNavController().popBackStack()
     }

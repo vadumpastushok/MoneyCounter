@@ -1,4 +1,4 @@
-package com.example.moneycounter.features.category
+package com.example.moneycounter.features.financial_place
 
 import android.animation.ValueAnimator
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import androidx.core.view.updatePadding
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -16,27 +16,32 @@ import com.example.moneycounter.NavGraphDirections
 import com.example.moneycounter.R
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.DialogCategoryBinding
-import com.example.moneycounter.databinding.FragmentCategoryBinding
+import com.example.moneycounter.databinding.FragmentFinancialPlaceBinding
 import com.example.moneycounter.features.category_add.CategoryAddFragment
-import com.example.moneycounter.features.financial_place.FinancialPlaceFragment
+import com.example.moneycounter.features.financial_place_add.FinancialPlaceAddFragment
+import com.example.moneycounter.features.input_amount.InputAmountFragment
+import com.example.moneycounter.features.input_amount.InputAmountFragmentArgs
 import com.example.moneycounter.model.entity.db.Category
+import com.example.moneycounter.model.entity.db.FinancialPlace
 import com.example.moneycounter.model.entity.ui.MoneyType
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContract {
+class FinancialPlaceFragment: BaseFragment<FragmentFinancialPlaceBinding>(), FinancialPlaceContract {
 
     @Inject
-    lateinit var presenter: CategoryPresenter
-    private val adapter: CategoryAdapter by lazy { CategoryAdapter() }
-    private val args: CategoryFragmentArgs by navArgs()
+    lateinit var presenter: FinancialPlacePresenter
+    private val adapter: FinancialPlaceAdapter by lazy { FinancialPlaceAdapter() }
+    private val args: FinancialPlaceFragmentArgs by navArgs()
 
     override fun createViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentCategoryBinding {
-        return FragmentCategoryBinding.inflate(inflater, container, false)
+    ): FragmentFinancialPlaceBinding {
+        return FragmentFinancialPlaceBinding.inflate(inflater, container, false)
     }
 
     override fun attachToPresenter() {
@@ -44,49 +49,23 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
     }
 
     override fun initView() {
-        setupPager()
+        setupRecycler()
         setupDialog()
         setupOnBackPressed()
         initListeners()
     }
 
-    override fun updateViewPaddings(left: Int, top: Int, right: Int, bottom: Int) {
-        binding.root.updatePadding(left, top, right, 0)
-    }
-
-    /**
-     * Contract
-     */
-
-    override fun openLastFragment(){
-        findNavController().popBackStack()
-    }
-
-    override fun openAddCategoryFragment(){
-        CategoryAddFragment.start(findNavController(), getMoneyType())
-    }
-
-    override fun openFinancePlaceFragment(id: Long){
-        FinancialPlaceFragment.start(findNavController(), id, getMoneyType())
-    }
-
-    override fun setTitleText(text: String){
-        binding.categoryTitlebar.setupTitleText(text)
-    }
-
-    override fun setData(list: MutableList<Category>) {
+    override fun setData(list: MutableList<FinancialPlace>) {
         adapter.setData(list)
     }
 
     override fun setMessageNoCategories(){
-        binding.tvNoCategories.isVisible = true
+        binding.tvNoFinancialPlaces.isVisible = true
     }
 
     override fun removeMessageNoCategories(){
-        binding.tvNoCategories.isVisible = false
+        binding.tvNoFinancialPlaces.isVisible = false
     }
-
-    override fun getMoneyType(): MoneyType = args.type
 
     override fun setIsEditable(editable: Boolean) {
         callback.setIsMovementEnabled(editable)
@@ -127,6 +106,18 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
         alertDialog.cancel()
     }
 
+    override fun openLastFragment() {
+        findNavController().popBackStack()
+    }
+
+    override fun openAddFinancePlaceFragment(){
+        FinancialPlaceAddFragment.start(findNavController())
+    }
+
+    override fun openInputAmountFragment(financePlaceId: Long) {
+        InputAmountFragment.start(findNavController(), args.id, args.type, financePlaceId)
+    }
+
     /**
      * Help fun-s
      */
@@ -147,18 +138,18 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
         ValueAnimator.ofFloat(fromValue, toValue).apply {
             duration = 500
             addUpdateListener {
-                binding.categoryEditSave.progress = it.animatedValue as Float
+                binding.financialPlaceEditSave.progress = it.animatedValue as Float
             }
             start()
         }
     }
 
     private fun initListeners(){
-        binding.categoryTitlebar.setBackButtonClickListener {
+        binding.financialPlacesTitlebar.setBackButtonClickListener {
             presenter.onBackClicked()
         }
 
-        binding.categoryEditSave.setOnClickListener {
+        binding.financialPlaceEditSave.setOnClickListener {
             presenter.onRightClicked()
         }
 
@@ -179,15 +170,15 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
         }
     }
 
-    private lateinit var callback: CategoryTouchCallback
-    private fun setupPager(){
-        binding.rvCategory.layoutManager = GridLayoutManager(context,3)
-        binding.rvCategory.adapter = adapter
+    private lateinit var callback: FinancialPlaceTouchCallback
+    private fun setupRecycler(){
+        binding.rvFinancialPlaces.layoutManager = GridLayoutManager(context,3)
+        binding.rvFinancialPlaces.adapter = adapter
 
-        callback = CategoryTouchCallback(adapter)
+        callback = FinancialPlaceTouchCallback(adapter)
         { presenter.onCategoryPositionChanged(adapter.getData()) }
         val touchHelper = ItemTouchHelper(callback)
-        touchHelper.attachToRecyclerView(binding.rvCategory)
+        touchHelper.attachToRecyclerView(binding.rvFinancialPlaces)
         callback.setIsMovementEnabled(false)
     }
 
@@ -202,9 +193,9 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
     }
 
 
-    companion object {
-        fun start(navController: NavController, moneyType: MoneyType) {
-            val direction = NavGraphDirections.actionToCategory(moneyType)
+    companion object{
+        fun start(navController: NavController, id: Long, type: MoneyType){
+            val direction = NavGraphDirections.actionToFinancialPlace(id, type)
             navController.navigate(direction)
         }
     }

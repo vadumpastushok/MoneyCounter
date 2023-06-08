@@ -50,7 +50,7 @@ class CategoryPresenter @Inject constructor(
     private fun insertAddButton(moneyType: MoneyType){
         categories.add(
             Category(
-                context.getString(R.string.category_title_add),
+                context.getString(R.string.btn_title_add),
                 context.resources.getResourceEntryName(R.drawable.icon_add),
                 context.getColor(R.color.dark_text),
                 moneyType,
@@ -90,10 +90,10 @@ class CategoryPresenter @Inject constructor(
         if(isEditable) return
 
         val item = categories[order]
-        if(item.title == context.getString(R.string.category_title_add)) {
+        if(item.title == context.getString(R.string.btn_title_add)) {
             rootView?.openAddCategoryFragment()
         } else {
-            rootView?.openInputAmountFragment(item.id)
+            rootView?.openFinancePlaceFragment(item.id)
         }
     }
 

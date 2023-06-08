@@ -1,4 +1,4 @@
-package com.example.moneycounter.features.category_add
+package com.example.moneycounter.features.financial_place_add
 
 import android.app.AlertDialog
 import android.content.Context
@@ -19,6 +19,9 @@ import com.example.moneycounter.app.Config
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.DialogCategoryAddBinding
 import com.example.moneycounter.databinding.FragmentCategoryAddBinding
+import com.example.moneycounter.databinding.FragmentFinancialPlaceAddBinding
+import com.example.moneycounter.features.category_add.CategoryAddContract
+import com.example.moneycounter.features.category_add.CategoryAddFragmentArgs
 import com.example.moneycounter.features.home.HomeFragment
 import com.example.moneycounter.features.icon_picker.IconPickerFragment
 import com.example.moneycounter.model.entity.ui.MoneyType
@@ -27,11 +30,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryAddContract {
+class FinancialPlaceAddFragment: BaseFragment<FragmentFinancialPlaceAddBinding>(), CategoryAddContract {
 
     @Inject
-    lateinit var presenter: CategoryAddPresenter
-    private val args: CategoryAddFragmentArgs by navArgs()
+    lateinit var presenter: FinancialPlaceAddPresenter
+    private val args: FinancialPlaceAddFragmentArgs by navArgs()
     private lateinit var alertDialog: AlertDialog
     private lateinit var dialogBinding: DialogCategoryAddBinding
 
@@ -42,8 +45,8 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
     override fun createViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentCategoryAddBinding {
-        return FragmentCategoryAddBinding.bind(inflater.inflate(R.layout.fragment_category_add, container, false))
+    ): FragmentFinancialPlaceAddBinding {
+        return FragmentFinancialPlaceAddBinding.inflate(inflater, container, false)
     }
 
     override fun attachToPresenter() {
@@ -86,11 +89,11 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
 
     override fun setColor(color: Int){
         this.color = color
-        binding.categoryAddTitlebar.setupBottomLine(color)
-        binding.categoryAddTitlebar.setupLeftButton(color)
-        binding.btnIconCategoryAdd.setColor(color)
+        binding.financialPlaceAddTitlebar.setupBottomLine(color)
+        binding.financialPlaceAddTitlebar.setupLeftButton(color)
+        binding.btnIconFinancialPlaceAdd.setColor(color)
         binding.btnColorPick.setTextColor(color)
-        binding.editCategoryTitle.backgroundTintList = ColorStateList.valueOf(color)
+        binding.editFinancialPlaceTitle.backgroundTintList = ColorStateList.valueOf(color)
         setButtonEnabled(null)
     }
 
@@ -101,7 +104,7 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
 
     override fun showDialog(){
         dialogBinding.categoryViewDialog.setIcon(icon)
-        dialogBinding.categoryViewDialog.setTitle(binding.editCategoryTitle.text.toString())
+        dialogBinding.categoryViewDialog.setTitle(binding.editFinancialPlaceTitle.text.toString())
         alertDialog.show()
     }
 
@@ -110,7 +113,7 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
     }
 
     override fun getTitle(): String {
-        return binding.editCategoryTitle.text.toString()
+        return binding.editFinancialPlaceTitle.text.toString()
     }
 
     override fun getColor(): Int = color
@@ -120,15 +123,15 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
     override fun getMoneyType(): MoneyType = moneyType
 
     override fun setIcon(selectedIcon: String){
-        binding.btnIconCategoryAdd.setIcon(icon)
+        binding.btnIconFinancialPlaceAdd.setIcon(icon)
     }
 
     override fun setButtonEnabled(isEnabled: Boolean?) {
-        if (isEnabled != null) binding.btnCategoryAdd.isEnabled = isEnabled
-        if (binding.btnCategoryAdd.isEnabled) {
-            binding.btnCategoryAdd.backgroundTintList = ColorStateList.valueOf(color)
+        if (isEnabled != null) binding.btnFinancialPlaceAdd.isEnabled = isEnabled
+        if (binding.btnFinancialPlaceAdd.isEnabled) {
+            binding.btnFinancialPlaceAdd.backgroundTintList = ColorStateList.valueOf(color)
         } else {
-            binding.btnCategoryAdd.backgroundTintList = ColorStateList.valueOf(
+            binding.btnFinancialPlaceAdd.backgroundTintList = ColorStateList.valueOf(
                 ResourcesCompat.getColor(
                     requireContext().resources,
                     R.color.gray,
@@ -144,12 +147,11 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
 
     private fun setupView(){
         setButtonEnabled(false)
-        binding.categoryAddTitlebar.setupTitleText(args.title)
+        binding.financialPlaceAddTitlebar.setupTitleText(args.title)
         setColor(color)
     }
 
     private fun setupData(){
-        moneyType = args.type
         icon = args.icon
         if(color == 0){
             color = requireContext().getColor(R.color.red)
@@ -157,22 +159,22 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
     }
 
     private fun setupTransferData(){
-        parentFragmentManager.setFragmentResultListener(Config.REQUEST_KEY_ICON_SELECT, this,
-            { _, bundle ->
-                val moneyTypeResult = bundle.getString(requireContext().getString(R.string.header_money_type))
-                moneyType = if(moneyTypeResult == MoneyType.INCOME.toString()) {
-                    MoneyType.INCOME
-                }else{
-                    MoneyType.COSTS
-                }
-                val iconResult = bundle.getString(requireContext().getString(R.string.header_icon))
-                iconResult?.let {
-                    icon = iconResult
-                    presenter.onIconSelected(iconResult)
-                }
-                setColor(color)
+        parentFragmentManager.setFragmentResultListener(Config.REQUEST_KEY_ICON_SELECT, this
+        ) { _, bundle ->
+            val moneyTypeResult =
+                bundle.getString(requireContext().getString(R.string.header_money_type))
+            moneyType = if (moneyTypeResult == MoneyType.INCOME.toString()) {
+                MoneyType.INCOME
+            } else {
+                MoneyType.COSTS
             }
-        )
+            val iconResult = bundle.getString(requireContext().getString(R.string.header_icon))
+            iconResult?.let {
+                icon = iconResult
+                presenter.onIconSelected(iconResult)
+            }
+            setColor(color)
+        }
     }
 
     private fun setupDialog(){
@@ -188,21 +190,21 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
     }
 
     private fun initListeners() {
-        binding.categoryAddTitlebar.setBackButtonClickListener {
+        binding.financialPlaceAddTitlebar.setBackButtonClickListener {
             presenter.onBackClicked()
         }
 
-        binding.btnIconCategoryAdd.setOnClickListener {
+        binding.btnIconFinancialPlaceAdd.setOnClickListener {
             presenter.onIconPickerClicked()
         }
 
         binding.btnColorPick.setOnClickListener {
             presenter.onSelectColorClicked()
         }
-        binding.btnCategoryAdd.setOnClickListener {
-            presenter.onCreateCategory()
+        binding.btnFinancialPlaceAdd.setOnClickListener {
+            presenter.onCreateFinancePlace()
         }
-        binding.editCategoryTitle.addTextChangedListener(object : TextWatcher {
+        binding.editFinancialPlaceTitle.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(editable: Editable?) {
@@ -223,11 +225,10 @@ class CategoryAddFragment: BaseFragment<FragmentCategoryAddBinding>(), CategoryA
     companion object{
         fun start(
             navController: NavController,
-            moneyType: MoneyType,
             icon: String = App.context.getString(R.string.default_icon),
             title: String = App.context.getString(R.string.title_create_category)
         ) {
-            val direction = NavGraphDirections.actionToCategoryAdd(moneyType, icon, title)
+            val direction = NavGraphDirections.actionToFinancialPlaceAdd(icon, title)
             navController.navigate(direction)
         }
     }
