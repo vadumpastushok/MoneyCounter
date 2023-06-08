@@ -30,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FinancialPlaceAddFragment: BaseFragment<FragmentFinancialPlaceAddBinding>(), CategoryAddContract {
+class FinancialPlaceAddFragment: BaseFragment<FragmentFinancialPlaceAddBinding>(), FinancialPlaceAddContract {
 
     @Inject
     lateinit var presenter: FinancialPlaceAddPresenter

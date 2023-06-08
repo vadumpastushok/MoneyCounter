@@ -11,7 +11,7 @@ import com.example.moneycounter.model.entity.db.FinancialPlace
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class FinancialPlaceAddPresenter @Inject constructor(): BasePresenter<CategoryAddContract>() {
+class FinancialPlaceAddPresenter @Inject constructor(): BasePresenter<FinancialPlaceAddContract>() {
 
     @Inject lateinit var databaseManager: DatabaseManager
     private var title = ""
