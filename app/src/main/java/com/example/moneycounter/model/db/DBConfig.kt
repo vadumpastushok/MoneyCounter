@@ -2,7 +2,7 @@ package com.example.moneycounter.model.db
 
 object DBConfig {
 
-    const val DB_VERSION = 1
+    const val DB_VERSION = 2
     const val DB_NAME = "money_counter_db"
 
     object Category {
@@ -25,6 +25,17 @@ object DBConfig {
             const val CATEGORY_ID = "category_id"
             const val DATE = "date"
             const val AMOUNT = "amount"
+            const val PLACE = "place"
+            const val ID = "id"
+        }
+    }
+
+    object FinancialPlace {
+        const val TABLE_NAME = "financial_places"
+
+        object Columns {
+            const val TITLE = "title"
+            const val ICON = "icon"
             const val ID = "id"
         }
     }

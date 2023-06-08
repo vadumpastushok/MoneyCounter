@@ -10,5 +10,6 @@ data class Finance(
     @ColumnInfo(name = DBConfig.Finance.Columns.CATEGORY_ID) val category_id: Long,
     @ColumnInfo(name = DBConfig.Finance.Columns.AMOUNT) val amount: Int,
     @ColumnInfo(name = DBConfig.Finance.Columns.DATE) val date: Long,
+    @ColumnInfo(name = DBConfig.Finance.Columns.PLACE) val placeId: Long,
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = DBConfig.Finance.Columns.ID) val id: Long = 0
 )

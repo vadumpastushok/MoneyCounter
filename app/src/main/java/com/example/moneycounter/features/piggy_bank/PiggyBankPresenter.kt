@@ -94,7 +94,8 @@ class PiggyBankPresenter @Inject constructor(
                 Finance(
                     piggyBankId,
                     amount,
-                    calendar.timeInMillis
+                    calendar.timeInMillis,
+                    0,
                 )
             )
         }
