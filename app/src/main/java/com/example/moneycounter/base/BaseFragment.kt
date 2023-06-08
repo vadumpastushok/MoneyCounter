@@ -35,15 +35,13 @@ abstract class BaseFragment<
         super.onViewCreated(view, savedInstanceState)
         attachToPresenter()
         initWindow()
+        updateStatusBarColor(getIsLightStatusBar())
         initView()
     }
 
     protected abstract fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
     open fun initWindow() {
-        WindowInsetsControllerCompat(requireActivity().window, requireActivity().window.decorView)
-            .isAppearanceLightStatusBars = getIsLightStatusBar()
-
         ViewCompat.setOnApplyWindowInsetsListener(requireView()) { _, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
 
@@ -53,6 +51,11 @@ abstract class BaseFragment<
     }
 
     open fun getIsLightStatusBar(): Boolean = true
+
+    override fun updateStatusBarColor(isLight: Boolean) {
+        WindowInsetsControllerCompat(requireActivity().window, requireActivity().window.decorView)
+            .isAppearanceLightStatusBars = isLight
+    }
 
     open fun updateViewPaddings(left: Int, top: Int, right: Int, bottom: Int) {
         binding.root.updatePadding(left, top, right, bottom)

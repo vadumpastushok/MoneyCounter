@@ -173,6 +173,9 @@ class HomePresenter @Inject constructor(
         val alpha = 0.5f.coerceAtMost(slideOffset) * 2
         rootView?.setScrimAlpha(alpha)
 
+        val isLightStatusBar = slideOffset >= 0.5
+        rootView?.updateStatusBarColor(isLightStatusBar)
+
         val translation = width * slideOffset
         rootView?.setMainLayoutTranslation(translation)
     }

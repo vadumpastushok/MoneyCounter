@@ -136,8 +136,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         ringtoneManager.play()
     }
 
-
-
     override fun setWaves(wavesList: MutableList<WaveView.WaveData>) {
         for (wave in wavesList){
             binding.homeWaveView.addWaveData(wave)
@@ -186,7 +184,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
 
     override fun setChartData(incomeAmount: Float, costsAmount: Float ){
         val pieEntries: ArrayList<PieEntry> = ArrayList()
-        val label = "label"
 
         val pieChartDataMap: MutableMap<String, Float> = HashMap()
         pieChartDataMap[" "] = costsAmount
@@ -200,7 +197,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
             pieEntries.add(PieEntry(pieChartDataMap[type]!!.toFloat(), type))
         }
 
-        val pieDataSet = PieDataSet(pieEntries, label)
+        val pieDataSet = PieDataSet(pieEntries, "")
         pieDataSet.colors = colors
         pieDataSet.setDrawValues(false)
         pieDataSet.notifyDataSetChanged()
