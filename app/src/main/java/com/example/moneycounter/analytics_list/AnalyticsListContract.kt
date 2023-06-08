@@ -1,4 +1,4 @@
-package com.example.moneycounter.features.analytics_list
+package com.example.moneycounter.analytics_list
 
 import com.example.moneycounter.base.BaseContract
 import com.example.moneycounter.model.entity.ui.Analytics

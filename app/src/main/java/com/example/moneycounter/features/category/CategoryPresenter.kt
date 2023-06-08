@@ -59,17 +59,19 @@ class CategoryPresenter @Inject constructor(
         )
     }
 
-    private fun prepareList(): MutableList<Category>{
-        val list: MutableList<Category> = categories.toMutableList()
-        list.removeAt(list.lastIndex)
+    companion object {
+        fun prepareList(categories: List<Category>): MutableList<Category> {
+            val list: MutableList<Category> = categories.toMutableList()
+            list.removeAt(list.lastIndex)
 
-        var lastOrder = 0
-        for(i in 0 until list.size){
-            val item = list[i]
-            item.order = lastOrder + 1
-            lastOrder = item.order
+            var lastOrder = 0
+            for (i in 0 until list.size) {
+                val item = list[i]
+                item.order = lastOrder + 1
+                lastOrder = item.order
+            }
+            return list
         }
-        return list
     }
 
     private fun applyChanges(){
@@ -80,7 +82,7 @@ class CategoryPresenter @Inject constructor(
                 if (it.title != context.getString(R.string.title_piggy_bank)) {
                     databaseManager.deleteCategory(it)
                 }
-                databaseManager.insertCategory(prepareList())
+                databaseManager.insertCategory(prepareList(categories))
             }
             databaseManager.deleteFinance(financesToDelete)
         }

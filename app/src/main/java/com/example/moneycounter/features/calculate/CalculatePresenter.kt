@@ -77,8 +77,18 @@ class CalculatePresenter @Inject constructor(
         val lastTime = preferences.getLong(Config.PREF_LAST_TIME_UPDATE_CURRENCIES, 0)
         val date = Date(lastTime)
 
-        return String.format(Locale(App.context.getString(R.string.default_locale)),
-            "${App.context.getString(R.string.last_update)} %td %tB %tY ${App.context.getString(R.string.year)} ${App.context.getString(R.string.at)} %tH:%tM:%tS",date,date,date,date,date,date)
+        val locale = Locale(App.context.getString(R.string.default_locale))
+        val lastUpdate = App.context.getString(R.string.last_update)
+        val year = App.context.getString(R.string.year)
+        val at = App.context.getString(R.string.at)
+        return formatTime(locale, lastUpdate, year, at, date)
+    }
+
+    companion object {
+        fun formatTime(locale: Locale, lastUpdate: String, year: String, at: String, date: Date): String {
+            return String.format(locale,
+            "$lastUpdate %td %tB %tY $year $at %tH:%tM:%tS",date,date,date,date,date,date)
+        }
     }
 
     private fun loadDataFromDatabase(){

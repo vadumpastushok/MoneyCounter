@@ -46,8 +46,14 @@ class CurrencyPresenter @Inject constructor(
     private fun isDataRecentlyUpdated(): Boolean {
         val lastTime = preferences.getLong(Config.PREF_LAST_TIME_UPDATE_CURRENCIES, 0)
         val currentTime = System.currentTimeMillis()
-        val fiveMinutes = 300000
-        return (currentTime - lastTime) < fiveMinutes
+        val fiveMinutes = 300000L
+        return checkForLowerTimeDuration(currentTime, lastTime, fiveMinutes)
+    }
+
+    companion object {
+        fun checkForLowerTimeDuration(currentTime: Long, lastTime: Long, period: Long): Boolean {
+            return (currentTime - lastTime) < period
+        }
     }
 
     private fun getLastTimeUpdate(): String {
