@@ -1,13 +1,18 @@
 package com.example.moneycounter.base
 
+import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.example.moneycounter.R
 
 abstract class BaseFragment<
         VB : ViewBinding
@@ -29,10 +34,29 @@ abstract class BaseFragment<
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         attachToPresenter()
+        initWindow()
         initView()
     }
 
     protected abstract fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+
+    open fun initWindow() {
+        WindowInsetsControllerCompat(requireActivity().window, requireActivity().window.decorView)
+            .isAppearanceLightStatusBars = getIsLightStatusBar()
+
+        ViewCompat.setOnApplyWindowInsetsListener(requireView()) { _, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            updateViewPaddings(insets.left, insets.top, insets.right, insets.bottom)
+            WindowInsetsCompat.CONSUMED
+        }
+    }
+
+    open fun getIsLightStatusBar(): Boolean = true
+
+    open fun updateViewPaddings(left: Int, top: Int, right: Int, bottom: Int) {
+        binding.root.updatePadding(left, top, right, bottom)
+    }
 
     open fun initView() {}
 
