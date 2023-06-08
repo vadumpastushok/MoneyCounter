@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/programming/Android/MoneyCounter/app/src/main/res/drawable/home_background.xml" value="0.188" />
+        <entry key="..\:/programming/Android/MoneyCounter/app/src/main/res/layout/el_mc_toolbar.xml" value="0.246875" />
         <entry key="..\:/programming/Android/MoneyCounter/app/src/main/res/layout/fragment_analytics.xml" value="0.25416666666666665" />
+        <entry key="..\:/programming/Android/MoneyCounter/app/src/main/res/layout/fragment_category.xml" value="0.246875" />
         <entry key="..\:/programming/Android/MoneyCounter/app/src/main/res/layout/fragment_currency.xml" value="0.25416666666666665" />
         <entry key="..\:/programming/Android/MoneyCounter/app/src/main/res/layout/fragment_financial_place.xml" value="0.246875" />
         <entry key="..\:/programming/Android/MoneyCounter/app/src/main/res/layout/fragment_home.xml" value="0.246875" />

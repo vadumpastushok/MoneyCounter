@@ -93,7 +93,7 @@ class CategoryPresenter @Inject constructor(
         if(item.title == context.getString(R.string.category_title_add)) {
             rootView?.openAddCategoryFragment()
         } else {
-            rootView?.openInputAmountFragment(item.id)
+            rootView?.openFinancePlaceFragment(item.id)
         }
     }
 

@@ -103,6 +103,7 @@
     <string name="intro_accept_policy_terms">Почати</string>
     <string name="home_text_income">Доходи</string>
     <string name="home_text_costs">Витрати</string>
+    <string name="financial_places">Місця збереження коштів</string>
     <string name="home_text_analytics">Аналітика</string>
     <string name="home_text_calculate">Конвертер валют</string>
     <string name="home_text_currency">Курси валют</string>
@@ -120,6 +121,7 @@
     <string name="home_expression">Я знаю, не можна мати все відразу, тому я почну з невеликого - з грошей.</string>
     <string name="home_author_expression">Януш Васильковський</string>
     <string name="no_categories">Категорії не знайдені. Ви можете створити нові вийшовши з режиму редактування</string>
+    <string name="no_financial_places">Місця збереження коштів не знайдені. Ви можете створити нові вийшовши з режиму редактування</string>
     <string name="category_title_salary">Заробітна плата</string>
     <string name="category_title_sponsor">Спонсор</string>
     <string name="category_title_rollback">Вхятка, відкат</string>

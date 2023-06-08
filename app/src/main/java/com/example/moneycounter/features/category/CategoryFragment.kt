@@ -18,6 +18,7 @@ import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.DialogCategoryBinding
 import com.example.moneycounter.databinding.FragmentCategoryBinding
 import com.example.moneycounter.features.category_add.CategoryAddFragment
+import com.example.moneycounter.features.financial_place.FinancialPlaceFragment
 import com.example.moneycounter.features.input_amount.InputAmountFragment
 import com.example.moneycounter.model.entity.db.Category
 import com.example.moneycounter.model.entity.ui.MoneyType
@@ -66,8 +67,8 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
         CategoryAddFragment.start(findNavController(), getMoneyType())
     }
 
-    override fun openInputAmountFragment(id: Long){
-        InputAmountFragment.start(findNavController(), id, getMoneyType())
+    override fun openFinancePlaceFragment(id: Long){
+        FinancialPlaceFragment.start(findNavController(), id, getMoneyType())
     }
 
     override fun setTitleText(text: String){
