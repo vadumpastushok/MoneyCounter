@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.moneycounter.base.BaseFragment
 import com.example.moneycounter.databinding.FragmentAnalyticsPagerBinding
-import com.example.moneycounter.features.analytics_list.AnalyticsListFragment
+import com.example.moneycounter.analytics_list.AnalyticsListFragment
 import com.example.moneycounter.model.entity.ui.MoneyType
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

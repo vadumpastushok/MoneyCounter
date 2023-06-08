@@ -1,4 +1,4 @@
-package com.example.moneycounter.features.analytics_list
+package com.example.moneycounter.analytics_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

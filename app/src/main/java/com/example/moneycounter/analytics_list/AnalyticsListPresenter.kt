@@ -1,10 +1,11 @@
-package com.example.moneycounter.features.analytics_list
+package com.example.moneycounter.analytics_list
 
 import androidx.lifecycle.viewModelScope
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App.Companion.context
 import com.example.moneycounter.base.BasePresenter
 import com.example.moneycounter.model.db.DatabaseManager
+import com.example.moneycounter.model.entity.db.CategoryWithFinances
 import com.example.moneycounter.model.entity.ui.Analytics
 import com.example.moneycounter.model.entity.ui.MoneyType
 import kotlinx.coroutines.launch
@@ -22,27 +23,32 @@ class AnalyticsListPresenter @Inject constructor(
         getAnalyticsList(root.getAnalyticsMoneyType())
     }
 
-    private fun getAnalyticsList(moneyType: MoneyType){
-        viewModelScope.launch {
-
-            val categoriesWithFinances =
-                databaseManager.getCategoryWithFinancesByMoneyType(moneyType)
-            analyticsList = categoriesWithFinances
-                .map { category ->
-                    var amount = 0
-                    for (finance in category.finances) {
-                        amount += finance.amount
-                    }
-
-                    Analytics(
-                        category.category.icon,
-                        category.category.color,
-                        category.category.title,
-                        amount
-                    )
+    companion object {
+        fun formatDataToAnalyticsList(data: List<CategoryWithFinances>): MutableList<Analytics> {
+            return data.map { category ->
+                var amount = 0
+                for (finance in category.finances) {
+                    amount += finance.amount
                 }
+
+                Analytics(
+                    category.category.icon,
+                    category.category.color,
+                    category.category.title,
+                    amount
+                )
+            }
                 .sortedByDescending { it.amount }
                 .toMutableList()
+        }
+    }
+
+    private fun getAnalyticsList(moneyType: MoneyType){
+        viewModelScope.launch {
+            val categoriesWithFinances =
+                databaseManager.getCategoryWithFinancesByMoneyType(moneyType)
+            analyticsList = formatDataToAnalyticsList(categoriesWithFinances)
+
             if(analyticsList.size != 0){
                 rootView?.setRecycleData(analyticsList)
             }else{

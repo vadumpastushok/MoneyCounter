@@ -4,20 +4,30 @@ import com.example.moneycounter.R
 import com.example.moneycounter.app.App
 import com.example.moneycounter.base.BasePresenter
 import com.example.moneycounter.features.analytics.AnalyticsFragment
-import com.example.moneycounter.features.analytics_list.AnalyticsListFragment
+import com.example.moneycounter.analytics_list.AnalyticsListFragment
 import com.example.moneycounter.model.entity.ui.MoneyType
 import javax.inject.Inject
 
 class AnalyticsPagerPresenter @Inject constructor(): BasePresenter<AnalyticsPagerContract>() {
 
     fun onPageSelected(fragments: List<AnalyticsListFragment>, position: Int){
-        if(fragments[position].moneyType== MoneyType.INCOME){
-            rootView?.setIndicatorColor(R.color.light_blue)
-            AnalyticsFragment.setupTitleText(App.context.getString(R.string.title_income))
+        rootView?.setIndicatorColor(getColorByMoneyType(fragments[position].moneyType))
+        AnalyticsFragment.setupTitleText(App.context.getString(getTitleByMoneyType(fragments[position].moneyType)))
+    }
+
+    fun getColorByMoneyType(moneyType: MoneyType): Int {
+        return if (moneyType == MoneyType.INCOME) {
+            R.color.light_blue
+        } else {
+            R.color.red
         }
-        else{
-            rootView?.setIndicatorColor(R.color.red)
-            AnalyticsFragment.setupTitleText(App.context.getString(R.string.title_costs))
+    }
+
+    fun getTitleByMoneyType(moneyType: MoneyType): Int {
+        return if (moneyType == MoneyType.INCOME) {
+            R.string.title_income
+        } else {
+            R.string.title_costs
         }
     }
 }
