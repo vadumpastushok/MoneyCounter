@@ -45,15 +45,24 @@ object DatabaseManagerModule {
     }
 
     @Provides
+    fun provideFinancialPlaceDao(
+        db: AppDatabase
+    ): FinancialPlaceDao{
+        return db.financialPlaceDao()
+    }
+
+    @Provides
     fun provideDatabaseManager(
         categoryDao: CategoryDao,
         financeDao: FinanceDao,
-        currencyDao: CurrencyDao
+        currencyDao: CurrencyDao,
+        financialPlaceDao: FinancialPlaceDao,
     ): DatabaseManager{
         return DatabaseManager(
             categoryDao,
             financeDao,
-            currencyDao
+            currencyDao,
+            financialPlaceDao,
         )
     }
 }

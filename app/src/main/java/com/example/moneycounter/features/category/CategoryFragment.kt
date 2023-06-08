@@ -19,7 +19,6 @@ import com.example.moneycounter.databinding.DialogCategoryBinding
 import com.example.moneycounter.databinding.FragmentCategoryBinding
 import com.example.moneycounter.features.category_add.CategoryAddFragment
 import com.example.moneycounter.features.financial_place.FinancialPlaceFragment
-import com.example.moneycounter.features.input_amount.InputAmountFragment
 import com.example.moneycounter.model.entity.db.Category
 import com.example.moneycounter.model.entity.ui.MoneyType
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +29,7 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
 
     @Inject
     lateinit var presenter: CategoryPresenter
-    private val adapter: CategoryAdapter by lazy { CategoryAdapter(binding.rvCategory) }
+    private val adapter: CategoryAdapter by lazy { CategoryAdapter() }
     private val args: CategoryFragmentArgs by navArgs()
 
     override fun createViewBinding(

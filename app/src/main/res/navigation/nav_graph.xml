@@ -129,6 +129,27 @@
         app:popEnterAnim="@anim/fade_in"
         app:popExitAnim="@anim/fade_out"/>
 
+<!--    FinancialPlaceAdd-->
+    <fragment
+        android:id="@+id/financialPlaceAddFragment"
+        android:name="com.example.moneycounter.features.financial_place_add.FinancialPlaceAddFragment"
+        android:label="FinancialPlaceAddFragment"
+        tools:layout="@layout/fragment_financial_place_add">
+        <argument
+            android:name="icon"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
+
+    <action android:id="@+id/action_to_financial_place_add"
+        app:destination="@id/financialPlaceAddFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
+
 <!--    InputAmount-->
     <fragment
         android:id="@+id/InputAmountFragment"
@@ -141,6 +162,9 @@
         <argument
             android:name="type"
             app:argType="com.example.moneycounter.model.entity.ui.MoneyType" />
+        <argument
+            android:name="financePlaceId"
+            app:argType="long" />
     </fragment>
 
     <action android:id="@+id/action_to_input_amount"

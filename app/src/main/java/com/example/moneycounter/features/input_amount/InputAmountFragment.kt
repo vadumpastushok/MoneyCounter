@@ -98,8 +98,8 @@ class InputAmountFragment: BaseFragment<FragmentInputAmountBinding>(), InputAmou
     }
 
     companion object{
-        fun start(navController : NavController, id : Long, type : MoneyType){
-            val direction = NavGraphDirections.actionToInputAmount(id, type)
+        fun start(navController : NavController, id : Long, type : MoneyType, financePlaceId: Long){
+            val direction = NavGraphDirections.actionToInputAmount(id, type, financePlaceId)
             navController.navigate(direction)
         }
     }

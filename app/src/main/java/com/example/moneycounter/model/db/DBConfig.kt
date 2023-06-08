@@ -36,6 +36,8 @@ object DBConfig {
         object Columns {
             const val TITLE = "title"
             const val ICON = "icon"
+            const val COLOR = "color"
+            const val ORDER = "order"
             const val ID = "id"
         }
     }

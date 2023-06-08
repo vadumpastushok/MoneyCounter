@@ -18,7 +18,7 @@ object Config {
     const val PREF_IS_FINGERPRINT_ENABLED = "isFingerprintEnabled"
     const val PREF_LAST_TIME_UPDATE_CURRENCIES = "lastTimeUpdateCurrencies"
 
-    const val REQUEST_KEY_CATEGORY_ADD = "categoryAdd"
+    const val REQUEST_KEY_ICON_SELECT = "iconSelect"
 
     val tableHeader = mutableListOf(
         context.getString(R.string.header_category_id),

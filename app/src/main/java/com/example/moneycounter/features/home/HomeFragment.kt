@@ -118,12 +118,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
 
     override fun vibrate(){
         val vibrator = App.context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
-        } else {
-            vibrator.vibrate(100)
-        }
+        vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
     }
 
     override fun playSound(){

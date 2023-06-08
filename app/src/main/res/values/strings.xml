@@ -9,7 +9,7 @@
     <string name="USD" translatable="false">$</string>
 <string name="channelId_with_sound" translatable="false">channelId_with_sound</string>
     <string name="channelId_without_sound" translatable="false">channelId_without_sound</string>
-    <string name="category_title_add" translatable="false">""</string>
+    <string name="btn_title_add" translatable="false">""</string>
     <string name="header_category_id" translatable="false">category id</string>
     <string name="header_name" translatable="false">name</string>
     <string name="header_money_type" translatable="false">money type</string>
@@ -104,6 +104,7 @@
     <string name="home_text_income">Доходи</string>
     <string name="home_text_costs">Витрати</string>
     <string name="financial_places">Місця збереження коштів</string>
+    <string name="add_financial_places">Додати місце збереження коштів</string>
     <string name="home_text_analytics">Аналітика</string>
     <string name="home_text_calculate">Конвертер валют</string>
     <string name="home_text_currency">Курси валют</string>

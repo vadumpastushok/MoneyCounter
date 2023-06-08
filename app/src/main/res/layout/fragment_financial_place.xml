@@ -7,7 +7,7 @@
     android:gravity="center">
 
     <com.example.moneycounter.ui.custom.MCToolbar
-        android:id="@+id/category_titlebar"
+        android:id="@+id/financial_places_titlebar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:icon_color="@color/light_blue"
@@ -40,7 +40,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category_titlebar" />
+        app:layout_constraintTop_toBottomOf="@id/financial_places_titlebar" />
 
     <TextView
         android:id="@+id/tv_no_financial_places"
@@ -58,6 +58,6 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/category_titlebar" />
+        app:layout_constraintTop_toBottomOf="@+id/financial_places_titlebar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
