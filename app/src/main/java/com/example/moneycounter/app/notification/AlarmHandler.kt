@@ -32,7 +32,7 @@ class AlarmHandler {
     private fun setAlarm(time: Long){
         val intent = Intent(App.context, NotificationBroadcastReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
-            App.context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT
+            App.context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val alarmManager = App.context.getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_HALF_DAY , pendingIntent)

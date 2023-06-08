@@ -80,9 +80,9 @@ class HomePresenter @Inject constructor(
 
         for(index in 0 until size){
             val item = root.getSideBarMenuItem(index)
-            if(item.title.equals(App.context.getString(R.string.sidebar_text_notifications))){
+            if(item.title?.equals(App.context.getString(R.string.sidebar_text_notifications)) == true){
                 root.setItemEnabled(item, getNotification())
-            }else if(item.title.equals(App.context.getString(R.string.sidebar_text_sound_notifications))){
+            }else if(item.title?.equals(App.context.getString(R.string.sidebar_text_sound_notifications)) == true){
                 root.setItemEnabled(item, getNotification() && getSoundNotification())
             }
         }

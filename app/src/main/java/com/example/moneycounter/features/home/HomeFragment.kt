@@ -284,12 +284,12 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
 
     override fun setItemEnabled(item: MenuItem, isEnabled: Boolean){
         if(isEnabled){
-            item.icon.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+            item.icon?.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
                 Color.TRANSPARENT,
                 BlendModeCompat.SRC_ATOP
             )
         }else{
-            item.icon.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+            item.icon?.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
                 requireContext().getColor(R.color.unabled),
                 BlendModeCompat.SRC_ATOP
             )
