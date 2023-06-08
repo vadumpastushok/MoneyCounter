@@ -49,7 +49,7 @@ class InputAmountPresenter @Inject constructor(
                     root.getFragmentArgs().id,
                     root.getAmount().toInt(),
                     time,
-                    0,
+                    root.getFragmentArgs().financePlaceId,
                 )
             )
         }
