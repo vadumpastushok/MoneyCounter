@@ -3,6 +3,7 @@ package com.example.moneycounter.features.currency
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +40,10 @@ class CurrencyFragment: BaseFragment<FragmentCurrencyBinding>(), CurrencyContrac
     override fun onDestroy() {
         super.onDestroy()
         presenter.onFragmentDestroyed()
+    }
+
+    override fun updateViewPaddings(left: Int, top: Int, right: Int, bottom: Int) {
+        binding.root.updatePadding(left, top, right, 0)
     }
 
     /**

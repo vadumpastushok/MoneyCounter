@@ -2,6 +2,7 @@ package com.example.moneycounter.features.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.moneycounter.base.BaseActivity
 import com.example.moneycounter.databinding.ActivityMainBinding
@@ -15,7 +16,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+        )
         super.onCreate(savedInstanceState)
     }
 

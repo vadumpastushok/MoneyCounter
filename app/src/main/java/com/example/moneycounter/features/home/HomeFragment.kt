@@ -7,10 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -20,6 +17,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.core.view.get
+import androidx.core.view.marginTop
+import androidx.core.view.updatePadding
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -81,6 +80,16 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         setupOnBackPressed()
     }
 
+    override fun getIsLightStatusBar(): Boolean {
+        return false
+    }
+
+    override fun updateViewPaddings(left: Int, top: Int, right: Int, bottom: Int) {
+        binding.homeMainLayout.updatePadding(left, 0, right, bottom)
+        binding.homeMenuButton.updatePadding(top = top)
+        binding.homeSidebar.updatePadding(left, top, right, bottom)
+    }
+
     override fun onPause() {
         super.onPause()
         pauseWaves()
@@ -126,8 +135,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         )
         ringtoneManager.play()
     }
-
-
 
     override fun setWaves(wavesList: MutableList<WaveView.WaveData>) {
         for (wave in wavesList){
@@ -177,7 +184,6 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
 
     override fun setChartData(incomeAmount: Float, costsAmount: Float ){
         val pieEntries: ArrayList<PieEntry> = ArrayList()
-        val label = "label"
 
         val pieChartDataMap: MutableMap<String, Float> = HashMap()
         pieChartDataMap[" "] = costsAmount
@@ -191,7 +197,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
             pieEntries.add(PieEntry(pieChartDataMap[type]!!.toFloat(), type))
         }
 
-        val pieDataSet = PieDataSet(pieEntries, label)
+        val pieDataSet = PieDataSet(pieEntries, "")
         pieDataSet.colors = colors
         pieDataSet.setDrawValues(false)
         pieDataSet.notifyDataSetChanged()

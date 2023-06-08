@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -47,6 +48,10 @@ class CategoryFragment: BaseFragment<FragmentCategoryBinding>(), CategoryContrac
         setupDialog()
         setupOnBackPressed()
         initListeners()
+    }
+
+    override fun updateViewPaddings(left: Int, top: Int, right: Int, bottom: Int) {
+        binding.root.updatePadding(left, top, right, 0)
     }
 
     /**
