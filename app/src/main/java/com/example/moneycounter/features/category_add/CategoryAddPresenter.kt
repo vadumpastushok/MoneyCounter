@@ -19,10 +19,16 @@ class CategoryAddPresenter @Inject constructor(): BasePresenter<CategoryAddContr
     private fun checkAllData(){
         val root = rootView ?: return
 
-        if(root.getIcon() == context.getString(R.string.default_icon)|| root.getColor() == 0 || root.getTitle().isEmpty()){
-            root.setButtonEnabled(false)
-        }else{
+        if (checkDataFullness(root.getIcon(), root.getColor(), root.getTitle(), context.getString(R.string.default_icon))) {
             root.setButtonEnabled(true)
+        } else {
+            root.setButtonEnabled(false)
+        }
+    }
+
+    companion object {
+        fun checkDataFullness(icon: String, color: Int, title: String, iconException: String): Boolean {
+            return !(icon == iconException || color == 0 || title.isEmpty())
         }
     }
 
