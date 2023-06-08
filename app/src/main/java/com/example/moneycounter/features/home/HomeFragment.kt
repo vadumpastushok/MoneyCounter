@@ -32,6 +32,7 @@ import com.example.moneycounter.features.currency.CurrencyFragment
 import com.example.moneycounter.features.info.InfoFragment
 import com.example.moneycounter.features.lock_settings.LockSettingsFragment
 import com.example.moneycounter.features.write_to_us.WriteToUsFragment
+import com.example.moneycounter.model.entity.ui.FinancialPlaceBalance
 import com.example.moneycounter.model.entity.ui.MoneyType
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
@@ -148,44 +149,32 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         binding.homeWaveView.startAnimation()
     }
 
-    override fun setGeneral(incomeAmount: Int, costsAmount: Int){
-        binding.financeTextView.text = context?.getString(R.string.title_general)
-        val amount = incomeAmount + costsAmount
-        binding.financePercentView.text = amount.toString()
-        val difference = incomeAmount - costsAmount
-        if(difference > 0){
-            binding.financeSumView.text = "+$difference"
-        }else{
-            binding.financeSumView.text = difference.toString()
+    override fun setChartInfo(title: String, moneyFlow: Int, balance: Int?) {
+        binding.financeTextView.text = title
+        binding.financePercentView.text = moneyFlow.toString()
+        if (balance == null) {
+            binding.financeSumView.text = ""
+            return
+        }
+        if (balance > 0) {
+            binding.financeSumView.text = "+$balance"
+        } else {
+            binding.financeSumView.text = balance.toString()
         }
     }
 
-    override fun setIncome(percent: Float, sum: Int){
-        binding.financeTextView.text = context?.getString(R.string.title_income)
-        var percentString = String.format("%.2f", percent)
-        percentString += "%"
-        binding.financePercentView.text = percentString
-        binding.financeSumView.text = sum.toString()
-    }
-
-    override fun setCosts(percent: Float, sum: Int) {
-        binding.financeTextView.text = context?.getString(R.string.title_costs)
-        var percentString = String.format("%.2f", percent)
-        percentString += "%"
-        binding.financePercentView.text = percentString
-        binding.financeSumView.text=sum.toString()
-    }
-
-    override fun setChartData(incomeAmount: Float, costsAmount: Float ){
+    override fun setChartData(financeInfo: List<FinancialPlaceBalance>) {
         val pieEntries: ArrayList<PieEntry> = ArrayList()
 
         val pieChartDataMap: MutableMap<String, Float> = HashMap()
-        pieChartDataMap[" "] = costsAmount
-        pieChartDataMap["  "] = incomeAmount
-
         val colors: ArrayList<Int> = ArrayList()
-        colors.add(App.context.getColor(R.color.costs_color))
-        colors.add(App.context.getColor(R.color.light_blue))
+
+        var title = ""
+        financeInfo.forEach {
+            title += " "
+            pieChartDataMap[title] = it.moneyFlow.toFloat()
+            colors.add(it.color)
+        }
 
         for (type in pieChartDataMap.keys) {
             pieEntries.add(PieEntry(pieChartDataMap[type]!!.toFloat(), type))
@@ -402,7 +391,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>(), HomeContract {
         binding.homeFinanceChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener
         {
             override fun onValueSelected(e: Entry, h: Highlight?) {
-                presenter.onFinanceSelected(e.y)
+                presenter.onFinanceSelected(e.y.toInt())
             }
 
             override fun onNothingSelected() {

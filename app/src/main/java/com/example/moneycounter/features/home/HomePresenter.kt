@@ -1,8 +1,10 @@
 package com.example.moneycounter.features.home
 
 import android.content.Context
+import android.graphics.Color
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewModelScope
 import com.example.moneycounter.R
 import com.example.moneycounter.app.App
@@ -11,6 +13,7 @@ import com.example.moneycounter.base.BasePresenter
 import com.example.moneycounter.features.data_manager.ExportDataManager
 import com.example.moneycounter.features.data_manager.ImportDataManager
 import com.example.moneycounter.model.db.DatabaseManager
+import com.example.moneycounter.model.entity.ui.FinancialPlaceBalance
 import com.example.moneycounter.model.entity.ui.MoneyType
 import kotlinx.coroutines.launch
 import java.io.File
@@ -26,8 +29,7 @@ class HomePresenter @Inject constructor(
     @Inject
     lateinit var exportDataManager: ExportDataManager
 
-    private var incomeAmount: Float = 0f
-    private var costsAmount: Float = 0f
+    private var financeInfo = mutableListOf<FinancialPlaceBalance>()
 
     override fun onViewAttached() {
         rootView?.setWaves(Config.wavesData)
@@ -38,40 +40,51 @@ class HomePresenter @Inject constructor(
 
     private fun getFinanceData(){
         viewModelScope.launch {
+            financeInfo.clear()
             val incomeCategories = databaseManager.getCategoryByType(MoneyType.INCOME)
-            incomeAmount = 0f
-            costsAmount = 0f
 
-            val finances = databaseManager.getAllFinances()
+            val financesByFinancialPlaces = databaseManager.getAllFinances().groupBy { it.placeId }
 
-            for (finance in finances) {
-                if (incomeCategories.find { it.id == finance.category_id } != null){
-                    incomeAmount += finance.amount
-                } else{
-                    costsAmount += finance.amount
+            financesByFinancialPlaces.forEach { (placeId, finances) ->
+                val title = databaseManager.getAllFinancialPlaces().firstOrNull() { it.id == placeId }?.title ?: ""
+                val color = databaseManager.getAllFinancialPlaces().firstOrNull() { it.id == placeId }?.color ?: Color.BLACK
+                var balance = 0
+                var moneyFlow = 0
+
+                for (finance in finances) {
+                    if (incomeCategories.find { it.id == finance.category_id } != null){
+                        balance += finance.amount
+                        moneyFlow += finance.amount
+                    } else{
+                        balance -= finance.amount
+                        moneyFlow += finance.amount
+                    }
                 }
+                financeInfo.add(
+                    FinancialPlaceBalance(
+                        title,
+                        color,
+                        balance,
+                        moneyFlow,
+                    )
+                )
             }
-
+            rootView?.setChartData(financeInfo)
             setFinanceAmount(null)
         }
     }
 
-    private fun setFinanceAmount(moneyType: MoneyType?){
-        val root = rootView ?: return
-        val amount: Float = incomeAmount + costsAmount
-
-        root.setChartData(incomeAmount, costsAmount)
-        when (moneyType) {
-            null -> {
-                root.setGeneral(incomeAmount.toInt(), costsAmount.toInt())
-            }
-            MoneyType.INCOME -> {
-                root.setIncome(incomeAmount*100/amount, incomeAmount.toInt())
-            }
-            else -> {
-                root.setCosts(costsAmount*100/amount, costsAmount.toInt())
-            }
+    private fun setFinanceAmount(title: String?){
+        if (title == null) {
+            rootView?.setChartInfo(
+                (rootView as? Fragment)?.getString(R.string.title_general) ?: "",
+                financeInfo.sumOf { it.moneyFlow },
+                null
+            )
+            return
         }
+        val financialPlace = financeInfo.firstOrNull { it.title == title } ?: return
+        rootView?.setChartInfo(financialPlace.title, financialPlace.moneyFlow, financialPlace.balance)
     }
 
     private fun setupMenu(){
@@ -120,23 +133,15 @@ class HomePresenter @Inject constructor(
         rootView?.openSideBar()
     }
 
-    fun onFinanceSelected(amount: Float){
-        if(incomeAmount == 0f && costsAmount == 0f) {
-            getFinanceData()
-        }
-        else if(incomeAmount == amount) {
-            setFinanceAmount(MoneyType.INCOME)
-        }
-        else{
-            setFinanceAmount(MoneyType.COSTS)
-        }
+    fun onFinanceSelected(moneyFlow: Int){
+        setFinanceAmount(financeInfo.firstOrNull { it.moneyFlow == moneyFlow }?.title)
     }
 
     fun onNothingSelected(){
-        if(incomeAmount == 0f && costsAmount == 0f) {
+        if (financeInfo.isEmpty()) {
             getFinanceData()
-        }else{
-            rootView?.setGeneral(incomeAmount.toInt(), costsAmount.toInt())
+        } else {
+           setFinanceAmount(null)
         }
     }
 
@@ -180,12 +185,9 @@ class HomePresenter @Inject constructor(
         rootView?.setMainLayoutTranslation(translation)
     }
 
-    private fun onDataImported(income: Float, costs: Float){
-        incomeAmount = income
-        costsAmount = costs
-        setFinanceAmount(null)
+    private fun onDataImported(){
+        getFinanceData()
     }
-
 
     private val preferences by lazy { App.context.getSharedPreferences(Config.PREFERENCES_NAME, Context.MODE_PRIVATE) }
 
@@ -232,10 +234,7 @@ class HomePresenter @Inject constructor(
         }
         viewModelScope.launch {
             importDataManager.importDataFromFile(file)
-            val incomeAmount = importDataManager.incomeAmount.toFloat()
-            val costsAmount = importDataManager.costsAmount.toFloat()
-
-            onDataImported(incomeAmount, costsAmount)
+            onDataImported()
         }
 
     }

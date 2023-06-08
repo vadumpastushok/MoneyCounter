@@ -2,6 +2,7 @@ package com.example.moneycounter.features.home
 
 import android.view.MenuItem
 import com.example.moneycounter.base.BaseContract
+import com.example.moneycounter.model.entity.ui.FinancialPlaceBalance
 import com.ssynhtn.waveview.WaveView
 
 interface HomeContract: BaseContract {
@@ -18,13 +19,9 @@ interface HomeContract: BaseContract {
 
     fun playSound()
 
-    fun setGeneral(incomeAmount: Int, costsAmount: Int)
+    fun setChartInfo(title: String, moneyFlow: Int, balance: Int?)
 
-    fun setIncome(percent: Float, sum: Int)
-
-    fun setCosts(percent: Float, sum: Int)
-
-    fun setChartData(incomeAmount: Float, costsAmount: Float )
+    fun setChartData(financeInfo: List<FinancialPlaceBalance>)
 
     fun openCategoriesIncome()
 
