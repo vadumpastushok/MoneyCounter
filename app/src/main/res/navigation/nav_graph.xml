@@ -107,6 +107,27 @@
         app:popEnterAnim="@anim/fade_in"
         app:popExitAnim="@anim/fade_out"/>
 
+<!--    FinancialPlaceFragment-->
+
+    <fragment
+        android:id="@+id/financialPlaceFragment"
+        android:name="com.example.moneycounter.features.financial_place.FinancialPlaceFragment"
+        android:label="FinancialPlaceFragment"
+        tools:layout="@layout/fragment_financial_place">
+        <argument
+            android:name="id"
+            app:argType="long" />
+        <argument
+            android:name="type"
+            app:argType="com.example.moneycounter.model.entity.ui.MoneyType" />
+    </fragment>
+
+    <action android:id="@+id/action_to_financial_place"
+        app:destination="@id/financialPlaceFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
 
 <!--    InputAmount-->
     <fragment

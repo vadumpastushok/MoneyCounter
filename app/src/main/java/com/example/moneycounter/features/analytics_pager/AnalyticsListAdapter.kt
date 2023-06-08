@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moneycounter.R
 import com.example.moneycounter.databinding.ItemAnalyticsBinding
 import com.example.moneycounter.model.entity.Analytics
-import com.example.moneycounter.model.entity.MoneyType
+import com.example.moneycounter.model.entity.ui.MoneyType
 
 class AnalyticsListAdapter(private val moneyType: MoneyType, private val context: Context) : RecyclerView.Adapter<AnalyticsListAdapter.AnalyticsListViewHolder>() {
 
